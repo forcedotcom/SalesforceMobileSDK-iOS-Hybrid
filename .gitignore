@@ -1,0 +1,13 @@
+.DS_Store
+DerivedData
+xcuserdata
+project.xcworkspace
+artifacts
+shared/test/test_credentials.json
+/hybrid/SampleApps/ContactExplorer/build/
+/hybrid/SampleApps/VFConnector/build/
+/libs/SalesforceHybridSDK/build/
+.github/
+.idea/
+*.framework.zip
+Carthage/
