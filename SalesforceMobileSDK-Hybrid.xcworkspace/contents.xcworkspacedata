@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:configuration"
+      name = "configuration">
+      <FileRef
+         location = "group:Common.xcconfig">
+      </FileRef>
+      <FileRef
+         location = "group:Common-iOS.xcconfig">
+      </FileRef>
+      <FileRef
+         location = "group:Common-Test.xcconfig">
+      </FileRef>
+      <FileRef
+         location = "group:Configuration-Debug.xcconfig">
+      </FileRef>
+      <FileRef
+         location = "group:Configuration-Release.xcconfig">
+      </FileRef>
+      <FileRef
+         location = "group:Packaging-Static.xcconfig">
+      </FileRef>
+      <FileRef
+         location = "group:Packaging-Dynamic.xcconfig">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Libs">
+      <FileRef
+         location = "group:libs/SalesforceHybridSDK/SalesforceHybridSDK.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "NativeSamples">
+      <FileRef
+         location = "group:native/SampleApps/RestAPIExplorer/RestAPIExplorer.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:native/SampleApps/SmartSyncExplorer/SmartSyncExplorer.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "HybridSamples">
+      <FileRef
+         location = "group:hybrid/SampleApps/AccountEditor/AccountEditor.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:hybrid/SampleApps/NoteSync/NoteSync.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:hybrid/SampleApps/SmartSyncExplorerHybrid/SmartSyncExplorerHybrid.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "External">
+      <FileRef
+         location = "group:external/CocoaLumberjack/Lumberjack.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:external/cordova-ios/cordova-ios/CordovaLib/CordovaLib.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:external/ThirdPartyDependencies"
+      name = "ThirdPartyDependencies">
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
+      <Group
+         location = "group:sqlcipher"
+         name = "sqlcipher">
+         <FileRef
+            location = "group:libsqlcipher.a">
+         </FileRef>
+         <FileRef
+            location = "group:LICENSE">
+         </FileRef>
+      </Group>
+   </Group>
+   <Group
+      location = "container:"
+      name = "shared">
+      <Group
+         location = "group:shared/resources"
+         name = "resources">
+         <Group
+            location = "group:Images.xcassets"
+            name = "Images.xcassets">
+            <Group
+               location = "group:AppIcon.appiconset"
+               name = "AppIcon.appiconset">
+               <FileRef
+                  location = "group:appicon29x29.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon40x40.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon50x50.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon57x57.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon58x58.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon72x72.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon76x76.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon80x80.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon87x87.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon100x100.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon114x114.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon120x120.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon144x144.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon152x152.png">
+               </FileRef>
+               <FileRef
+                  location = "group:appicon180x180.png">
+               </FileRef>
+               <FileRef
+                  location = "group:Contents.json">
+               </FileRef>
+            </Group>
+            <Group
+               location = "group:LaunchImage.launchimage"
+               name = "LaunchImage.launchimage">
+               <FileRef
+                  location = "group:Default640x960.png">
+               </FileRef>
+               <FileRef
+                  location = "group:Default640x1136.png">
+               </FileRef>
+               <FileRef
+                  location = "group:Default1242x2208.png">
+               </FileRef>
+               <FileRef
+                  location = "group:Default2208x1242.png">
+               </FileRef>
+               <FileRef
+                  location = "group:Contents.json">
+               </FileRef>
+            </Group>
+         </Group>
+         <FileRef
+            location = "group:SalesforceSDKResources.bundle">
+         </FileRef>
+         <FileRef
+            location = "group:SalesforceSDKAssets.xcassets">
+         </FileRef>
+         <FileRef
+            location = "group:LaunchScreen.storyboard">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:shared/test"
+         name = "test">
+         <FileRef
+            location = "group:test_credentials.json">
+         </FileRef>
+         <FileRef
+            location = "group:ui_test_credentials.json">
+         </FileRef>
+      </Group>
+   </Group>
+</Workspace>
