@@ -6,7 +6,7 @@
 //  Copyright © 2015 salesforce.com. All rights reserved.
 //
 
-#include "../../../configuration/Common-iOS.xcconfig"
-#include "../../../configuration/Packaging-Dynamic.xcconfig"
-#include "../../../configuration/Configuration-Release.xcconfig"
+#include "../../../external/SalesforceMobileSDK-iOS/configuration/Common-iOS.xcconfig"
+#include "../../../external/SalesforceMobileSDK-iOS/configuration/Packaging-Dynamic.xcconfig"
+#include "../../../external/SalesforceMobileSDK-iOS/configuration/Configuration-Release.xcconfig"
 #include "SalesforceHybridSDK-Common.xcconfig"

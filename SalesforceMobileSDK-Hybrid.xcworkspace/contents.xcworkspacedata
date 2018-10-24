@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <Group
-      location = "group:configuration"
+      location = "group:external/SalesforceMobileSDK-iOS/configuration"
       name = "configuration">
       <FileRef
          location = "group:Common.xcconfig">
@@ -30,17 +30,19 @@
       location = "container:"
       name = "Libs">
       <FileRef
+         location = "group:external/SalesforceMobileSDK-iOS/libs/SalesforceAnalytics/SalesforceAnalytics.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCore/SalesforceSDKCore.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:external/SalesforceMobileSDK-iOS/libs/SmartSync/SmartSync.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:external/SalesforceMobileSDK-iOS/libs/SmartStore/SmartStore.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:libs/SalesforceHybridSDK/SalesforceHybridSDK.xcodeproj">
-      </FileRef>
-   </Group>
-   <Group
-      location = "container:"
-      name = "NativeSamples">
-      <FileRef
-         location = "group:native/SampleApps/RestAPIExplorer/RestAPIExplorer.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:native/SampleApps/SmartSyncExplorer/SmartSyncExplorer.xcodeproj">
       </FileRef>
    </Group>
    <Group
@@ -60,34 +62,14 @@
       location = "container:"
       name = "External">
       <FileRef
-         location = "group:external/CocoaLumberjack/Lumberjack.xcodeproj">
-      </FileRef>
-      <FileRef
          location = "group:external/cordova-ios/cordova-ios/CordovaLib/CordovaLib.xcodeproj">
       </FileRef>
-   </Group>
-   <Group
-      location = "group:external/ThirdPartyDependencies"
-      name = "ThirdPartyDependencies">
-      <FileRef
-         location = "group:README.md">
-      </FileRef>
-      <Group
-         location = "group:sqlcipher"
-         name = "sqlcipher">
-         <FileRef
-            location = "group:libsqlcipher.a">
-         </FileRef>
-         <FileRef
-            location = "group:LICENSE">
-         </FileRef>
-      </Group>
    </Group>
    <Group
       location = "container:"
       name = "shared">
       <Group
-         location = "group:shared/resources"
+         location = "group:external/SalesforceMobileSDK-iOS/shared/resources"
          name = "resources">
          <Group
             location = "group:Images.xcassets"
@@ -179,9 +161,6 @@
          name = "test">
          <FileRef
             location = "group:test_credentials.json">
-         </FileRef>
-         <FileRef
-            location = "group:ui_test_credentials.json">
          </FileRef>
       </Group>
    </Group>
