@@ -5,6 +5,9 @@
       location = "group:external/SalesforceMobileSDK-iOS/configuration"
       name = "configuration">
       <FileRef
+         location = "group:Version.xcconfig">
+      </FileRef>
+      <FileRef
          location = "group:Common.xcconfig">
       </FileRef>
       <FileRef
