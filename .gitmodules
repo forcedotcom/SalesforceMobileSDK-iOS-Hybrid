@@ -9,4 +9,4 @@
 	url = https://github.com/apache/cordova-plugin-wkwebview-engine
 [submodule "external/SalesforceMobileSDK-iOS"]
 	path = external/SalesforceMobileSDK-iOS
-	url = https://github.com/wmathurin/SalesforceMobileSDK-iOS
+	url = https://github.com/forcedotcom/SalesforceMobileSDK-iOS
