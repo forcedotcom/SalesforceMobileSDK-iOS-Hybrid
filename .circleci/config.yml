@@ -1,0 +1,95 @@
+defaults: &defaults
+  working_directory: ~/SalesforceMobileSDK-iOS-Hybrid
+  macos:
+    xcode: "10.0.0"
+  shell: /bin/bash --login -eo pipefail
+  environment:
+    BASH_ENV: ~/.bashrc
+    FASTLANE_SKIP_UPDATE_CHECK: true
+    CHRUBY_VER: 2.5.1
+
+version: 2
+jobs:
+  test-ios:
+    <<: *defaults
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: v5-gems-{{ checksum ".circleci/Gemfile.lock" }}
+
+      - run:
+          name: Installing gem dependencies
+          command:  |
+            chruby ${CHRUBY_VER}
+            cd .circleci
+            gem install bundler
+            bundle check || bundle install
+            bundle update
+
+      - save_cache:
+          key: v5-gems-{{ checksum ".circleci/Gemfile.lock" }}
+          paths:
+            - /Users/distiller/.gem/ruby/2.5.1
+            - /Users/distiller/.rubies/ruby-2.4.2/lib/ruby/gems/2.5.1
+
+      - run:
+          name: Running install.sh
+          command: | 
+            ./install.sh
+
+      - run:
+          name: Creating test_credentials.json
+          command: | 
+            ./install.sh
+            ./build/pre-build
+
+      - run:
+          name: Compile
+          command:  |
+            chruby ${CHRUBY_VER}
+            cd .circleci
+            fastlane build
+
+      - run:
+          name: Run Tests
+          command:  |
+            chruby ${CHRUBY_VER}
+            cd .circleci
+            fastlane test
+
+      - store_test_results:
+          path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/test_output
+
+      - store_artifacts:
+          path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/test_output
+          destination: Test-Results
+
+      - store_artifacts:
+          path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/clangReport
+          destination: Static-Analysis
+
+      - run:
+          name: Upload code coverage
+          command: bash <(curl -s https://codecov.io/bash) -X gcov -X xcode
+
+workflows:
+  version: 2
+
+  pr-build-all-apps:
+    jobs:
+      - test-ios
+
+  # Cron are on a timezone 8 hours ahead of PST
+  # Build everything at ~10:30pm Sunday/Wednesday Nights
+  weekly-build-all-apps:
+    triggers:
+      - schedule:
+          cron: "30 6 * * 1,4"
+          filters:
+            branches:
+              only:
+                - dev
+
+    jobs:
+      - test-ios
