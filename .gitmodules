@@ -7,6 +7,9 @@
 [submodule "external/cordova-plugin-wkwebview-engine"]
 	path = external/cordova-plugin-wkwebview-engine
 	url = https://github.com/apache/cordova-plugin-wkwebview-engine
+[submodule "external/CocoaLumberjack"]
+	path = external/CocoaLumberjack
+	url = https://github.com/forcedotcom/CocoaLumberjack
 [submodule "external/SalesforceMobileSDK-iOS"]
 	path = external/SalesforceMobileSDK-iOS
 	url = https://github.com/forcedotcom/SalesforceMobileSDK-iOS
