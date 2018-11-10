@@ -6,8 +6,8 @@ fi
 
 SCRIPT_DIR=`(cd $(dirname $0)/; pwd)`
 
-$SCRIPT_DIR/build-ios.sh -c Debug -b $WORKSPACE/derivedData -f CocoaLumberjack -g CocoaLumberjack-iOS
-$SCRIPT_DIR/build-ios.sh -c Release -b $WORKSPACE/derivedData -f CocoaLumberjack -g CocoaLumberjack-iOS
+$SCRIPT_DIR/build-ios.sh -c Debug -b $WORKSPACE/derivedData -f SalesforceSDKCommon
+$SCRIPT_DIR/build-ios.sh -c Release -b $WORKSPACE/derivedData -f SalesforceSDKCommon
 
 $SCRIPT_DIR/build-ios.sh -c Debug -b $WORKSPACE/derivedData -f SalesforceAnalytics
 $SCRIPT_DIR/build-ios.sh -c Release -b $WORKSPACE/derivedData -f SalesforceAnalytics
