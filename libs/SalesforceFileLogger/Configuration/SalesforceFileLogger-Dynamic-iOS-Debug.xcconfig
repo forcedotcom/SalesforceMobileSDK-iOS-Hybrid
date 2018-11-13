@@ -1,0 +1,12 @@
+//
+//  SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig
+//  SalesforceFileLogger
+//
+//  Created by Wolfgang Mathurin on 11/8/18.
+//  Copyright (c) 2018-present, salesforce.com. All rights reserved.
+//
+
+#include "../../../external/SalesforceMobileSDK-iOS/configuration/Common-iOS.xcconfig"
+#include "../../../external/SalesforceMobileSDK-iOS/configuration/Packaging-Dynamic.xcconfig"
+#include "../../../external/SalesforceMobileSDK-iOS/configuration/Configuration-Debug.xcconfig"
+#include "SalesforceFileLogger-Common.xcconfig"
