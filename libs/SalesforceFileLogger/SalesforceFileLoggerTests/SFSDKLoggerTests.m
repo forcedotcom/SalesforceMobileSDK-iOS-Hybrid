@@ -1,6 +1,6 @@
 /*
  SFSDKLoggerTests.m
- SalesforceAnalytics
+ SalesforceFileLogger
  
  Created by Bharath Hariharan on 6/18/17.
  

@@ -1,6 +1,6 @@
 /*
  SFSDKLogger.h
- SalesforceAnalytics
+ SalesforceFileLogger
  
  Created by Bharath Hariharan on 6/8/17.
  
