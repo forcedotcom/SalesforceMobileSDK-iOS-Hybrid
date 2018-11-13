@@ -14,80 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B7136CFD216684A700F6A221"
-               BuildableName = "SalesforceSDKCommon.framework"
-               BlueprintName = "SalesforceSDKCommon"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCommon/SalesforceSDKCommon.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "CE4CE2E01C0E465B009F6029"
                BuildableName = "SalesforceFileLogger.framework"
                BlueprintName = "SalesforceFileLogger"
                ReferencedContainer = "container:libs/SalesforceFileLogger/SalesforceFileLogger.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE2B8BCE1CE900F500C6FC6A"
-               BuildableName = "SalesforceAnalytics.framework"
-               BlueprintName = "SalesforceAnalytics"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceAnalytics/SalesforceAnalytics.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE4CE26A1C0E449C009F6029"
-               BuildableName = "SalesforceSDKCore.framework"
-               BlueprintName = "SalesforceSDKCore"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCore/SalesforceSDKCore.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE4CE2B81C0E4581009F6029"
-               BuildableName = "SmartStore.framework"
-               BlueprintName = "SmartStore"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SmartStore/SmartStore.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE4CE2C81C0E463C009F6029"
-               BuildableName = "SmartSync.framework"
-               BlueprintName = "SmartSync"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SmartSync/SmartSync.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -154,80 +84,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B7136D06216684A700F6A221"
-               BuildableName = "SalesforceSDKCommonTests.xctest"
-               BlueprintName = "SalesforceSDKCommonTests"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCommon/SalesforceSDKCommon.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "8222729C19C39F4500FC537E"
                BuildableName = "SalesforceFileLoggerTests.xctest"
                BlueprintName = "SalesforceFileLoggerTests"
                ReferencedContainer = "container:libs/SalesforceFileLogger/SalesforceFileLogger.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE2B8BD81CE900F500C6FC6A"
-               BuildableName = "SalesforceAnalyticsTests.xctest"
-               BlueprintName = "SalesforceAnalyticsTests"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceAnalytics/SalesforceAnalytics.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4F7EB4051BFFC88200768720"
-               BuildableName = "SalesforceSDKCoreTests.xctest"
-               BlueprintName = "SalesforceSDKCoreTests"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCore/SalesforceSDKCore.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEAAAE54195911E600CBBFE9"
-               BuildableName = "SmartStoreTests.xctest"
-               BlueprintName = "SmartStoreTests"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SmartStore/SmartStore.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEAAAE54195911E600CBBFE9"
-               BuildableName = "SmartSyncTests.xctest"
-               BlueprintName = "SmartSyncTests"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SmartSync/SmartSync.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -252,52 +112,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B716A3E3218F6EEA009D407F"
-               BuildableName = "SalesforceSDKCommonTestApp.app"
-               BlueprintName = "SalesforceSDKCommonTestApp"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCommon/SalesforceSDKCommon.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "82EFF2FE16E8049500A63CDF"
                BuildableName = "SalesforceFileLoggerTestApp.app"
                BlueprintName = "SalesforceFileLoggerTestApp"
                ReferencedContainer = "container:libs/SalesforceFileLogger/SalesforceFileLogger.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE2B8C291CE9218900C6FC6A"
-               BuildableName = "SalesforceAnalyticsTestApp.app"
-               BlueprintName = "SalesforceAnalyticsTestApp"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceAnalytics/SalesforceAnalytics.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "82D4642319C7C8170006BDFE"
-               BuildableName = "SalesforceSDKCoreTestApp.app"
-               BlueprintName = "SalesforceSDKCoreTestApp"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCore/SalesforceSDKCore.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -322,108 +140,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4F06AF081C499EB600F70798"
-               BuildableName = "SmartStoreTestApp.app"
-               BlueprintName = "SmartStoreTestApp"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SmartStore/SmartStore.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4F06AF2D1C499FD100F70798"
-               BuildableName = "SmartSyncTestApp.app"
-               BlueprintName = "SmartSyncTestApp"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SmartSync/SmartSync.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B7686AD821929D3B00D4332A"
-               BuildableName = "libSalesforceSDKCommon.a"
-               BlueprintName = "SalesforceSDKCommonStatic"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCommon/SalesforceSDKCommon.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "CEA884421C191795008D871B"
                BuildableName = "libSalesforceFileLogger.a"
                BlueprintName = "SalesforceFileLoggerStatic"
                ReferencedContainer = "container:libs/SalesforceFileLogger/SalesforceFileLogger.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE2B8BFE1CE91BFA00C6FC6A"
-               BuildableName = "libSalesforceAnalytics.a"
-               BlueprintName = "SalesforceAnalyticsStatic"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceAnalytics/SalesforceAnalytics.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEA8825E1C18F722008D871B"
-               BuildableName = "libSalesforceSDKCore.a"
-               BlueprintName = "SalesforceSDKCoreStatic"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCore/SalesforceSDKCore.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEA883B91C1914DE008D871B"
-               BuildableName = "libSmartStore.a"
-               BlueprintName = "SmartStoreStatic"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SmartStore/SmartStore.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEA883ED1C19160E008D871B"
-               BuildableName = "libSmartSync.a"
-               BlueprintName = "SmartSyncStatic"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SmartSync/SmartSync.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -452,16 +172,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CE2B8BD81CE900F500C6FC6A"
-               BuildableName = "SalesforceAnalyticsTests.xctest"
-               BlueprintName = "SalesforceAnalyticsTests"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceAnalytics/SalesforceAnalytics.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "8222729C19C39F4500FC537E"
                BuildableName = "SalesforceFileLoggerTests.xctest"
                BlueprintName = "SalesforceFileLoggerTests"
@@ -476,46 +186,6 @@
                BuildableName = "SalesforceHybridSDKTests.xctest"
                BlueprintName = "SalesforceHybridSDKTests"
                ReferencedContainer = "container:libs/SalesforceHybridSDK/SalesforceHybridSDK.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B7136D06216684A700F6A221"
-               BuildableName = "SalesforceSDKCommonTests.xctest"
-               BlueprintName = "SalesforceSDKCommonTests"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCommon/SalesforceSDKCommon.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4F7EB4051BFFC88200768720"
-               BuildableName = "SalesforceSDKCoreTests.xctest"
-               BlueprintName = "SalesforceSDKCoreTests"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCore/SalesforceSDKCore.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEAAAE54195911E600CBBFE9"
-               BuildableName = "SmartStoreTests.xctest"
-               BlueprintName = "SmartStoreTests"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SmartStore/SmartStore.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEAAAE54195911E600CBBFE9"
-               BuildableName = "SmartSyncTests.xctest"
-               BlueprintName = "SmartSyncTests"
-               ReferencedContainer = "container:external/SalesforceMobileSDK-iOS/libs/SmartSync/SmartSync.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
