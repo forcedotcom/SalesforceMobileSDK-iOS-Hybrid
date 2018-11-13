@@ -1,12 +1,14 @@
 ENV['DEVICE'] = 'iPhone XR' unless ENV.has_key?('DEVICE')
 ENV['IOS_VERSION'] = '12.0' unless ENV.has_key?('IOS_VERSION')
 
-lane :build do
-    analyze_scheme("SalesforceHybridSDK")
+lane :build do |options|
+    scheme = options[:lib]
+    analyze_scheme(scheme)
 end
 
-lane :test do
-    test_scheme("SalesforceHybridSDK")
+lane :test do |options|
+    scheme = options[:lib]
+    test_scheme(scheme)
 end
 
 def test_scheme(scheme)
