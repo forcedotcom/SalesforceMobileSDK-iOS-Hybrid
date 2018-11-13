@@ -71,7 +71,7 @@ jobs:
           destination: Static-Analysis
       - run: *upload-codecov
 
-  SalesforceFilLogger:
+  SalesforceFileLogger:
     <<: *defaults
     environment:
       - SCHEME: "SalesforceFileLogger"
@@ -91,8 +91,6 @@ jobs:
           path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/clangReport
           destination: Static-Analysis
       - run: *upload-codecov
-
-
 
 workflows:
   version: 2
