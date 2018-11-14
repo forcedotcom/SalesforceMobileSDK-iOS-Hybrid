@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		4F06AFEB1C49D35B00F70798 /* test_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 82EFF33D16E8063700A63CDF /* test_credentials.json */; };
+		4F9E588E219BB0CE00783BF5 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC2B285219A48A10064EB46 /* CocoaLumberjack.framework */; };
 		4FAE62E821966E8A003A5CD6 /* SFSDKLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62E221966E8A003A5CD6 /* SFSDKLogFileManager.m */; };
 		4FAE62E921966E8A003A5CD6 /* SFSDKFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62E321966E8A003A5CD6 /* SFSDKFileLogger.m */; };
 		4FAE62EA21966E8A003A5CD6 /* SFSDKFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FAE62E421966E8A003A5CD6 /* SFSDKFileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -30,7 +31,6 @@
 		4FAE62ED21966E8A003A5CD6 /* SFSDKLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62E721966E8A003A5CD6 /* SFSDKLogger.m */; };
 		4FAE63002196714C003A5CD6 /* SFSDKLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62FF2196714C003A5CD6 /* SFSDKLoggerTests.m */; };
 		4FC2B26B219A44880064EB46 /* SalesforceFileLoggerTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FC2B26A219A44880064EB46 /* SalesforceFileLoggerTests-Info.plist */; };
-		4FC2B26F219A48720064EB46 /* Cordova.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC2B26E219A48720064EB46 /* Cordova.framework */; };
 		4FC2B270219A48720064EB46 /* SalesforceSDKCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FAE62F621966FE7003A5CD6 /* SalesforceSDKCommon.framework */; };
 		829DA2B11C12677B0040F5F1 /* SalesforceFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 829DA2B01C12677B0040F5F1 /* SalesforceFileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82EFF30A16E8049500A63CDF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 82EFF30816E8049500A63CDF /* InfoPlist.strings */; };
@@ -231,86 +231,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4F0C193E18AB0509000FD4E9 /* Copy underscore lib */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = www/dependencies/underscore;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			name = "Copy underscore lib";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4F1A5A01174FF4AD00473EE8 /* Copy test lib */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = www/test;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			name = "Copy test lib";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4F1A5A091750090700473EE8 /* Copy qunit lib */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = www/dependencies/qunit;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			name = "Copy qunit lib";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4F458AEC1911CF2700545F86 /* Copy sfdc libs */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = www/libs;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			name = "Copy sfdc libs";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4FC404BD1911C70F0027AD76 /* Copy backbone lib */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = www/dependencies/backbone;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			name = "Copy backbone lib";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		82AF5A6E1A0D91F3006C7A4B /* Copy cordova-plugin-console plugin */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = www/plugins/org.apache.cordova.console/www;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			name = "Copy cordova-plugin-console plugin";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		82AF5A8B1A0D9DD4006C7A4B /* Copy Salesforce plugin */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = www/plugins/com.salesforce;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			name = "Copy Salesforce plugin";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		82EFF37016E8147C00A63CDF /* Copy files to www/ */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = www;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			name = "Copy files to www/";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CE4CE2F21C0E465C009F6029 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -320,16 +240,6 @@
 				CE4CE2E91C0E465B009F6029 /* SalesforceFileLogger.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CE77E3021E8C8BE2003E1CD6 /* Copy cordova-plugin-wkwebview-engine */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = www;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			name = "Copy cordova-plugin-wkwebview-engine";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -393,7 +303,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FC2B26F219A48720064EB46 /* Cordova.framework in Frameworks */,
+				4F9E588E219BB0CE00783BF5 /* CocoaLumberjack.framework in Frameworks */,
 				4FC2B270219A48720064EB46 /* SalesforceSDKCommon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -631,16 +541,7 @@
 				82EFF2FB16E8049500A63CDF /* Sources */,
 				82EFF2FC16E8049500A63CDF /* Frameworks */,
 				82EFF2FD16E8049500A63CDF /* Resources */,
-				82EFF37016E8147C00A63CDF /* Copy files to www/ */,
-				4F1A5A01174FF4AD00473EE8 /* Copy test lib */,
-				4F1A5A091750090700473EE8 /* Copy qunit lib */,
-				4F0C193E18AB0509000FD4E9 /* Copy underscore lib */,
-				4FC404BD1911C70F0027AD76 /* Copy backbone lib */,
-				4F458AEC1911CF2700545F86 /* Copy sfdc libs */,
-				82AF5A6E1A0D91F3006C7A4B /* Copy cordova-plugin-console plugin */,
-				82AF5A8B1A0D9DD4006C7A4B /* Copy Salesforce plugin */,
 				CE4CE2F21C0E465C009F6029 /* Embed Frameworks */,
-				CE77E3021E8C8BE2003E1CD6 /* Copy cordova-plugin-wkwebview-engine */,
 			);
 			buildRules = (
 			);
@@ -941,7 +842,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$SRCROOT/../../shared/common/build/tools/generate_headers.sh\" -o \"$TARGET_BUILD_DIR/$PRODUCT_NAME.framework/Headers/$PRODUCT_NAME.h\" -u \"$SRCROOT/$TARGET_NAME/$TARGET_NAME.h\"";
+			shellScript = "\"$SRCROOT/../../shared/common/build/tools/generate_headers.sh\" -o \"$TARGET_BUILD_DIR/$PRODUCT_NAME.framework/Headers/$PRODUCT_NAME.h\" -u \"$SRCROOT/$TARGET_NAME/$TARGET_NAME.h\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
