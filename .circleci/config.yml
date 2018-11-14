@@ -8,7 +8,13 @@ aliases:
       - /Users/distiller/.gem/ruby/2.5.1
       - /Users/distiller/.rubies/ruby-2.4.2/lib/ruby/gems/2.5.1
 
-  - &install-dependencies
+  - &setup-workspace
+    name: Setting up workspace
+    command:  |
+      ./install.sh
+      ./build/pre-build
+
+  - &install-gem-dependencies
     name: Installing gem dependencies
     command:  |
       ./install.sh
@@ -57,8 +63,9 @@ jobs:
     steps:
       - checkout
       - restore_cache: *restore-gem-cache
-      - run: *install-dependencies
+      - run: *install-gem-dependencies
       - save_cache: *save-gem-cache
+      - run: *setup-workspace
       - run: *compile
       - run: *run-tests
       - store_test_results:
@@ -78,8 +85,9 @@ jobs:
     steps:
       - checkout
       - restore_cache: *restore-gem-cache
-      - run: *install-dependencies
+      - run: *install-gem-dependencies
       - save_cache: *save-gem-cache
+      - run: *setup-workspace
       - run: *compile
       - run: *run-tests
       - store_test_results:
