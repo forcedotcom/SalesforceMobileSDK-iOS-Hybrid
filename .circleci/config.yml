@@ -30,14 +30,14 @@ aliases:
     command:  |
       chruby ${CHRUBY_VER}
       cd .circleci
-      fastlane "build lib:${SCHEME}"
+      fastlane build lib:${SCHEME}
 
   - &run-tests
     name: Run Tests
     command:  |
       chruby ${CHRUBY_VER}
       cd .circleci
-      fastlane "test lib:${SCHEME}"
+      fastlane test lib:${SCHEME}
   
   - &upload-codecov
     name: Upload code coverage
