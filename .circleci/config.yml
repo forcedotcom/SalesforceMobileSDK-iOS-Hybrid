@@ -21,7 +21,7 @@ aliases:
       ./build/pre-build
       chruby ${CHRUBY_VER}
       cd .circleci
-      gem install bundler
+      sudo gem install bundler
       bundle check || bundle install
       bundle update
 
