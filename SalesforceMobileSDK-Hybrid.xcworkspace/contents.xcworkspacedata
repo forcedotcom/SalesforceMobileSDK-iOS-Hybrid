@@ -33,6 +33,9 @@
       location = "container:"
       name = "Libs">
       <FileRef
+         location = "group:libs/SalesforceFileLogger/SalesforceFileLogger.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCommon/SalesforceSDKCommon.xcodeproj">
       </FileRef>
       <FileRef
@@ -67,6 +70,9 @@
    <Group
       location = "container:"
       name = "External">
+      <FileRef
+         location = "group:external/CocoaLumberjack/Lumberjack.xcodeproj">
+      </FileRef>
       <FileRef
          location = "group:external/cordova-ios/cordova-ios/CordovaLib/CordovaLib.xcodeproj">
       </FileRef>

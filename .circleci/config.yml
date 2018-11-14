@@ -1,3 +1,49 @@
+aliases:
+  - &restore-gem-cache
+    key: v5-gems-{{ checksum ".circleci/Gemfile.lock" }}
+
+  - &save-gem-cache
+    key: v5-gems-{{ checksum ".circleci/Gemfile.lock" }}
+    paths:
+      - /Users/distiller/.gem/ruby/2.5.1
+      - /Users/distiller/.rubies/ruby-2.4.2/lib/ruby/gems/2.5.1
+
+  - &setup-workspace
+    name: Setting up workspace
+    command:  |
+      ./install.sh
+      ./build/pre-build
+
+  - &install-gem-dependencies
+    name: Installing gem dependencies
+    command:  |
+      ./install.sh
+      ./build/pre-build
+      chruby ${CHRUBY_VER}
+      cd .circleci
+      sudo gem install bundler
+      bundle check || bundle install
+      bundle update
+
+  - &compile
+    name: Compile
+    command:  |
+      chruby ${CHRUBY_VER}
+      cd .circleci
+      fastlane build lib:${SCHEME}
+
+  - &run-tests
+    name: Run Tests
+    command:  |
+      chruby ${CHRUBY_VER}
+      cd .circleci
+      fastlane test lib:${SCHEME}
+  
+  - &upload-codecov
+    name: Upload code coverage
+    command: bash <(curl -s https://codecov.io/bash) -X gcov -X xcode
+    when: always
+
 defaults: &defaults
   working_directory: ~/SalesforceMobileSDK-iOS-Hybrid
   macos:
@@ -10,75 +56,57 @@ defaults: &defaults
 
 version: 2
 jobs:
-  test-ios:
+  SalesforceHybridSDK:
     <<: *defaults
+    environment:
+      - SCHEME: "SalesforceHybridSDK"
     steps:
       - checkout
-
-      - restore_cache:
-          key: v5-gems-{{ checksum ".circleci/Gemfile.lock" }}
-
-      - run:
-          name: Installing gem dependencies
-          command:  |
-            chruby ${CHRUBY_VER}
-            cd .circleci
-            gem install bundler
-            bundle check || bundle install
-            bundle update
-
-      - save_cache:
-          key: v5-gems-{{ checksum ".circleci/Gemfile.lock" }}
-          paths:
-            - /Users/distiller/.gem/ruby/2.5.1
-            - /Users/distiller/.rubies/ruby-2.4.2/lib/ruby/gems/2.5.1
-
-      - run:
-          name: Running install.sh
-          command: | 
-            ./install.sh
-
-      - run:
-          name: Creating test_credentials.json
-          command: | 
-            ./install.sh
-            ./build/pre-build
-
-      - run:
-          name: Compile
-          command:  |
-            chruby ${CHRUBY_VER}
-            cd .circleci
-            fastlane build
-
-      - run:
-          name: Run Tests
-          command:  |
-            chruby ${CHRUBY_VER}
-            cd .circleci
-            fastlane test
-
+      - restore_cache: *restore-gem-cache
+      - run: *install-gem-dependencies
+      - save_cache: *save-gem-cache
+      - run: *setup-workspace
+      - run: *compile
+      - run: *run-tests
       - store_test_results:
           path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/test_output
-
       - store_artifacts:
           path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/test_output
           destination: Test-Results
-
       - store_artifacts:
           path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/clangReport
           destination: Static-Analysis
+      - run: *upload-codecov
 
-      - run:
-          name: Upload code coverage
-          command: bash <(curl -s https://codecov.io/bash) -X gcov -X xcode
+  SalesforceFileLogger:
+    <<: *defaults
+    environment:
+      - SCHEME: "SalesforceFileLogger"
+    steps:
+      - checkout
+      - restore_cache: *restore-gem-cache
+      - run: *install-gem-dependencies
+      - save_cache: *save-gem-cache
+      - run: *setup-workspace
+      - run: *compile
+      - run: *run-tests
+      - store_test_results:
+          path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/test_output
+      - store_artifacts:
+          path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/test_output
+          destination: Test-Results
+      - store_artifacts:
+          path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/clangReport
+          destination: Static-Analysis
+      - run: *upload-codecov
 
 workflows:
   version: 2
 
   pr-build-all-apps:
     jobs:
-      - test-ios
+      - SalesforceHybridSDK
+      - SalesforceFileLogger
 
   # Cron are on a timezone 8 hours ahead of PST
   # Build everything at ~10:30pm Sunday/Wednesday Nights
@@ -92,4 +120,5 @@ workflows:
                 - dev
 
     jobs:
-      - test-ios
+      - SalesforceHybridSDK
+      - SalesforceFileLogger

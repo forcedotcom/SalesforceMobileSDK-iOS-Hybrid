@@ -3,7 +3,7 @@
 # set -x
 
 #
-# Run this script before working with the SalesforceMobileSDK Xcode workspace.
+# Run this script before working with the SalesforceMobileSDK-Hybrid Xcode workspace.
 #
 
 # Sync submodules

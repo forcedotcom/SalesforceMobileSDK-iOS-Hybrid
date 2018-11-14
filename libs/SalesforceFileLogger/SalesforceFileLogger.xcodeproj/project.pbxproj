@@ -1,0 +1,1365 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		2DE48CC018BFA941008345C7 /* Documentation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2DE48CC318BFA941008345C7 /* Build configuration list for PBXAggregateTarget "Documentation" */;
+			buildPhases = (
+				2DE48CC418BFA9B0008345C7 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Documentation;
+			productName = Documentation;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		4F06AFEB1C49D35B00F70798 /* test_credentials.json in Resources */ = {isa = PBXBuildFile; fileRef = 82EFF33D16E8063700A63CDF /* test_credentials.json */; };
+		4F9E588E219BB0CE00783BF5 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC2B285219A48A10064EB46 /* CocoaLumberjack.framework */; };
+		4FAE62E821966E8A003A5CD6 /* SFSDKLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62E221966E8A003A5CD6 /* SFSDKLogFileManager.m */; };
+		4FAE62E921966E8A003A5CD6 /* SFSDKFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62E321966E8A003A5CD6 /* SFSDKFileLogger.m */; };
+		4FAE62EA21966E8A003A5CD6 /* SFSDKFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FAE62E421966E8A003A5CD6 /* SFSDKFileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4FAE62EB21966E8A003A5CD6 /* SFSDKLogFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FAE62E521966E8A003A5CD6 /* SFSDKLogFileManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4FAE62EC21966E8A003A5CD6 /* SFSDKLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FAE62E621966E8A003A5CD6 /* SFSDKLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4FAE62ED21966E8A003A5CD6 /* SFSDKLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62E721966E8A003A5CD6 /* SFSDKLogger.m */; };
+		4FAE63002196714C003A5CD6 /* SFSDKLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62FF2196714C003A5CD6 /* SFSDKLoggerTests.m */; };
+		4FC2B26B219A44880064EB46 /* SalesforceFileLoggerTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FC2B26A219A44880064EB46 /* SalesforceFileLoggerTests-Info.plist */; };
+		4FC2B270219A48720064EB46 /* SalesforceSDKCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FAE62F621966FE7003A5CD6 /* SalesforceSDKCommon.framework */; };
+		829DA2B11C12677B0040F5F1 /* SalesforceFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 829DA2B01C12677B0040F5F1 /* SalesforceFileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		82EFF30A16E8049500A63CDF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 82EFF30816E8049500A63CDF /* InfoPlist.strings */; };
+		82EFF30C16E8049500A63CDF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EFF30B16E8049500A63CDF /* main.m */; };
+		82EFF31216E8049500A63CDF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EFF31116E8049500A63CDF /* Default.png */; };
+		82EFF31416E8049500A63CDF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EFF31316E8049500A63CDF /* Default@2x.png */; };
+		82EFF31616E8049500A63CDF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EFF31516E8049500A63CDF /* Default-568h@2x.png */; };
+		82EFF34416E80B6300A63CDF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EFF34316E80B6300A63CDF /* AppDelegate.m */; };
+		CE0AB0A51C10D60400BFAEED /* SalesforceFileLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */; };
+		CE4CE2E81C0E465B009F6029 /* SalesforceFileLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */; };
+		CE4CE2E91C0E465B009F6029 /* SalesforceFileLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CEA884661C191899008D871B /* SalesforceFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 829DA2B01C12677B0040F5F1 /* SalesforceFileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4FAE62F521966FE7003A5CD6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FAE62EE21966FE7003A5CD6 /* SalesforceSDKCommon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B7136CFE216684A700F6A221;
+			remoteInfo = SalesforceSDKCommon;
+		};
+		4FAE62F721966FE7003A5CD6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FAE62EE21966FE7003A5CD6 /* SalesforceSDKCommon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B7136D07216684A700F6A221;
+			remoteInfo = SalesforceSDKCommonTests;
+		};
+		4FAE62F921966FE7003A5CD6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FAE62EE21966FE7003A5CD6 /* SalesforceSDKCommon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B716A3E4218F6EEA009D407F;
+			remoteInfo = SalesforceSDKCommonTestApp;
+		};
+		4FAE62FB21966FE7003A5CD6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FAE62EE21966FE7003A5CD6 /* SalesforceSDKCommon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B7686AD921929D3B00D4332A;
+			remoteInfo = SalesforceSDKCommonStatic;
+		};
+		4FAE62FD21966FF3003A5CD6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FAE62EE21966FE7003A5CD6 /* SalesforceSDKCommon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B7136CFD216684A700F6A221;
+			remoteInfo = SalesforceSDKCommon;
+		};
+		4FC2B26C219A48480064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FAE62EE21966FE7003A5CD6 /* SalesforceSDKCommon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B7686AD821929D3B00D4332A;
+			remoteInfo = SalesforceSDKCommonStatic;
+		};
+		4FC2B284219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DCB3185114EB418E001CFBEE;
+			remoteInfo = CocoaLumberjack;
+		};
+		4FC2B286219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 18F3BF0F1A81D8B700692297;
+			remoteInfo = CocoaLumberjackSwift;
+		};
+		4FC2B288219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19FF46021B8B4CF400B43179;
+			remoteInfo = "CocoaLumberjack-iOS";
+		};
+		4FC2B28A219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19FF460F1B8B4D1400B43179;
+			remoteInfo = "CocoaLumberjackSwift-iOS";
+		};
+		4FC2B28C219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 18F3BFD71A81E06E00692297;
+			remoteInfo = "CocoaLumberjack-iOS-Static";
+		};
+		4FC2B28E219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19190EDE1B84D812008D059E;
+			remoteInfo = "CocoaLumberjack-watchOS";
+		};
+		4FC2B290219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19190EEB1B84D826008D059E;
+			remoteInfo = "CocoaLumberjackSwift-watchOS";
+		};
+		4FC2B292219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19D90B261BBFA9DB00947169;
+			remoteInfo = "CocoaLumberjack-tvOS";
+		};
+		4FC2B294219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19D90B351BBFAA7500947169;
+			remoteInfo = "CocoaLumberjackSwift-tvOS";
+		};
+		4FC2B296219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DCB318CA14ED6C3B001CFBEE;
+			remoteInfo = FmwkTest;
+		};
+		4FC2B298219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55CCBEFF19BA679200957A39;
+			remoteInfo = SwiftTest;
+		};
+		4FC2B29A219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 18F3BF5F1A81DD2E00692297;
+			remoteInfo = iOSSwiftTest;
+		};
+		4FC2B29C219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19EC14671B84D134000EC2E7;
+			remoteInfo = watchOSSwiftTest;
+		};
+		4FC2B29E219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19EC14731B84D134000EC2E7;
+			remoteInfo = "watchOSSwiftTest Extension";
+		};
+		4FC2B2A0219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19406BE11BDBABFF001194DC;
+			remoteInfo = tvOSSwiftTest;
+		};
+		4FC2B2A2219A48A10064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 18F3BFF21A81E0C700692297;
+			remoteInfo = iOSLibStaticTest;
+		};
+		4FC2B2A4219A48A90064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = DCB3185014EB418E001CFBEE;
+			remoteInfo = CocoaLumberjack;
+		};
+		4FC2B2A6219A48B20064EB46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 18F3BFD61A81E06E00692297;
+			remoteInfo = "CocoaLumberjack-iOS-Static";
+		};
+		822272AB19C39F4500FC537E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82EFF2C816E7C57100A63CDF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82EFF2FE16E8049500A63CDF;
+			remoteInfo = SalesforceFileLoggerTestApp;
+		};
+		82A8C6E81C122998006BBDFE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82EFF2C816E7C57100A63CDF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE4CE2E01C0E465B009F6029;
+			remoteInfo = SalesforceFileLogger;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CE4CE2F21C0E465C009F6029 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CE4CE2E91C0E465B009F6029 /* SalesforceFileLogger.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4F06AFC41C49A88B00F70798 /* SalesforceFileLoggerTestApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "SalesforceFileLoggerTestApp-Info.plist"; path = "SalesforceFileLoggerTestApp/SalesforceFileLoggerTestApp-Info.plist"; sourceTree = SOURCE_ROOT; };
+		4FAE62E221966E8A003A5CD6 /* SFSDKLogFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFSDKLogFileManager.m; path = Logger/SFSDKLogFileManager.m; sourceTree = "<group>"; };
+		4FAE62E321966E8A003A5CD6 /* SFSDKFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFSDKFileLogger.m; path = Logger/SFSDKFileLogger.m; sourceTree = "<group>"; };
+		4FAE62E421966E8A003A5CD6 /* SFSDKFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFSDKFileLogger.h; path = Logger/SFSDKFileLogger.h; sourceTree = "<group>"; };
+		4FAE62E521966E8A003A5CD6 /* SFSDKLogFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFSDKLogFileManager.h; path = Logger/SFSDKLogFileManager.h; sourceTree = "<group>"; };
+		4FAE62E621966E8A003A5CD6 /* SFSDKLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFSDKLogger.h; path = Logger/SFSDKLogger.h; sourceTree = "<group>"; };
+		4FAE62E721966E8A003A5CD6 /* SFSDKLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFSDKLogger.m; path = Logger/SFSDKLogger.m; sourceTree = "<group>"; };
+		4FAE62EE21966FE7003A5CD6 /* SalesforceSDKCommon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SalesforceSDKCommon.xcodeproj; path = "../../external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCommon/SalesforceSDKCommon.xcodeproj"; sourceTree = "<group>"; };
+		4FAE62FF2196714C003A5CD6 /* SFSDKLoggerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDKLoggerTests.m; sourceTree = "<group>"; };
+		4FC2B26A219A44880064EB46 /* SalesforceFileLoggerTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SalesforceFileLoggerTests-Info.plist"; sourceTree = "<group>"; };
+		4FC2B26E219A48720064EB46 /* Cordova.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Cordova.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lumberjack.xcodeproj; path = ../../external/CocoaLumberjack/Lumberjack.xcodeproj; sourceTree = "<group>"; };
+		8222729D19C39F4500FC537E /* SalesforceFileLoggerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalesforceFileLoggerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		829DA2B01C12677B0040F5F1 /* SalesforceFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalesforceFileLogger.h; sourceTree = "<group>"; };
+		82D0AB3D1C4980200081F833 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		82EFF2FA16E7FFF200A63CDF /* SalesforceSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SalesforceSDKResources.bundle; path = "../../../external/SalesforceMobileSDK-iOS/shared/resources/SalesforceSDKResources.bundle"; sourceTree = "<group>"; };
+		82EFF2FF16E8049500A63CDF /* SalesforceFileLoggerTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalesforceFileLoggerTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		82EFF30716E8049500A63CDF /* SalesforceFileLoggerTestApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SalesforceFileLoggerTestApp-Info.plist"; sourceTree = "<group>"; };
+		82EFF30916E8049500A63CDF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		82EFF30B16E8049500A63CDF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		82EFF31116E8049500A63CDF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		82EFF31316E8049500A63CDF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		82EFF31516E8049500A63CDF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		82EFF33D16E8063700A63CDF /* test_credentials.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = test_credentials.json; path = ../../../shared/test/test_credentials.json; sourceTree = "<group>"; };
+		82EFF34216E80B6300A63CDF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		82EFF34316E80B6300A63CDF /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B7282F4C1D8C717200475F79 /* SalesforceFileLoggerTestApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SalesforceFileLoggerTestApp.entitlements; sourceTree = "<group>"; };
+		CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SalesforceFileLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE8F13061AD4A87200233F2F /* SalesforceFileLogger-Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Common.xcconfig"; path = "Configuration/SalesforceFileLogger-Common.xcconfig"; sourceTree = "<group>"; };
+		CE8F13071AD4A87200233F2F /* SalesforceFileLogger-Static-iOS-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Static-iOS-Debug.xcconfig"; path = "Configuration/SalesforceFileLogger-Static-iOS-Debug.xcconfig"; sourceTree = "<group>"; };
+		CE8F13081AD4A87200233F2F /* SalesforceFileLogger-Static-iOS-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Static-iOS-Release.xcconfig"; path = "Configuration/SalesforceFileLogger-Static-iOS-Release.xcconfig"; sourceTree = "<group>"; };
+		CE8F13091AD4A87200233F2F /* SalesforceFileLogger-Test.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Test.xcconfig"; path = "Configuration/SalesforceFileLogger-Test.xcconfig"; sourceTree = "<group>"; };
+		CEA884431C191795008D871B /* libSalesforceFileLogger.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSalesforceFileLogger.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CECB662E1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig"; path = "Configuration/SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig"; sourceTree = "<group>"; };
+		CECB662F1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Dynamic-iOS-Release.xcconfig"; path = "Configuration/SalesforceFileLogger-Dynamic-iOS-Release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8222729A19C39F4500FC537E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE0AB0A51C10D60400BFAEED /* SalesforceFileLogger.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82EFF2FC16E8049500A63CDF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE4CE2E81C0E465B009F6029 /* SalesforceFileLogger.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE4CE2DD1C0E465B009F6029 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F9E588E219BB0CE00783BF5 /* CocoaLumberjack.framework in Frameworks */,
+				4FC2B270219A48720064EB46 /* SalesforceSDKCommon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEA884401C191795008D871B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4F06AFC31C49A87F00F70798 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4F06AFC41C49A88B00F70798 /* SalesforceFileLoggerTestApp-Info.plist */,
+			);
+			name = "Supporting Files";
+			path = SalesforceFileLoggerTests;
+			sourceTree = "<group>";
+		};
+		4FAE62EF21966FE7003A5CD6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4FAE62F621966FE7003A5CD6 /* SalesforceSDKCommon.framework */,
+				4FAE62F821966FE7003A5CD6 /* SalesforceSDKCommonTests.xctest */,
+				4FAE62FA21966FE7003A5CD6 /* SalesforceSDKCommonTestApp.app */,
+				4FAE62FC21966FE7003A5CD6 /* libSalesforceSDKCommon.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4FC2B272219A48A10064EB46 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4FC2B285219A48A10064EB46 /* CocoaLumberjack.framework */,
+				4FC2B287219A48A10064EB46 /* CocoaLumberjackSwift.framework */,
+				4FC2B289219A48A10064EB46 /* CocoaLumberjack.framework */,
+				4FC2B28B219A48A10064EB46 /* CocoaLumberjackSwift.framework */,
+				4FC2B28D219A48A10064EB46 /* libCocoaLumberjack.a */,
+				4FC2B28F219A48A10064EB46 /* CocoaLumberjack.framework */,
+				4FC2B291219A48A10064EB46 /* CocoaLumberjackSwift.framework */,
+				4FC2B293219A48A10064EB46 /* CocoaLumberjack.framework */,
+				4FC2B295219A48A10064EB46 /* CocoaLumberjackSwift.framework */,
+				4FC2B297219A48A10064EB46 /* FmwkTest.app */,
+				4FC2B299219A48A10064EB46 /* SwiftTest.app */,
+				4FC2B29B219A48A10064EB46 /* iOSSwiftTest.app */,
+				4FC2B29D219A48A10064EB46 /* watchOSSwiftTest.app */,
+				4FC2B29F219A48A10064EB46 /* watchOSSwiftTest Extension.appex */,
+				4FC2B2A1219A48A10064EB46 /* tvOSSwiftTest.app */,
+				4FC2B2A3219A48A10064EB46 /* iOSLibStaticTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		822272A219C39F4500FC537E /* SalesforceFileLoggerTests */ = {
+			isa = PBXGroup;
+			children = (
+				4FC2B26A219A44880064EB46 /* SalesforceFileLoggerTests-Info.plist */,
+				4FAE62FF2196714C003A5CD6 /* SFSDKLoggerTests.m */,
+			);
+			path = SalesforceFileLoggerTests;
+			sourceTree = "<group>";
+		};
+		82EFF2C716E7C57100A63CDF = {
+			isa = PBXGroup;
+			children = (
+				4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */,
+				4FAE62EE21966FE7003A5CD6 /* SalesforceSDKCommon.xcodeproj */,
+				CE3FE5631AD4804200E65B49 /* Configuration */,
+				82EFF2D516E7C57100A63CDF /* SalesforceFileLogger */,
+				82EFF30516E8049500A63CDF /* SalesforceFileLoggerTestApp */,
+				822272A219C39F4500FC537E /* SalesforceFileLoggerTests */,
+				82EFF30616E8049500A63CDF /* Supporting Files */,
+				82EFF2D216E7C57100A63CDF /* Frameworks */,
+				82EFF2D116E7C57100A63CDF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		82EFF2D116E7C57100A63CDF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				82EFF2FF16E8049500A63CDF /* SalesforceFileLoggerTestApp.app */,
+				8222729D19C39F4500FC537E /* SalesforceFileLoggerTests.xctest */,
+				CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */,
+				CEA884431C191795008D871B /* libSalesforceFileLogger.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		82EFF2D216E7C57100A63CDF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4FC2B26E219A48720064EB46 /* Cordova.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		82EFF2D516E7C57100A63CDF /* SalesforceFileLogger */ = {
+			isa = PBXGroup;
+			children = (
+				829DA2B01C12677B0040F5F1 /* SalesforceFileLogger.h */,
+				82EFF2E116E7C84900A63CDF /* Classes */,
+				82EFF2F916E7FFDB00A63CDF /* Resources */,
+				82EFF2D616E7C57100A63CDF /* Supporting Files */,
+			);
+			path = SalesforceFileLogger;
+			sourceTree = "<group>";
+		};
+		82EFF2D616E7C57100A63CDF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				82D0AB3D1C4980200081F833 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		82EFF2E116E7C84900A63CDF /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4FAE62E421966E8A003A5CD6 /* SFSDKFileLogger.h */,
+				4FAE62E321966E8A003A5CD6 /* SFSDKFileLogger.m */,
+				4FAE62E521966E8A003A5CD6 /* SFSDKLogFileManager.h */,
+				4FAE62E221966E8A003A5CD6 /* SFSDKLogFileManager.m */,
+				4FAE62E621966E8A003A5CD6 /* SFSDKLogger.h */,
+				4FAE62E721966E8A003A5CD6 /* SFSDKLogger.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		82EFF2F916E7FFDB00A63CDF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				82EFF2FA16E7FFF200A63CDF /* SalesforceSDKResources.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		82EFF30516E8049500A63CDF /* SalesforceFileLoggerTestApp */ = {
+			isa = PBXGroup;
+			children = (
+				4F06AFC31C49A87F00F70798 /* Supporting Files */,
+				B7282F4C1D8C717200475F79 /* SalesforceFileLoggerTestApp.entitlements */,
+				82EFF34116E80B6300A63CDF /* Classes */,
+			);
+			path = SalesforceFileLoggerTestApp;
+			sourceTree = "<group>";
+		};
+		82EFF30616E8049500A63CDF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				82EFF33D16E8063700A63CDF /* test_credentials.json */,
+				82EFF30716E8049500A63CDF /* SalesforceFileLoggerTestApp-Info.plist */,
+				82EFF30816E8049500A63CDF /* InfoPlist.strings */,
+				82EFF30B16E8049500A63CDF /* main.m */,
+				82EFF31116E8049500A63CDF /* Default.png */,
+				82EFF31316E8049500A63CDF /* Default@2x.png */,
+				82EFF31516E8049500A63CDF /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			path = SalesforceFileLoggerTestApp;
+			sourceTree = "<group>";
+		};
+		82EFF34116E80B6300A63CDF /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				82EFF34216E80B6300A63CDF /* AppDelegate.h */,
+				82EFF34316E80B6300A63CDF /* AppDelegate.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		CE3FE5631AD4804200E65B49 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				CECB662E1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig */,
+				CECB662F1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Release.xcconfig */,
+				CE8F13061AD4A87200233F2F /* SalesforceFileLogger-Common.xcconfig */,
+				CE8F13071AD4A87200233F2F /* SalesforceFileLogger-Static-iOS-Debug.xcconfig */,
+				CE8F13081AD4A87200233F2F /* SalesforceFileLogger-Static-iOS-Release.xcconfig */,
+				CE8F13091AD4A87200233F2F /* SalesforceFileLogger-Test.xcconfig */,
+			);
+			name = Configuration;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		CE4CE2DE1C0E465B009F6029 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FAE62EA21966E8A003A5CD6 /* SFSDKFileLogger.h in Headers */,
+				4FAE62EC21966E8A003A5CD6 /* SFSDKLogger.h in Headers */,
+				829DA2B11C12677B0040F5F1 /* SalesforceFileLogger.h in Headers */,
+				4FAE62EB21966E8A003A5CD6 /* SFSDKLogFileManager.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEA884511C19180A008D871B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEA884661C191899008D871B /* SalesforceFileLogger.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8222729C19C39F4500FC537E /* SalesforceFileLoggerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 822272AF19C39F4500FC537E /* Build configuration list for PBXNativeTarget "SalesforceFileLoggerTests" */;
+			buildPhases = (
+				8222729919C39F4500FC537E /* Sources */,
+				8222729A19C39F4500FC537E /* Frameworks */,
+				8222729B19C39F4500FC537E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				822272AC19C39F4500FC537E /* PBXTargetDependency */,
+			);
+			name = SalesforceFileLoggerTests;
+			productName = SalesforceFileLoggerTestAppTests;
+			productReference = 8222729D19C39F4500FC537E /* SalesforceFileLoggerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		82EFF2FE16E8049500A63CDF /* SalesforceFileLoggerTestApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82EFF33516E8049600A63CDF /* Build configuration list for PBXNativeTarget "SalesforceFileLoggerTestApp" */;
+			buildPhases = (
+				82EFF2FB16E8049500A63CDF /* Sources */,
+				82EFF2FC16E8049500A63CDF /* Frameworks */,
+				82EFF2FD16E8049500A63CDF /* Resources */,
+				CE4CE2F21C0E465C009F6029 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE4CE2E71C0E465B009F6029 /* PBXTargetDependency */,
+			);
+			name = SalesforceFileLoggerTestApp;
+			productName = SalesforceFileLoggerTestApp;
+			productReference = 82EFF2FF16E8049500A63CDF /* SalesforceFileLoggerTestApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CE4CE2E01C0E465B009F6029 /* SalesforceFileLogger */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE4CE2F11C0E465C009F6029 /* Build configuration list for PBXNativeTarget "SalesforceFileLogger" */;
+			buildPhases = (
+				CE4CE2DC1C0E465B009F6029 /* Sources */,
+				CE4CE2DD1C0E465B009F6029 /* Frameworks */,
+				CE4CE2DE1C0E465B009F6029 /* Headers */,
+				CE4CE4F91C0E6DCC009F6029 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4FC2B2A5219A48A90064EB46 /* PBXTargetDependency */,
+				4FAE62FE21966FF3003A5CD6 /* PBXTargetDependency */,
+			);
+			name = SalesforceFileLogger;
+			productName = SalesforceFileLogger;
+			productReference = CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		CEA884421C191795008D871B /* SalesforceFileLoggerStatic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEA884501C191796008D871B /* Build configuration list for PBXNativeTarget "SalesforceFileLoggerStatic" */;
+			buildPhases = (
+				CEA8843F1C191795008D871B /* Sources */,
+				CEA884401C191795008D871B /* Frameworks */,
+				CEA884511C19180A008D871B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4FC2B2A7219A48B20064EB46 /* PBXTargetDependency */,
+				4FC2B26D219A48480064EB46 /* PBXTargetDependency */,
+			);
+			name = SalesforceFileLoggerStatic;
+			productName = SalesforceFileLoggerStatic;
+			productReference = CEA884431C191795008D871B /* libSalesforceFileLogger.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		82EFF2C816E7C57100A63CDF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = salesforce.com;
+				TargetAttributes = {
+					8222729C19C39F4500FC537E = {
+						TestTargetID = 82EFF2FE16E8049500A63CDF;
+					};
+					82EFF2FE16E8049500A63CDF = {
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
+					CE4CE2E01C0E465B009F6029 = {
+						CreatedOnToolsVersion = 7.1;
+					};
+					CEA884421C191795008D871B = {
+						CreatedOnToolsVersion = 7.1;
+					};
+				};
+			};
+			buildConfigurationList = 82EFF2CB16E7C57100A63CDF /* Build configuration list for PBXProject "SalesforceFileLogger" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 82EFF2C716E7C57100A63CDF;
+			productRefGroup = 82EFF2D116E7C57100A63CDF /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4FC2B272219A48A10064EB46 /* Products */;
+					ProjectRef = 4FC2B271219A48A10064EB46 /* Lumberjack.xcodeproj */;
+				},
+				{
+					ProductGroup = 4FAE62EF21966FE7003A5CD6 /* Products */;
+					ProjectRef = 4FAE62EE21966FE7003A5CD6 /* SalesforceSDKCommon.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				CE4CE2E01C0E465B009F6029 /* SalesforceFileLogger */,
+				82EFF2FE16E8049500A63CDF /* SalesforceFileLoggerTestApp */,
+				8222729C19C39F4500FC537E /* SalesforceFileLoggerTests */,
+				2DE48CC018BFA941008345C7 /* Documentation */,
+				CEA884421C191795008D871B /* SalesforceFileLoggerStatic */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4FAE62F621966FE7003A5CD6 /* SalesforceSDKCommon.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SalesforceSDKCommon.framework;
+			remoteRef = 4FAE62F521966FE7003A5CD6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FAE62F821966FE7003A5CD6 /* SalesforceSDKCommonTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SalesforceSDKCommonTests.xctest;
+			remoteRef = 4FAE62F721966FE7003A5CD6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FAE62FA21966FE7003A5CD6 /* SalesforceSDKCommonTestApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SalesforceSDKCommonTestApp.app;
+			remoteRef = 4FAE62F921966FE7003A5CD6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FAE62FC21966FE7003A5CD6 /* libSalesforceSDKCommon.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSalesforceSDKCommon.a;
+			remoteRef = 4FAE62FB21966FE7003A5CD6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B285219A48A10064EB46 /* CocoaLumberjack.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjack.framework;
+			remoteRef = 4FC2B284219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B287219A48A10064EB46 /* CocoaLumberjackSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjackSwift.framework;
+			remoteRef = 4FC2B286219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B289219A48A10064EB46 /* CocoaLumberjack.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjack.framework;
+			remoteRef = 4FC2B288219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B28B219A48A10064EB46 /* CocoaLumberjackSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjackSwift.framework;
+			remoteRef = 4FC2B28A219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B28D219A48A10064EB46 /* libCocoaLumberjack.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCocoaLumberjack.a;
+			remoteRef = 4FC2B28C219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B28F219A48A10064EB46 /* CocoaLumberjack.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjack.framework;
+			remoteRef = 4FC2B28E219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B291219A48A10064EB46 /* CocoaLumberjackSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjackSwift.framework;
+			remoteRef = 4FC2B290219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B293219A48A10064EB46 /* CocoaLumberjack.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjack.framework;
+			remoteRef = 4FC2B292219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B295219A48A10064EB46 /* CocoaLumberjackSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaLumberjackSwift.framework;
+			remoteRef = 4FC2B294219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B297219A48A10064EB46 /* FmwkTest.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = FmwkTest.app;
+			remoteRef = 4FC2B296219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B299219A48A10064EB46 /* SwiftTest.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SwiftTest.app;
+			remoteRef = 4FC2B298219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B29B219A48A10064EB46 /* iOSSwiftTest.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = iOSSwiftTest.app;
+			remoteRef = 4FC2B29A219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B29D219A48A10064EB46 /* watchOSSwiftTest.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = watchOSSwiftTest.app;
+			remoteRef = 4FC2B29C219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B29F219A48A10064EB46 /* watchOSSwiftTest Extension.appex */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.app-extension";
+			path = "watchOSSwiftTest Extension.appex";
+			remoteRef = 4FC2B29E219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B2A1219A48A10064EB46 /* tvOSSwiftTest.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = tvOSSwiftTest.app;
+			remoteRef = 4FC2B2A0219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FC2B2A3219A48A10064EB46 /* iOSLibStaticTest.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = iOSLibStaticTest.app;
+			remoteRef = 4FC2B2A2219A48A10064EB46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8222729B19C39F4500FC537E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FC2B26B219A44880064EB46 /* SalesforceFileLoggerTests-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82EFF2FD16E8049500A63CDF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F06AFEB1C49D35B00F70798 /* test_credentials.json in Resources */,
+				82EFF30A16E8049500A63CDF /* InfoPlist.strings in Resources */,
+				82EFF31216E8049500A63CDF /* Default.png in Resources */,
+				82EFF31416E8049500A63CDF /* Default@2x.png in Resources */,
+				82EFF31616E8049500A63CDF /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2DE48CC418BFA9B0008345C7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "docOutputDir=\"${PROJECT_DIR}/../../build/artifacts/doc/build_out/${PROJECT_NAME}\"\nif [ ! -d \"$docOutputDir\" ]; then\n    mkdir -p \"$docOutputDir\"\nfi\n\n/usr/bin/headerdoc2html \\\n-o \"$docOutputDir\" \\\n${PROJECT_DIR}/SalesforceFileLogger/ -j -C -L -N -Q -t --tocformat=\"default\"";
+		};
+		CE4CE4F91C0E6DCC009F6029 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$SRCROOT/../../shared/common/build/tools/generate_headers.sh\" -o \"$TARGET_BUILD_DIR/$PRODUCT_NAME.framework/Headers/$PRODUCT_NAME.h\" -u \"$SRCROOT/$TARGET_NAME/$TARGET_NAME.h\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8222729919C39F4500FC537E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FAE63002196714C003A5CD6 /* SFSDKLoggerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82EFF2FB16E8049500A63CDF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82EFF30C16E8049500A63CDF /* main.m in Sources */,
+				82EFF34416E80B6300A63CDF /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE4CE2DC1C0E465B009F6029 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FAE62ED21966E8A003A5CD6 /* SFSDKLogger.m in Sources */,
+				4FAE62E821966E8A003A5CD6 /* SFSDKLogFileManager.m in Sources */,
+				4FAE62E921966E8A003A5CD6 /* SFSDKFileLogger.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEA8843F1C191795008D871B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4FAE62FE21966FF3003A5CD6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SalesforceSDKCommon;
+			targetProxy = 4FAE62FD21966FF3003A5CD6 /* PBXContainerItemProxy */;
+		};
+		4FC2B26D219A48480064EB46 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SalesforceSDKCommonStatic;
+			targetProxy = 4FC2B26C219A48480064EB46 /* PBXContainerItemProxy */;
+		};
+		4FC2B2A5219A48A90064EB46 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaLumberjack;
+			targetProxy = 4FC2B2A4219A48A90064EB46 /* PBXContainerItemProxy */;
+		};
+		4FC2B2A7219A48B20064EB46 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocoaLumberjack-iOS-Static";
+			targetProxy = 4FC2B2A6219A48B20064EB46 /* PBXContainerItemProxy */;
+		};
+		822272AC19C39F4500FC537E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82EFF2FE16E8049500A63CDF /* SalesforceFileLoggerTestApp */;
+			targetProxy = 822272AB19C39F4500FC537E /* PBXContainerItemProxy */;
+		};
+		CE4CE2E71C0E465B009F6029 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE4CE2E01C0E465B009F6029 /* SalesforceFileLogger */;
+			targetProxy = 82A8C6E81C122998006BBDFE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		82EFF30816E8049500A63CDF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				82EFF30916E8049500A63CDF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2DE48CC118BFA941008345C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2DE48CC218BFA941008345C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		822272AD19C39F4500FC537E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE8F13091AD4A87200233F2F /* SalesforceFileLogger-Test.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SalesforceFileLoggerTestApp.app/SalesforceFileLoggerTestApp";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "SalesforceFileLoggerTests/SalesforceFileLoggerTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		822272AE19C39F4500FC537E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE8F13091AD4A87200233F2F /* SalesforceFileLogger-Test.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SalesforceFileLoggerTestApp.app/SalesforceFileLoggerTestApp";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "SalesforceFileLoggerTests/SalesforceFileLoggerTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+		82EFF2DC16E7C57100A63CDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		82EFF2DD16E7C57100A63CDF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		82EFF33616E8049600A63CDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE8F13091AD4A87200233F2F /* SalesforceFileLogger-Test.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SalesforceFileLoggerTestApp/SalesforceFileLoggerTestApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "SalesforceFileLoggerTestApp/SalesforceFileLoggerTestApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceFileLoggerTestApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		82EFF33716E8049600A63CDF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE8F13091AD4A87200233F2F /* SalesforceFileLogger-Test.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SalesforceFileLoggerTestApp/SalesforceFileLoggerTestApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "SalesforceFileLoggerTestApp/SalesforceFileLoggerTestApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceFileLoggerTestApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		CE4CE2EA1C0E465C009F6029 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CECB662E1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				BUILD_VERSION_SUFFIX = "";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = "$(OBJROOT)/UninstalledProducts/$(PLATFORM_NAME)/include";
+				INFOPLIST_FILE = SalesforceFileLogger/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceFileLogger;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		CE4CE2EB1C0E465C009F6029 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CECB662F1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Release.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				BUILD_VERSION_SUFFIX = "";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = "$(OBJROOT)/UninstalledProducts/$(PLATFORM_NAME)/include";
+				INFOPLIST_FILE = SalesforceFileLogger/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceFileLogger;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		CEA884491C191796008D871B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE8F13071AD4A87200233F2F /* SalesforceFileLogger-Static-iOS-Debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lxml2",
+					"-lz",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceFileLogger;
+				PRODUCT_NAME = SalesforceFileLogger;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		CEA8844A1C191796008D871B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE8F13081AD4A87200233F2F /* SalesforceFileLogger-Static-iOS-Release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lxml2",
+					"-lz",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceFileLogger;
+				PRODUCT_NAME = SalesforceFileLogger;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2DE48CC318BFA941008345C7 /* Build configuration list for PBXAggregateTarget "Documentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DE48CC118BFA941008345C7 /* Debug */,
+				2DE48CC218BFA941008345C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		822272AF19C39F4500FC537E /* Build configuration list for PBXNativeTarget "SalesforceFileLoggerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				822272AD19C39F4500FC537E /* Debug */,
+				822272AE19C39F4500FC537E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82EFF2CB16E7C57100A63CDF /* Build configuration list for PBXProject "SalesforceFileLogger" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82EFF2DC16E7C57100A63CDF /* Debug */,
+				82EFF2DD16E7C57100A63CDF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82EFF33516E8049600A63CDF /* Build configuration list for PBXNativeTarget "SalesforceFileLoggerTestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82EFF33616E8049600A63CDF /* Debug */,
+				82EFF33716E8049600A63CDF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE4CE2F11C0E465C009F6029 /* Build configuration list for PBXNativeTarget "SalesforceFileLogger" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE4CE2EA1C0E465C009F6029 /* Debug */,
+				CE4CE2EB1C0E465C009F6029 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEA884501C191796008D871B /* Build configuration list for PBXNativeTarget "SalesforceFileLoggerStatic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEA884491C191796008D871B /* Debug */,
+				CEA8844A1C191796008D871B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 82EFF2C816E7C57100A63CDF /* Project object */;
+}
