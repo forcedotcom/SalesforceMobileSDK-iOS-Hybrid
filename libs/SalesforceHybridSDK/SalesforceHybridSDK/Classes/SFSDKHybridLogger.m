@@ -33,8 +33,8 @@ NSString * const kSFSDKHybridComponentName = @"SalesforceHybrid";
 
 @implementation SFSDKHybridLogger
 
-+ (instancetype)sharedInstance {
-    return [self sharedInstanceWithComponent:kSFSDKHybridComponentName];
++ (instancetype)defaultLogger {
+    return [self loggerForComponent:kSFSDKHybridComponentName];
 }
 
 @end

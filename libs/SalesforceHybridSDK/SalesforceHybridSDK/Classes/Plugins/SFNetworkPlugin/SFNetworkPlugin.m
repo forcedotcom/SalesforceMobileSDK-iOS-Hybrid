@@ -31,7 +31,7 @@
 #import "CDVPlugin+SFAdditions.h"
 #import <SalesforceSDKCore/NSDictionary+SFAdditions.h>
 #import <SalesforceSDKCore/SFRestAPI+Blocks.h>
-#import <SalesforceSDKCore/SFJsonUtils.h>
+#import <SalesforceSDKCommon/SFJsonUtils.h>
 
 // NOTE: must match value in Cordova's config.xml file.
 NSString * const kSFNetworkPluginIdentifier = @"com.salesforce.network";
