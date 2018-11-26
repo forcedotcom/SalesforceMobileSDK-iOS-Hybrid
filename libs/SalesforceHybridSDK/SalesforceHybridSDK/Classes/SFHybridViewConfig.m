@@ -26,6 +26,10 @@
 #import "SFHybridViewConfig.h"
 #import <SalesforceSDKCore/SFSDKResourceUtils.h>
 
+@interface SFSDKAppConfig(Hybrid)
++ (void)createError:(NSError * _Nullable * _Nullable)error withCode:(NSInteger)errorCode message:(nonnull NSString *)message;
+@end
+
 @interface SFHybridViewConfig ()
 
 /**
