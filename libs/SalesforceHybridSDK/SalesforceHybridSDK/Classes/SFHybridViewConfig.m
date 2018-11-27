@@ -61,11 +61,21 @@ static NSString* const kDefaultErrorPage = @"error.html";
 {
     self = [super initWithDict:configDict];
     if (self) {
-
         // Set defaults for non-existent values.
         [self setConfigDefaults];
     }
     return self;
+}
+
+- (instancetype)initWithConfigFile:(NSString *)configFile {
+    
+    NSDictionary *hybridConfigDict = [SFSDKResourceUtils loadConfigFromFile:configFile];
+   
+    if (nil == hybridConfigDict) {
+        [SFSDKHybridLogger i:[SFHybridViewConfig class] format:@"Hybrid view config at specified path '%@' not found, or data could not be parsed.", configFile];
+        return nil;
+    }
+    return [self initWithDict:hybridConfigDict];
 }
 
 #pragma mark - Properties
@@ -173,12 +183,7 @@ static NSString* const kDefaultErrorPage = @"error.html";
 
 + (instancetype)fromConfigFile:(NSString *)configFilePath
 {
-    NSDictionary *hybridConfigDict = [SFSDKResourceUtils loadConfigFromFile:configFilePath];
-    if (nil == hybridConfigDict) {
-        [SFSDKHybridLogger i:[SFHybridViewConfig class] format:@"Hybrid view config at specified path '%@' not found, or data could not be parsed.", configFilePath];
-        return nil;
-    }
-    SFHybridViewConfig *hybridViewConfig = [[SFHybridViewConfig alloc] initWithDict:hybridConfigDict];
+    SFHybridViewConfig *hybridViewConfig = [[SFHybridViewConfig alloc] initWithConfigFile:configFilePath];
     return hybridViewConfig;
 }
 
