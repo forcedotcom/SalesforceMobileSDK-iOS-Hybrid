@@ -561,6 +561,7 @@
 				CE4CE2DD1C0E465B009F6029 /* Frameworks */,
 				CE4CE2DE1C0E465B009F6029 /* Headers */,
 				CE4CE4F91C0E6DCC009F6029 /* ShellScript */,
+				4F6A4A5921ADF3AB00A33B50 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -830,6 +831,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "docOutputDir=\"${PROJECT_DIR}/../../build/artifacts/doc/build_out/${PROJECT_NAME}\"\nif [ ! -d \"$docOutputDir\" ]; then\n    mkdir -p \"$docOutputDir\"\nfi\n\n/usr/bin/headerdoc2html \\\n-o \"$docOutputDir\" \\\n${PROJECT_DIR}/SalesforceFileLogger/ -j -C -L -N -Q -t --tocformat=\"default\"";
+		};
+		4F6A4A5921ADF3AB00A33B50 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PROJECT_DIR}/../../shared/common/build/tools/update_podspec_headers.sh\" -s  filelogger\n\n";
 		};
 		CE4CE4F91C0E6DCC009F6029 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
