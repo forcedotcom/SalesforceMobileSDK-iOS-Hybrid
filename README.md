@@ -1,1 +1,0 @@
-# SalesforceMobileSDK-iOS-Hybrid
