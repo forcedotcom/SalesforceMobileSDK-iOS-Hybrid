@@ -1,0 +1,19 @@
+//
+//  SalesforceFileLogger-Common.xcconfig
+//  SalesforceFileLogger
+//
+//  Created by Wolfgang Mathurin on 11/8/18.
+//  Copyright (c) 2018-present, salesforce.com. All rights reserved.
+//
+
+#include "../../../external/SalesforceMobileSDK-iOS/configuration/Version.xcconfig"
+
+GCC_PRECOMPILE_PREFIX_HEADER = YES
+GCC_PREFIX_HEADER = $(PROJECT_NAME)/$(PROJECT_NAME)-Prefix.pch
+
+PRODUCT_NAME = SalesforceFileLogger
+
+LIBRARY_SEARCH_PATHS = $(inherited)
+
+// Make sure to use only API that are safe for application extensions
+APPLICATION_EXTENSION_API_ONLY = YES
