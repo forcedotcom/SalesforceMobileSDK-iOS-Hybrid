@@ -28,6 +28,20 @@ This script pulls the submodule dependencies from GitHub, to finalize setup of t
 
 The Salesforce Mobile SDK for iOS requires iOS 11.0 or greater.  The install.sh script checks for this, and aborts if the configured SDK version is incorrect.  Building from the command line has been tested using ant 1.8.  Older versions might work, but we recommend using the latest version of ant.
 
+Introduction
+==
+
+### What's New in 7.0
+
+**Version Updates**
+- Cordova for iOS: 4.5.5
+- Cordova command line: 8.1.2
+- iOS minimum version (deployment target): iOS 11
+- iOS base version: iOS 12
+- Xcode minimum version: 10
+- SQLCipher: 3.5.9
+- SQLite: 3.20.1
+
 Documentation
 ==
 
