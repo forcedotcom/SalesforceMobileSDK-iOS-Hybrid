@@ -52,6 +52,13 @@
     // Need to use SalesforceHybridSDKManager in hybrid apps
     [SalesforceHybridSDKManager initializeSDK];
     
+#ifdef DEBUG
+    [SalesforceHybridSDKManager sharedManager].isDevSupportEnabled = YES;
+#else
+    [SalesforceHybridSDKManager sharedManager].isDevSupportEnabled = NO;
+#endif
+
+    
     //App Setup for any changes to the current authenticated user
     __weak __typeof (self) weakSelf = self;
     [SFSDKAuthHelper registerBlockForCurrentUserChangeNotifications:^{
