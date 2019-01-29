@@ -50,6 +50,7 @@ static NSString * const kReturnBinary    = @"returnBinary";
 static NSString * const kEncodedBody     = @"encodedBody";
 static NSString * const kContentType     = @"contentType";
 static NSString * const kHttpContentType = @"content-type";
+static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthentication";
 
 @implementation SFNetworkPlugin
 
@@ -74,8 +75,11 @@ static NSString * const kHttpContentType = @"content-type";
     NSMutableDictionary<NSString*, NSString*>* headerParams = [argsDict nonNullObjectForKey:kHeaderParams];
     NSDictionary<NSString*, NSDictionary*>* fileParams = [argsDict nonNullObjectForKey:kfileParams];
     BOOL returnBinary = [argsDict nonNullObjectForKey:kReturnBinary] != nil && [[argsDict nonNullObjectForKey:kReturnBinary] boolValue];
+    
+    BOOL doesNotRequireAuthentication = [argsDict nonNullObjectForKey:kDoesNotRequireAuthentication] != nil && [[argsDict nonNullObjectForKey:kDoesNotRequireAuthentication] boolValue];
+    
     SFRestRequest* request = nil;
-
+    
     // Sets HTTP body explicitly for a POST, PATCH or PUT request.
     if (method == SFRestMethodPOST || method == SFRestMethodPATCH || method == SFRestMethodPUT) {
         request = [SFRestRequest requestWithMethod:method path:path queryParams:nil];
@@ -83,16 +87,17 @@ static NSString * const kHttpContentType = @"content-type";
     } else {
         request = [SFRestRequest requestWithMethod:method path:path queryParams:queryParams];
     }
-
+    
+    request.requiresAuthentication = !doesNotRequireAuthentication;
     // Adds custom headers, if any.
     [request setCustomHeaders:headerParams];
     if (endPoint) {
         [request setEndpoint:endPoint];
     }
-
+    
     // Sets body for a file POST request.
     if (fileParams) {
-
+        
         /*
          * File params expected to be of the form:
          * {<fileParamNameInPost>: {fileMimeType:<someMimeType>, fileUrl:<fileUrl>, fileName:<fileNameForPost>}}.
@@ -114,7 +119,9 @@ static NSString * const kHttpContentType = @"content-type";
     }
     
     __weak typeof(self) weakSelf = self;
-    [[SFRestAPI sharedInstance] sendRESTRequest:request
+    SFRestAPI *restApiInstance = doesNotRequireAuthentication ? [SFRestAPI sharedGlobalInstance] : [SFRestAPI sharedInstance];
+    
+    [restApiInstance sendRESTRequest:request
                                       failBlock:^(NSError *e, NSURLResponse *rawResponse) {
                                           __strong typeof(self) strongSelf = weakSelf;
                                           CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:e.localizedDescription];
