@@ -152,7 +152,7 @@ NSString * const kUserAccountClientIdDictKey       = @"clientId";
                                    kUserAccountInstanceServerDictKey : [account.credentials.instanceUrl absoluteString],
                                    kUserAccountOrgIdDictKey : account.credentials.organizationId,
                                    kUserAccountUserIdDictKey : account.credentials.userId,
-                                   kUserAccountUsernameDictKey : account.userName,
+                                   kUserAccountUsernameDictKey : account.idData.username,
                                    kUserAccountClientIdDictKey : account.credentials.clientId
                                    };
     return accountDict;
