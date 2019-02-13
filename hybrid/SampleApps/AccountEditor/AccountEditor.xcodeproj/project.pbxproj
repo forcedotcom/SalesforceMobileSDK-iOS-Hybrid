@@ -37,7 +37,6 @@
 		4FF15E9B190885CC00705FE0 /* com.salesforce.util.logger.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4FF15E681908852E00705FE0 /* com.salesforce.util.logger.js */; };
 		4FF15E9E1908860900705FE0 /* cordova.js in Copy Shared www Files */ = {isa = PBXBuildFile; fileRef = 4FF15E9C1908860100705FE0 /* cordova.js */; };
 		8236AD101C4D9FF5004B69B8 /* SalesforceHybridSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FFEE5FE1BFE912300B7AA8A /* SalesforceHybridSDK.framework */; };
-		8236AD111C4D9FF5004B69B8 /* SalesforceHybridSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4FFEE5FE1BFE912300B7AA8A /* SalesforceHybridSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		824A9BD21721FCA400C9BD79 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9BD11721FCA400C9BD79 /* UIKit.framework */; };
 		824A9BD41721FCA400C9BD79 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9BD31721FCA400C9BD79 /* Foundation.framework */; };
 		824A9BD61721FCA400C9BD79 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9BD51721FCA400C9BD79 /* CoreGraphics.framework */; };
@@ -89,7 +88,6 @@
 		CED7473E1E8C834C0019AA9D /* ios-wkwebview-exec.js in Copy cordova-plugin-wkwebview-engine */ = {isa = PBXBuildFile; fileRef = CED747371E8C82BC0019AA9D /* ios-wkwebview-exec.js */; };
 		CED747481E8C86EB0019AA9D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED747471E8C86EB0019AA9D /* WebKit.framework */; };
 		CEEF96A21EB7CE750059CA79 /* Cordova.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEF967C1EB7CE5A0059CA79 /* Cordova.framework */; };
-		CEEF96A31EB7CE8C0059CA79 /* Cordova.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEEF967C1EB7CE5A0059CA79 /* Cordova.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -299,18 +297,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		8236ACFB1C4D9FA0004B69B8 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				CEEF96A31EB7CE8C0059CA79 /* Cordova.framework in Embed Frameworks */,
-				8236AD111C4D9FF5004B69B8 /* SalesforceHybridSDK.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		824A9D6B1724C35700C9BD79 /* Copy Shared www Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -894,7 +880,6 @@
 				824A9D711724C3DB00C9BD79 /* Copy js Files */,
 				824A9D7A1724C51500C9BD79 /* Copy plugins Files */,
 				82AF5ABA1A0DAAB8006C7A4B /* Copy cordova-plugin-console plugin */,
-				8236ACFB1C4D9FA0004B69B8 /* Embed Frameworks */,
 				CED7473D1E8C83290019AA9D /* Copy cordova-plugin-wkwebview-engine */,
 			);
 			buildRules = (
