@@ -45,4 +45,5 @@ echo -e "${YELLOW}*** SETTING VERSION TO ${OPT_VERSION} ***${NC}"
 
 echo "*** Updating podspecs ***"
 update_podspec "./SalesforceFileLogger.podspec" "${OPT_VERSION}"
+update_podspec "./SalesforceHybridSDK.podspec" "${OPT_VERSION}"
 
