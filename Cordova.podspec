@@ -32,3 +32,6 @@ end
 #
 # Once Cordova accepts the upstream PR and maintains its own pod specs, this file may be removed.
 #
+# Upstream Cordova GitHub Issue: https://github.com/apache/cordova-ios/issues/542
+# Upstream Cordova GitHub PR: https://github.com/apache/cordova-ios/pull/543
+#
