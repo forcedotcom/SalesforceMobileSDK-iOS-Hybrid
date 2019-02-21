@@ -27,9 +27,11 @@
 #import "SFHybridViewController.h"
 #import <Cordova/CDVViewController.h>
 #import "CDVPlugin+SFAdditions.h"
+#import "SFSDKHybridLogger.h"
 #import <Cordova/CDVInvokedUrlCommand.h>
 #import <SalesforceSDKCore/SFSDKAppFeatureMarkers.h>
 #import <SalesforceSDKCore/NSDictionary+SFAdditions.h>
+#import <SalesforceSDKCore/SalesforceSDKConstants.h>
 
 // Keys in sdk info map
 NSString * const kSDKVersionKey = @"sdkVersion";

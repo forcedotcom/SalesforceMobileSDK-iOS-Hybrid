@@ -25,6 +25,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <SalesforceSDKCore/SFSDKAppFeatureMarkers.h>
 #import "SFLocalhostSubstitutionCache.h"
+#import "SFSDKHybridLogger.h"
 
 #define WWW_DIR @"www"
 

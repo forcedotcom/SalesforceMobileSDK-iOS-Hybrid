@@ -30,6 +30,7 @@
 #import <SalesforceSDKCore/SFSDKWebUtils.h>
 #import <SalesforceSDKCore/SFUserAccountManager.h>
 #import "SFHybridViewController.h"
+#import "SFSDKHybridLogger.h"
 
 @implementation SalesforceOAuthPlugin
 

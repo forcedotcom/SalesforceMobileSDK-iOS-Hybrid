@@ -24,6 +24,7 @@
 
 #import "SalesforceHybridSDKManager.h"
 #import "SFHybridViewConfig.h"
+
 @interface SmartStoreSDKManager ()
 
 - (NSString*) pathForGlobalStoreConfig;
