@@ -498,6 +498,10 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
 
 - (BOOL)isSamlLoginRedirect:(NSString *)url {
     if (self.authConfig) {
+        NSString *loginPageUrl = self.authConfig.loginPageUrl;
+        if (loginPageUrl && [url containsString:loginPageUrl]) {
+            return YES;
+        }
         NSArray<NSString *> *ssoUrls = self.authConfig.ssoUrls;
         if (ssoUrls && ssoUrls.count > 0) {
             for (NSString *ssoUrl in ssoUrls) {
