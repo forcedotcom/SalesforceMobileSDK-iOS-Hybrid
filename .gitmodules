@@ -3,7 +3,7 @@
 	url = https://github.com/forcedotcom/SalesforceMobileSDK-Shared
 [submodule "external/cordova-ios/cordova-ios"]
 	path = external/cordova-ios/cordova-ios
-	url=https://github.com/forcedotcom/cordova-ios
+	url = https://github.com/forcedotcom/cordova-ios
 [submodule "external/cordova-plugin-wkwebview-engine"]
 	path = external/cordova-plugin-wkwebview-engine
 	url = https://github.com/apache/cordova-plugin-wkwebview-engine
