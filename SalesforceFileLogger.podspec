@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'SalesforceFileLogger' do |filelogger|
       filelogger.dependency 'SalesforceSDKCommon'
-      filelogger.dependency 'CocoaLumberjack', '~> 2.4.0'
+      filelogger.dependency 'CocoaLumberjack', '~> 3.5.1'
       filelogger.source_files = 'libs/SalesforceFileLogger/SalesforceFileLogger/Classes/**/*.{h,m}', 'libs/SalesforceFileLogger/SalesforceFileLogger/SalesforceFileLogger.h'
       filelogger.public_header_files = 'libs/SalesforceFileLogger/SalesforceFileLogger/Classes/Logger/SFSDKFileLogger.h', 'libs/SalesforceFileLogger/SalesforceFileLogger/Classes/Logger/SFSDKLogFileManager.h', 'libs/SalesforceFileLogger/SalesforceFileLogger/Classes/Logger/SFSDKLogger.h', 'libs/SalesforceFileLogger/SalesforceFileLogger/SalesforceFileLogger.h'
       filelogger.prefix_header_contents = ''
