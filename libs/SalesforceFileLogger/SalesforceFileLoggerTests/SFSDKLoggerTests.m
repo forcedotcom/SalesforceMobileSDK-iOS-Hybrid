@@ -78,7 +78,7 @@ unsigned long long const kDefaultMaxFileSize = 1024 * 1024; // 1 MB.
 - (void)testFlushLogFile {
     SFSDKLogger *logger = [SFSDKLogger sharedInstanceWithComponent:kTestComponent1];
     XCTAssertEqualObjects(nil, [logger.fileLogger readFile], @"Log file should be empty");
-    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine1]];
+    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine1 logger:logger]];
     XCTAssertNotEqualObjects(nil, [logger.fileLogger readFile], @"Log file should not be empty");
     [logger.fileLogger flushLogWithCompletionBlock:nil];
     
@@ -93,7 +93,7 @@ unsigned long long const kDefaultMaxFileSize = 1024 * 1024; // 1 MB.
 - (void)testAddLogLine {
     SFSDKLogger *logger = [SFSDKLogger sharedInstanceWithComponent:kTestComponent1];
     XCTAssertEqualObjects(nil, [logger.fileLogger readFile], @"Log file should be empty");
-    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine1]];
+    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine1 logger:logger]];
     XCTAssertNotEqualObjects(nil, [logger.fileLogger readFile], @"Log file should not be empty");
     XCTAssertTrue([[logger.fileLogger readFile] containsString:kTestLogLine1], @"Log file doesn't contain expected log line");
 }
@@ -104,9 +104,9 @@ unsigned long long const kDefaultMaxFileSize = 1024 * 1024; // 1 MB.
 - (void) testAddMultipleLogLines {
     SFSDKLogger *logger = [SFSDKLogger sharedInstanceWithComponent:kTestComponent1];
     XCTAssertEqualObjects(nil, [logger.fileLogger readFile], @"Log file should be empty");
-    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine1]];
-    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine2]];
-    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine3]];
+    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine1 logger:logger]];
+    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine2 logger:logger]];
+    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine3 logger:logger]];
     XCTAssertNotEqualObjects(nil, [logger.fileLogger readFile], @"Log file should not be empty");
     XCTAssertTrue([[logger.fileLogger readFile] containsString:kTestLogLine1], @"Log file doesn't contain expected log line");
     XCTAssertTrue([[logger.fileLogger readFile] containsString:kTestLogLine2], @"Log file doesn't contain expected log line");
@@ -118,7 +118,7 @@ unsigned long long const kDefaultMaxFileSize = 1024 * 1024; // 1 MB.
     SFSDKLogger *logger = [SFSDKLogger sharedInstanceWithComponent:kTestComponent1];
     SFSDKFileLogger *origFileLogger = logger.fileLogger;
     XCTAssertNil([logger.fileLogger readFile], @"Log file should be empty");
-    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine1]];
+    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine1 logger:logger]];
     XCTAssertNotNil([logger.fileLogger readFile], @"Log file should not be empty");
     XCTAssertTrue([[logger.fileLogger readFile] containsString:kTestLogLine1], @"Log file doesn't contain expected log line");
     
@@ -127,7 +127,7 @@ unsigned long long const kDefaultMaxFileSize = 1024 * 1024; // 1 MB.
     logger.fileLogger = newFileLogger;
     XCTAssertNotEqual(logger.fileLogger, origFileLogger, @"File logger should have changed to the new file logger.");
     XCTAssertNil([logger.fileLogger readFile], @"Log file should be empty");
-    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine2]];
+    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine2 logger:logger]];
     XCTAssertNotNil([logger.fileLogger readFile], @"Log file should not be empty");
     XCTAssertTrue([[logger.fileLogger readFile] containsString:kTestLogLine2], @"New log file doesn't contain expected log line");
     XCTAssertFalse([[logger.fileLogger readFile] containsString:kTestLogLine1], @"New log file contains unexpected log line");
@@ -152,9 +152,9 @@ unsigned long long const kDefaultMaxFileSize = 1024 * 1024; // 1 MB.
     logger2.fileLogger = logger1.fileLogger;
     XCTAssertEqual(logger1.fileLogger, logger2.fileLogger, @"File logger should be the same for both components.");
     XCTAssertNil([logger1.fileLogger readFile], @"Log file should be empty");
-    [logger1.logger log:NO message:[self messageForLogLine:kTestLogLine1]];
-    [logger2.logger log:NO message:[self messageForLogLine:kTestLogLine2]];
-    [logger1.logger log:NO message:[self messageForLogLine:kTestLogLine3]];
+    [logger1.logger log:NO message:[self messageForLogLine:kTestLogLine1 logger:logger1]];
+    [logger2.logger log:NO message:[self messageForLogLine:kTestLogLine2 logger:logger2]];
+    [logger1.logger log:NO message:[self messageForLogLine:kTestLogLine3 logger:logger1]];
     for (SFSDKFileLogger *fileLogger in @[ logger1.fileLogger, logger2.fileLogger ]) {
         XCTAssertNotNil([fileLogger readFile], @"Log file should not be empty");
         XCTAssertTrue([[fileLogger readFile] containsString:kTestLogLine1], @"Log file doesn't contain expected log line");
@@ -169,13 +169,13 @@ unsigned long long const kDefaultMaxFileSize = 1024 * 1024; // 1 MB.
 - (void)testWriteAfterMaxSizeReached {
     SFSDKLogger *logger = [SFSDKLogger sharedInstanceWithComponent:kTestComponent1];
     XCTAssertEqualObjects(nil, [logger.fileLogger readFile], @"Log file should be empty");
-    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine1]];
-    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine2]];
-    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine3]];
+    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine1 logger:logger]];
+    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine2 logger:logger]];
+    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine3 logger:logger]];
     XCTAssertNotEqualObjects(nil, [logger.fileLogger readFile], @"Log file should not be empty");
     logger.fileLogger.maximumFileSize = 1;
     XCTAssertEqual(1, logger.fileLogger.maximumFileSize, @"Max size didn't match expected max size");
-    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine4]];
+    [logger.logger log:NO message:[self messageForLogLine:kTestLogLine4 logger:logger]];
     XCTAssertTrue([[logger.fileLogger readFile] containsString:kTestLogLine4], @"Log file doesn't contain expected log line");
     XCTAssertFalse([[logger.fileLogger readFile] containsString:kTestLogLine1], @"Log file contains unexpected log line");
 }
@@ -268,8 +268,8 @@ unsigned long long const kDefaultMaxFileSize = 1024 * 1024; // 1 MB.
     XCTAssertTrue([logger isFileLoggingEnabled], @"File logger should be enabled");
 }
 
-- (DDLogMessage *)messageForLogLine:(NSString *)logLine {
-    return [[DDLogMessage alloc] initWithMessage:logLine level:DDLogLevelError flag:DDLogFlagError context:0 file:nil function:nil line:0 tag:[self class] options:0 timestamp:[NSDate date]];
+- (DDLogMessage *)messageForLogLine:(NSString *)logLine logger:(SFSDKLogger *)logger {
+    return [[DDLogMessage alloc] initWithMessage:logLine level:DDLogLevelError flag:DDLogFlagError context:0 file:logger.componentName function:nil line:0 tag:[self class] options:0 timestamp:[NSDate date]];
 }
 
 @end
