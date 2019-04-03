@@ -200,7 +200,7 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
                     strongSelf.authConfig = authConfig;
                 }
             });
-        } oauthCredentials:[SFUserAccountManager sharedInstance].currentUser.credentials];
+        } loginDomain:[SFUserAccountManager sharedInstance].loginHost];
     }
     return self;
 }
