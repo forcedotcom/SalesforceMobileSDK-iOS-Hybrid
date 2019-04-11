@@ -71,7 +71,6 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
 {
     BOOL _foundHomeUrl;
     SFHybridViewConfig *_hybridViewConfig;
-    SFUserAccountManagerSuccessCallbackBlock authSuccessCallbackBlock;
     SFUserAccountManagerFailureCallbackBlock authFailureCallbackBlock;
 }
 
@@ -203,15 +202,6 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
                 }
             });
         } loginDomain:[SFUserAccountManager sharedInstance].loginHost];
-
-        // Auth success callback block.
-        authSuccessCallbackBlock = ^(SFOAuthInfo *authInfo, SFUserAccount *userAccount) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [SFUserAccountManager sharedInstance].currentUser = userAccount;
-
-            // Reset the user agent back to Cordova.
-            [strongSelf authenticationCompletion:refreshUrl authInfo:authInfo];
-        };
 
         // Auth failure callback block.
         authFailureCallbackBlock = ^(SFOAuthInfo *authInfo, NSError *error) {
@@ -650,12 +640,19 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
         NSString *refreshUrl = [self isLoginRedirectUrl:navigationAction.request.URL];
         if (refreshUrl != nil) {
             [SFSDKHybridLogger w:[self class] message:@"Caught login redirect from session timeout. Reauthenticating."];
-            
+
+            // Auth success callback block.
+            __weak typeof(self) weakSelf = self;
+            SFUserAccountManagerSuccessCallbackBlock authSuccessCallbackBlock = ^(SFOAuthInfo *authInfo, SFUserAccount *userAccount) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [SFUserAccountManager sharedInstance].currentUser = userAccount;
+                [strongSelf authenticationCompletion:refreshUrl authInfo:authInfo];
+            };
+
             /*
              * Reconfigure user agent. Basically this ensures that Cordova whitelisting won't apply to the
              * WKWebView that hosts the login screen (important for SSO outside of Salesforce domains).
              */
-            __weak typeof(self) weakSelf = self;
             [SFSDKWebUtils configureUserAgent:[self sfHybridViewUserAgentString]];
             if (![SFUserAccountManager sharedInstance].currentUser) {
                 [[SFUserAccountManager sharedInstance] loginWithCompletion:authSuccessCallbackBlock failure:authFailureCallbackBlock];
@@ -725,6 +722,14 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
         NSString *refreshUrl = [self isLoginRedirectUrl:request.URL];
         if (refreshUrl != nil) {
             [SFSDKHybridLogger w:[self class] message:@"Caught login redirect from session timeout. Reauthenticating."];
+
+            // Auth success callback block.
+            __weak typeof(self) weakSelf = self;
+            SFUserAccountManagerSuccessCallbackBlock authSuccessCallbackBlock = ^(SFOAuthInfo *authInfo, SFUserAccount *userAccount) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [SFUserAccountManager sharedInstance].currentUser = userAccount;
+                [strongSelf authenticationCompletion:refreshUrl authInfo:authInfo];
+            };
 
             /*
              * Reconfigure user agent. Basically this ensures that Cordova whitelisting won't apply to the
