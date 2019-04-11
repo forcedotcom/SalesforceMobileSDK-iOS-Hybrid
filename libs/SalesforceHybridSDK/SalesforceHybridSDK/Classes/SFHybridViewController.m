@@ -71,6 +71,8 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
 {
     BOOL _foundHomeUrl;
     SFHybridViewConfig *_hybridViewConfig;
+    SFUserAccountManagerSuccessCallbackBlock authSuccessCallbackBlock;
+    SFUserAccountManagerFailureCallbackBlock authFailureCallbackBlock;
 }
 
 @property (nonatomic, readwrite, assign) BOOL useUIWebView;
@@ -201,6 +203,32 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
                 }
             });
         } loginDomain:[SFUserAccountManager sharedInstance].loginHost];
+
+        // Auth success callback block.
+        authSuccessCallbackBlock = ^(SFOAuthInfo *authInfo, SFUserAccount *userAccount) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [SFUserAccountManager sharedInstance].currentUser = userAccount;
+
+            // Reset the user agent back to Cordova.
+            [strongSelf authenticationCompletion:refreshUrl authInfo:authInfo];
+        };
+
+        // Auth failure callback block.
+        authFailureCallbackBlock = ^(SFOAuthInfo *authInfo, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if ([strongSelf logoutOnInvalidCredentials:error]) {
+                [SFSDKHybridLogger e:[strongSelf class] message:@"Could not refresh expired session. Logging out."];
+                NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
+                attributes[@"errorCode"] = [NSNumber numberWithInteger:error.code];
+                attributes[@"errorDescription"] = error.localizedDescription;
+                [SFSDKEventBuilderHelper createAndStoreEvent:@"userLogout" userAccount:nil className:NSStringFromClass([strongSelf class]) attributes:attributes];
+                [[SFUserAccountManager sharedInstance] logout];
+            } else {
+
+                // Error is not invalid credentials, or developer otherwise wants to handle it.
+                [strongSelf loadErrorPageWithCode:error.code description:error.localizedDescription context:kErrorContextAuthExpiredSessionRefresh];
+            }
+        };
     }
     return self;
 }
@@ -332,7 +360,6 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
             completionBlock(authInfo, authDict);
         }
     };
-    
     SFOAuthPluginFailureBlock authFailureBlock = ^(SFOAuthInfo *authInfo, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if ([strongSelf logoutOnInvalidCredentials:error]) {
@@ -349,9 +376,8 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
     if (![SFUserAccountManager sharedInstance].currentUser) {
         [[SFUserAccountManager sharedInstance] loginWithCompletion:authCompletionBlock failure:authFailureBlock];
     } else {
-        [[SFUserAccountManager sharedInstance] refreshCredentials:[SFUserAccountManager sharedInstance].currentUser.credentials
-                                                         completion:authCompletionBlock
-                                                            failure:authFailureBlock];
+        [[SFUserAccountManager sharedInstance] refreshCredentials:[SFUserAccountManager sharedInstance].currentUser.credentials completion:authCompletionBlock
+            failure:authFailureBlock];
     }
 }
 
@@ -631,27 +657,11 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
              */
             __weak typeof(self) weakSelf = self;
             [SFSDKWebUtils configureUserAgent:[self sfHybridViewUserAgentString]];
-            [self refreshCredentials:[SFUserAccountManager sharedInstance].currentUser.credentials
-             completion:^(SFOAuthInfo *authInfo, SFUserAccount *userAccount) {
-                 [SFUserAccountManager sharedInstance].currentUser = userAccount;
-
-                 // Reset the user agent back to Cordova.
-                 [weakSelf authenticationCompletion:refreshUrl authInfo:authInfo];
-             } failure:^(SFOAuthInfo *authInfo, NSError *error) {
-                 __strong typeof(weakSelf) strongSelf = weakSelf;
-                 if ([strongSelf logoutOnInvalidCredentials:error]) {
-                     [SFSDKHybridLogger e:[strongSelf class] message:@"Could not refresh expired session. Logging out."];
-                     NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
-                     attributes[@"errorCode"] = [NSNumber numberWithInteger:error.code];
-                     attributes[@"errorDescription"] = error.localizedDescription;
-                     [SFSDKEventBuilderHelper createAndStoreEvent:@"userLogout" userAccount:nil className:NSStringFromClass([strongSelf class]) attributes:attributes];
-                     [[SFUserAccountManager sharedInstance] logout];
-                 } else {
-                     
-                     // Error is not invalid credentials, or developer otherwise wants to handle it.
-                     [strongSelf loadErrorPageWithCode:error.code description:error.localizedDescription context:kErrorContextAuthExpiredSessionRefresh];
-                 }
-             }];
+            if (![SFUserAccountManager sharedInstance].currentUser) {
+                [[SFUserAccountManager sharedInstance] loginWithCompletion:authSuccessCallbackBlock failure:authFailureCallbackBlock];
+            } else {
+                [self refreshCredentials:[SFUserAccountManager sharedInstance].currentUser.credentials completion:authSuccessCallbackBlock failure:authFailureCallbackBlock];
+            }
             shouldAllowRequest = NO;
         } else {
             [self defaultWKNavigationHandling:webView decidePolicyForNavigationAction:navigationAction decisionHandler:decisionHandler];
@@ -715,34 +725,17 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
         NSString *refreshUrl = [self isLoginRedirectUrl:request.URL];
         if (refreshUrl != nil) {
             [SFSDKHybridLogger w:[self class] message:@"Caught login redirect from session timeout. Reauthenticating."];
-            
+
             /*
              * Reconfigure user agent. Basically this ensures that Cordova whitelisting won't apply to the
              * UIWebView that hosts the login screen (important for SSO outside of Salesforce domains).
              */
             [SFSDKWebUtils configureUserAgent:[self sfHybridViewUserAgentString]];
-            __weak typeof(self) weakSelf = self;
-            [self refreshCredentials:[SFUserAccountManager sharedInstance].currentUser.credentials
-             completion:^(SFOAuthInfo *authInfo, SFUserAccount *userAccount) {
-                 [SFUserAccountManager sharedInstance].currentUser = userAccount;
-
-                 // Reset the user agent back to Cordova.
-                 [weakSelf authenticationCompletion:refreshUrl authInfo:authInfo];
-             } failure:^(SFOAuthInfo *authInfo, NSError *error) {
-                 __strong typeof(weakSelf) strongSelf = weakSelf;
-                 if ([strongSelf logoutOnInvalidCredentials:error]) {
-                    [SFSDKHybridLogger e:[strongSelf class] message:@"Could not refresh expired session. Logging out."];
-                     NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
-                     attributes[@"errorCode"] = [NSNumber numberWithInteger:error.code];
-                     attributes[@"errorDescription"] = error.localizedDescription;
-                     [SFSDKEventBuilderHelper createAndStoreEvent:@"userLogout" userAccount:nil className:NSStringFromClass([strongSelf class]) attributes:attributes];
-                     [[SFUserAccountManager sharedInstance] logout];
-                 } else {
-                     
-                     // Error is not invalid credentials, or developer otherwise wants to handle it.
-                     [strongSelf loadErrorPageWithCode:error.code description:error.localizedDescription context:kErrorContextAuthExpiredSessionRefresh];
-                 }
-             }];
+            if (![SFUserAccountManager sharedInstance].currentUser) {
+                [[SFUserAccountManager sharedInstance] loginWithCompletion:authSuccessCallbackBlock failure:authFailureCallbackBlock];
+            } else {
+                [self refreshCredentials:[SFUserAccountManager sharedInstance].currentUser.credentials completion:authSuccessCallbackBlock failure:authFailureCallbackBlock];
+            }
             return NO;
         }
         NSURL* url = request.URL;
