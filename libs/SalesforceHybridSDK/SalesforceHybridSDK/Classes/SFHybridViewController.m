@@ -458,13 +458,13 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
      */
     if (createAbsUrl && ![returnUrlString hasPrefix:@"http"]) {
         NSURLComponents *retUrlComponents = [NSURLComponents componentsWithURL:instUrl resolvingAgainstBaseURL:NO];
-        retUrlComponents.path = [retUrlComponents.path stringByAppendingPathComponent:returnUrlString];
+        retUrlComponents.path = [retUrlComponents.path stringByAppendingString:returnUrlString];
         fullReturnUrlString = retUrlComponents.string;
     }
 
     // Create frontDoor path based on credentials API URL.
     NSURLComponents *frontDoorUrlComponents = [NSURLComponents componentsWithURL:instUrl resolvingAgainstBaseURL:NO];
-    frontDoorUrlComponents.path = [frontDoorUrlComponents.path stringByAppendingPathComponent:@"/secur/frontdoor.jsp"];
+    frontDoorUrlComponents.path = [frontDoorUrlComponents.path stringByAppendingString:@"/secur/frontdoor.jsp"];
 
     // NB: We're not using NSURLComponents.queryItems here, because it unsufficiently encodes query params.
     NSMutableString *frontDoorUrlString = [NSMutableString stringWithString:frontDoorUrlComponents.string];
