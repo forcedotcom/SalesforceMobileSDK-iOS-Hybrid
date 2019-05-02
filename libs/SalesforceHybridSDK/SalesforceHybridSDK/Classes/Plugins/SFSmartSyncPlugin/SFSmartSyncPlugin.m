@@ -144,11 +144,18 @@ NSString *const kSyncStoreNameArg = @"storeName";
         SFSyncOptions *options = [SFSyncOptions newFromDict:[argsDict nonNullObjectForKey:kSyncOptionsArg]];
         SFSyncDownTarget *target = [SFSyncDownTarget newFromDict:[argsDict nonNullObjectForKey:kSyncTargetArg]];
         __weak typeof(self) weakSelf = self;
+        
+        NSError *error = nil;
         SFSyncState* sync = [[self getSyncManagerInst:argsDict] syncDownWithTarget:target options:options soupName:soupName syncName:syncName updateBlock:^(SFSyncState* sync) {
             [weakSelf handleSyncUpdate:sync withArgs:argsDict];
-        }];
-        [SFSDKHybridLogger d:[self class] format:@"syncDown # %ld from soup: %@", sync.syncId, soupName];
-        return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[sync asDict]];
+        } error:&error];
+        if (error) {
+            NSString *errorMessage = [NSString stringWithFormat:@"syncDown failed, error: %@, `argsDict`: %@.", error, argsDict];
+            return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        } else {
+            [SFSDKHybridLogger d:[self class] format:@"syncDown # %ld from soup: %@", sync.syncId, soupName];
+            return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[sync asDict]];
+        }
     } command:command];
 }
 
@@ -158,19 +165,20 @@ NSString *const kSyncStoreNameArg = @"storeName";
         NSNumber *syncId = (NSNumber *) [argsDict nonNullObjectForKey:kSyncIdArg];
         NSString *syncName = (NSString *) [argsDict nonNullObjectForKey:kSyncNameArg];
 
+        NSError *error=nil;
         SFSyncState *sync;
         if (syncId) {
             [SFSDKHybridLogger d:[self class] format:@"reSync with sync id: %@", syncId];
             __weak typeof(self) weakSelf = self;
             sync = [[self getSyncManagerInst:argsDict] reSync:syncId updateBlock:^(SFSyncState* sync) {
                 [weakSelf handleSyncUpdate:sync withArgs:argsDict];
-            }];
+            } error:&error];
         } else if (syncName) {
             [SFSDKHybridLogger d:[self class] format:@"reSync with sync name: %@", syncName];
             __weak typeof(self) weakSelf = self;
             sync = [[self getSyncManagerInst:argsDict] reSyncByName:syncName updateBlock:^(SFSyncState* sync) {
                 [weakSelf handleSyncUpdate:sync withArgs:argsDict];
-            }];
+            } error:&error];
         } else {
             NSString *errorMessage = @"Neither syncId nor syncName were specified";
             return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
@@ -179,7 +187,8 @@ NSString *const kSyncStoreNameArg = @"storeName";
         if (sync) {
             return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[sync asDict]];
         } else {
-            return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+            NSString *errorMessage = [NSString stringWithFormat:@"reSync failed, error: %@, `argsDict`: %@.", error, argsDict];
+            return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         }
     } command:command];
 }
@@ -192,17 +201,23 @@ NSString *const kSyncStoreNameArg = @"storeName";
     id <CDVCommandDelegate> commandDelegate = self.commandDelegate;
     NSString* callbackId = command.callbackId;
     [SFSDKHybridLogger d:selfClass format:@"cleanResyncGhosts with sync id: %@", syncId];
+    NSError* error = nil;
     [[self getSyncManagerInst:argsDict] cleanResyncGhosts:syncId completionStatusBlock:^(SFSyncStateStatus syncStatus, NSUInteger numRecords) {
         CDVPluginResult* pluginResult;
         if (syncStatus == SFSyncStateStatusDone) {
             [SFSDKHybridLogger d:selfClass format:@"cleanResyncGhosts completed successfully"];
-            pluginResult =[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:numRecords];
+            pluginResult =[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:(int) numRecords];
         } else {
             [SFSDKHybridLogger e:selfClass format:@"cleanResyncGhosts did not complete successfully"];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
         }
         [commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
-    }];
+    } error:&error];
+    
+    if (error) {
+        NSString *errorMessage = [NSString stringWithFormat:@"cleanResyncGhosts failed, error: %@, `argsDict`: %@.", error, argsDict];
+        [commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage] callbackId:callbackId];
+    }
 }
 
 - (void) syncUp:(CDVInvokedUrlCommand *)command
@@ -213,11 +228,17 @@ NSString *const kSyncStoreNameArg = @"storeName";
         SFSyncOptions *options = [SFSyncOptions newFromDict:[argsDict nonNullObjectForKey:kSyncOptionsArg]];
         SFSyncUpTarget *target = [SFSyncUpTarget newFromDict:[argsDict nonNullObjectForKey:kSyncTargetArg]];
         __weak typeof(self) weakSelf = self;
+        NSError* error = nil;
         SFSyncState* sync = [[self getSyncManagerInst:argsDict] syncUpWithTarget:target options:options soupName:soupName syncName:syncName updateBlock:^(SFSyncState* sync) {
             [weakSelf handleSyncUpdate:sync withArgs:argsDict];
-        }];
-        [SFSDKHybridLogger d:[self class] format:@"syncUp # %ld from soup: %@", sync.syncId, soupName];
-        return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[sync asDict]];
+        } error:&error];
+        if (error) {
+            NSString *errorMessage = [NSString stringWithFormat:@"syncUp failed, error: %@, `argsDict`: %@.", error, argsDict];
+            return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        } else {
+            [SFSDKHybridLogger d:[self class] format:@"syncUp # %ld from soup: %@", sync.syncId, soupName];
+            return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[sync asDict]];
+        }
     } command:command];
 }
 
