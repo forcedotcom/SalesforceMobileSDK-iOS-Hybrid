@@ -885,23 +885,30 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
 
 - (void)loadVFPingPage
 {
-    SFOAuthCredentials *creds = [SFUserAccountManager sharedInstance].currentUser.credentials;
-    if (nil != creds.apiUrl) {
-        NSMutableString *instanceUrl = [[NSMutableString alloc] initWithString:creds.apiUrl.absoluteString];
-        NSString *encodedPingUrlParam = [kVFPingPageUrl stringByURLEncoding];
-        [instanceUrl appendFormat:@"/visualforce/session?url=%@&autoPrefixVFDomain=true", encodedPingUrlParam];
-        NSURL *pingURL = [[NSURL alloc] initWithString:instanceUrl];
-        NSURLRequest *pingRequest = [[NSURLRequest alloc] initWithURL:pingURL];
-        if (self.useUIWebView) {
-            self.vfPingPageHiddenUIWebView = [[UIWebView alloc] initWithFrame:CGRectZero];
-            self.vfPingPageHiddenUIWebView.delegate = self;
-            [self.vfPingPageHiddenUIWebView loadRequest:pingRequest];
-        } else {
-            WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-            config.processPool = SFSDKWebViewStateManager.sharedProcessPool;
-            self.vfPingPageHiddenWKWebView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:config];
-            self.vfPingPageHiddenWKWebView.navigationDelegate = self;
-            [self.vfPingPageHiddenWKWebView loadRequest:pingRequest];
+    if (!NSThread.isMainThread) {
+        __strong typeof(self) weakSelf = self;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [weakSelf loadVFPingPage];
+        });
+    } else {
+        SFOAuthCredentials *creds = [SFUserAccountManager sharedInstance].currentUser.credentials;
+        if (nil != creds.apiUrl) {
+            NSMutableString *instanceUrl = [[NSMutableString alloc] initWithString:creds.apiUrl.absoluteString];
+            NSString *encodedPingUrlParam = [kVFPingPageUrl stringByURLEncoding];
+            [instanceUrl appendFormat:@"/visualforce/session?url=%@&autoPrefixVFDomain=true", encodedPingUrlParam];
+            NSURL *pingURL = [[NSURL alloc] initWithString:instanceUrl];
+            NSURLRequest *pingRequest = [[NSURLRequest alloc] initWithURL:pingURL];
+            if (self.useUIWebView) {
+                self.vfPingPageHiddenUIWebView = [[UIWebView alloc] initWithFrame:CGRectZero];
+                self.vfPingPageHiddenUIWebView.delegate = self;
+                [self.vfPingPageHiddenUIWebView loadRequest:pingRequest];
+            } else {
+                WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+                config.processPool = SFSDKWebViewStateManager.sharedProcessPool;
+                self.vfPingPageHiddenWKWebView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:config];
+                self.vfPingPageHiddenWKWebView.navigationDelegate = self;
+                [self.vfPingPageHiddenWKWebView loadRequest:pingRequest];
+            }
         }
     }
 }
