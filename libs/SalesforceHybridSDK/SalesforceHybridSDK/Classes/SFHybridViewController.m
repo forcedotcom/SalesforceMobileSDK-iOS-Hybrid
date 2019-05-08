@@ -886,9 +886,8 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
 - (void)loadVFPingPage
 {
     if (!NSThread.isMainThread) {
-        __weak typeof(self) weakSelf = self;
         dispatch_sync(dispatch_get_main_queue(), ^{
-            [weakSelf loadVFPingPage];
+            [self loadVFPingPage];
         });
     } else {
         SFOAuthCredentials *creds = [SFUserAccountManager sharedInstance].currentUser.credentials;
