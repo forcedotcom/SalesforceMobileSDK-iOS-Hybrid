@@ -885,7 +885,7 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
 
 - (void)loadVFPingPage
 {
-    // Make sure this method is called on the main thread.
+    // Make sure loadVFPingPage is called on the main thread.
     if (!NSThread.isMainThread) {
         dispatch_sync(dispatch_get_main_queue(), ^{
             [self loadVFPingPage];
