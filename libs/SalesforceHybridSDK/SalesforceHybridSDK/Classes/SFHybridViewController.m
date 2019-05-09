@@ -31,7 +31,6 @@
 #import <SalesforceSDKCore/SalesforceSDKManager.h>
 #import <SalesforceSDKCore/NSURL+SFStringUtils.h>
 #import <SalesforceSDKCore/NSURL+SFAdditions.h>
-#import <SalesforceSDKCore/SFUserAccountManager.h>
 #import <SalesforceSDKCore/SFAuthErrorHandlerList.h>
 #import <SAlesforceSDKCore/SFSDKAuthConfigUtil.h>
 #import <SalesforceSDKCore/SFSDKWebUtils.h>
@@ -71,7 +70,6 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
 {
     BOOL _foundHomeUrl;
     SFHybridViewConfig *_hybridViewConfig;
-    SFUserAccountManagerFailureCallbackBlock authFailureCallbackBlock;
 }
 
 @property (nonatomic, readwrite, assign) BOOL useUIWebView;
@@ -153,13 +151,6 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
 - (NSString *)createDefaultErrorPageContentWithCode:(NSInteger)errorCode description:(NSString *)errorDescription context:(NSString *)errorContext;
 
 /**
- * Method called after re-authentication completes (after session timeout).
- *
- * @param originalUrl The original URL being called before the session timed out.
- */
-- (void)authenticationCompletion:(NSString *)originalUrl authInfo:(SFOAuthInfo *)authInfo;
-
-/**
  * Loads the VF ping page in an invisible WKWebView and sets session cookies for the VF domain.
  */
 - (void)loadVFPingPage;
@@ -204,7 +195,7 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
         } loginDomain:[SFUserAccountManager sharedInstance].loginHost];
 
         // Auth failure callback block.
-        authFailureCallbackBlock = ^(SFOAuthInfo *authInfo, NSError *error) {
+        _authFailureCallbackBlock = ^(SFOAuthInfo *authInfo, NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if ([strongSelf logoutOnInvalidCredentials:error]) {
                 [SFSDKHybridLogger e:[strongSelf class] message:@"Could not refresh expired session. Logging out."];
@@ -655,9 +646,9 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
              */
             [SFSDKWebUtils configureUserAgent:[self sfHybridViewUserAgentString]];
             if (![SFUserAccountManager sharedInstance].currentUser) {
-                [[SFUserAccountManager sharedInstance] loginWithCompletion:authSuccessCallbackBlock failure:authFailureCallbackBlock];
+                [[SFUserAccountManager sharedInstance] loginWithCompletion:authSuccessCallbackBlock failure:self.authFailureCallbackBlock];
             } else {
-                [self refreshCredentials:[SFUserAccountManager sharedInstance].currentUser.credentials completion:authSuccessCallbackBlock failure:authFailureCallbackBlock];
+                [self refreshCredentialsWithCompletion:authSuccessCallbackBlock failure:self.authFailureCallbackBlock];
             }
             shouldAllowRequest = NO;
         } else {
@@ -737,9 +728,9 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
              */
             [SFSDKWebUtils configureUserAgent:[self sfHybridViewUserAgentString]];
             if (![SFUserAccountManager sharedInstance].currentUser) {
-                [[SFUserAccountManager sharedInstance] loginWithCompletion:authSuccessCallbackBlock failure:authFailureCallbackBlock];
+                [[SFUserAccountManager sharedInstance] loginWithCompletion:authSuccessCallbackBlock failure:self.authFailureCallbackBlock];
             } else {
-                [self refreshCredentials:[SFUserAccountManager sharedInstance].currentUser.credentials completion:authSuccessCallbackBlock failure:authFailureCallbackBlock];
+                [self refreshCredentialsWithCompletion:authSuccessCallbackBlock failure:self.authFailureCallbackBlock];
             }
             return NO;
         }
@@ -913,9 +904,8 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
     }
 }
 
-- (void)refreshCredentials:(SFOAuthCredentials *)credentials
-                 completion:(SFUserAccountManagerSuccessCallbackBlock)completionBlock
-                  failure:(SFUserAccountManagerFailureCallbackBlock)failureBlock {
+- (void)refreshCredentialsWithCompletion:(nullable SFUserAccountManagerSuccessCallbackBlock)completionBlock
+                                 failure:(nullable SFUserAccountManagerFailureCallbackBlock)failureBlock {
 
     /*
      * Performs a cheap REST call to refresh the access token if needed
