@@ -27,6 +27,7 @@
 #import <WebKit/WebKit.h>
 #import <Cordova/CDVViewController.h>
 #import <SalesforceSDKCore/SFOAuthInfo.h>
+#import <SalesforceSDKCore/SFUserAccountManager.h>
 #import "SFHybridViewConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -92,6 +93,11 @@ typedef void (^SFOAuthPluginFailureBlock)(SFOAuthInfo *, NSError *);
  found.
  */
 @property (nonatomic, strong, nullable) NSURL *appHomeUrl;
+
+/**
+ Authentication failure block. Called in case of auth/re-auth failure.
+ */
+@property (nonatomic, readonly) SFUserAccountManagerFailureCallbackBlock authFailureCallbackBlock;
 
 /**
  Designated initializer. Initializes the view controller with its hybrid view configuration. Uses WKWebView by default.
@@ -167,6 +173,22 @@ typedef void (^SFOAuthPluginFailureBlock)(SFOAuthInfo *, NSError *);
  web-based auth context setup.
  */
 - (void)webStateCleanupStrategy;
+
+/**
+ * Method called after re-authentication completes (after session timeout).
+ *
+ * @param originalUrl The original URL being called before the session timed out.
+ */
+- (void)authenticationCompletion:(nullable NSString *)originalUrl authInfo:(nullable SFOAuthInfo *)authInfo;
+
+/**
+ * Passively refresh credentials if needed by making userInfo REST API call.
+ *
+ @param completionBlock The block of code to execute when the refresh process successfully completes.
+ @param failureBlock The block of code to execute when the refresh process has a fatal failure.
+ */
+- (void)refreshCredentialsWithCompletion:(nullable SFUserAccountManagerSuccessCallbackBlock)completionBlock
+                   failure:(nullable SFUserAccountManagerFailureCallbackBlock)failureBlock;
 
 @end
 
