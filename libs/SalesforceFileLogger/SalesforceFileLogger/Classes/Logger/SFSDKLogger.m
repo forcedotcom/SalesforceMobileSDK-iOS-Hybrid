@@ -67,10 +67,16 @@ static NSMutableDictionary<NSString *, SFSDKLogger *> *loggerList = nil;
     return [self sharedInstanceWithComponent:kDefaultComponentName];
 }
 
-+ (void)flushAllComponents {
++ (void)flushAllComponents:(void (^)(void))completionBlock {
     @synchronized ([SFSDKLogger class]) {
+        __block NSUInteger numberOfLogsLeftToFlush = loggerList.allKeys.count;
         for (NSString *loggerKey in loggerList.allKeys) {
-            [loggerList[loggerKey].fileLogger flushLogWithCompletionBlock:nil];
+            [loggerList[loggerKey].fileLogger flushLogWithCompletionBlock:^{
+                numberOfLogsLeftToFlush--;
+                if (numberOfLogsLeftToFlush ==0 && completionBlock) {
+                    completionBlock();
+                }
+            }];
         }
         [loggerList removeAllObjects];
     }

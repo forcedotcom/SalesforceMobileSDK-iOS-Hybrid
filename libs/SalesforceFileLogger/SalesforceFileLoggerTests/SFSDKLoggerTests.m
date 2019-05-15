@@ -38,9 +38,7 @@ static NSString * const kTestLogLine3 = @"This is test log line 3!";
 static NSString * const kTestLogLine4 = @"This is test log line 4!";
 unsigned long long const kDefaultMaxFileSize = 1024 * 1024; // 1 MB.
 
-@interface SFSDKLoggerTests : XCTestCase {
-    SFLogLevel _origLogLevel;
-}
+@interface SFSDKLoggerTests : XCTestCase
 
 @end
 
@@ -48,16 +46,15 @@ unsigned long long const kDefaultMaxFileSize = 1024 * 1024; // 1 MB.
 
 - (void)setUp {
     [super setUp];
-    [SFSDKLogger flushAllComponents];
-    _origLogLevel = [SFSDKLogger sharedInstanceWithComponent:kTestComponent1].logLevel;
     [[SFSDKLogger sharedInstanceWithComponent:kTestComponent1] setLogLevel:SFLogLevelInfo];
-    [NSThread sleepForTimeInterval:1.0]; // Flushing the log file is asynchronous.
 }
 
 - (void)tearDown {
-    [SFSDKLogger flushAllComponents];
-    [NSThread sleepForTimeInterval:1.0]; // Flushing the log file is asynchronous.
-    [[SFSDKLogger sharedInstanceWithComponent:kTestComponent1] setLogLevel:_origLogLevel];
+    XCTestExpectation *flushLogsExpectation = [self expectationWithDescription:@"flushLogs"];
+    [SFSDKLogger flushAllComponents:^{
+        [flushLogsExpectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:1.0 handler:nil];
     [super tearDown];
 }
 
@@ -173,8 +170,9 @@ unsigned long long const kDefaultMaxFileSize = 1024 * 1024; // 1 MB.
     [logger.logger log:NO message:[self messageForLogLine:kTestLogLine2 logger:logger]];
     [logger.logger log:NO message:[self messageForLogLine:kTestLogLine3 logger:logger]];
     XCTAssertNotEqualObjects(nil, [logger.fileLogger readFile], @"Log file should not be empty");
-    logger.fileLogger.maximumFileSize = 1;
-    XCTAssertEqual(1, logger.fileLogger.maximumFileSize, @"Max size didn't match expected max size");
+    NSUInteger logLength = [kTestLogLine1 length] * 3; // room for three lines
+    logger.fileLogger.maximumFileSize = logLength;
+    XCTAssertEqual(logLength, logger.fileLogger.maximumFileSize, @"Max size didn't match expected max size");
     [logger.logger log:NO message:[self messageForLogLine:kTestLogLine4 logger:logger]];
     XCTAssertTrue([[logger.fileLogger readFile] containsString:kTestLogLine4], @"Log file doesn't contain expected log line");
     XCTAssertFalse([[logger.fileLogger readFile] containsString:kTestLogLine1], @"Log file contains unexpected log line");
