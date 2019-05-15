@@ -67,6 +67,7 @@
 		82AF5AEA1A0DAE72006C7A4B /* console-via-logger.js in Copy cordova-plugin-console plugin */ = {isa = PBXBuildFile; fileRef = 82AF5AE41A0DADA4006C7A4B /* console-via-logger.js */; };
 		82AF5AEB1A0DAE72006C7A4B /* logger.js in Copy cordova-plugin-console plugin */ = {isa = PBXBuildFile; fileRef = 82AF5AE51A0DADA4006C7A4B /* logger.js */; };
 		B7168F921FACC2E100A48DB5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7168F911FACC2E100A48DB5 /* LaunchScreen.storyboard */; };
+		B72A9CB9228C7CA100B2C1E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B72A9CB8228C7CA100B2C1E8 /* Images.xcassets */; };
 		CE15E3FD2213E969003BBAC7 /* SalesforceAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E3C62213E943003BBAC7 /* SalesforceAnalytics.framework */; };
 		CE15E3FE2213E969003BBAC7 /* SalesforceSDKCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E3B62213E940003BBAC7 /* SalesforceSDKCommon.framework */; };
 		CE15E3FF2213E969003BBAC7 /* SalesforceSDKCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E3D62213E947003BBAC7 /* SalesforceSDKCore.framework */; };
@@ -461,6 +462,7 @@
 		82AF5AE51A0DADA4006C7A4B /* logger.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = logger.js; sourceTree = "<group>"; };
 		82E8560A1D88ABBF0000EECB /* NoteSync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NoteSync.entitlements; sourceTree = "<group>"; };
 		B7168F911FACC2E100A48DB5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "../../../../external/SalesforceMobileSDK-iOS/shared/resources/LaunchScreen.storyboard"; sourceTree = "<group>"; };
+		B72A9CB8228C7CA100B2C1E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CE15E3AE2213E940003BBAC7 /* SalesforceSDKCommon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SalesforceSDKCommon.xcodeproj; path = "../../../external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCommon/SalesforceSDKCommon.xcodeproj"; sourceTree = "<group>"; };
 		CE15E3BD2213E943003BBAC7 /* SalesforceAnalytics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SalesforceAnalytics.xcodeproj; path = "../../../external/SalesforceMobileSDK-iOS/libs/SalesforceAnalytics/SalesforceAnalytics.xcodeproj"; sourceTree = "<group>"; };
 		CE15E3CD2213E947003BBAC7 /* SalesforceSDKCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SalesforceSDKCore.xcodeproj; path = "../../../external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCore/SalesforceSDKCore.xcodeproj"; sourceTree = "<group>"; };
@@ -646,6 +648,7 @@
 				824A9BFB1721FE7E00C9BD79 /* shared-www */,
 				824A9C5E1722021D00C9BD79 /* Classes */,
 				824A9C5B1722018E00C9BD79 /* Resources */,
+				B72A9CB8228C7CA100B2C1E8 /* Images.xcassets */,
 				824A9BD81721FCA400C9BD79 /* Supporting Files */,
 			);
 			path = NoteSync;
@@ -1144,6 +1147,7 @@
 			files = (
 				8230E2461A24181500EFE764 /* Images.xcassets in Resources */,
 				4FC276B019DCBC6E008F4AA6 /* config.xml in Resources */,
+				B72A9CB9228C7CA100B2C1E8 /* Images.xcassets in Resources */,
 				4FC276B119DCBC6E008F4AA6 /* InfoPlist.strings in Resources */,
 				B7168F921FACC2E100A48DB5 /* LaunchScreen.storyboard in Resources */,
 				CED7473A1E8C82D80019AA9D /* ios-wkwebview-exec.js in Resources */,
