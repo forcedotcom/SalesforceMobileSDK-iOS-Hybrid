@@ -11,6 +11,20 @@
 		4F5B96171DA8698D001627F2 /* force.js in Copy js Files */ = {isa = PBXBuildFile; fileRef = 4F5B96151DA8695E001627F2 /* force.js */; };
 		4F5B96931DAD9E98001627F2 /* com.salesforce.plugin.smartstore.client.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4F5B966C1DAD9E90001627F2 /* com.salesforce.plugin.smartstore.client.js */; };
 		4F5B96941DAD9E98001627F2 /* com.salesforce.util.promiser.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4F5B966D1DAD9E90001627F2 /* com.salesforce.util.promiser.js */; };
+		4F6D68BF228E3129008C8A96 /* SalesforceSDKCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E35D2213A655003BBAC7 /* SalesforceSDKCommon.framework */; };
+		4F6D68C0228E3129008C8A96 /* SalesforceSDKCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E35D2213A655003BBAC7 /* SalesforceSDKCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F6D68C8228E3129008C8A96 /* SalesforceAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E36D2213A711003BBAC7 /* SalesforceAnalytics.framework */; };
+		4F6D68C9228E3129008C8A96 /* SalesforceAnalytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E36D2213A711003BBAC7 /* SalesforceAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F6D68D1228E3129008C8A96 /* SalesforceSDKCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E37D2213A716003BBAC7 /* SalesforceSDKCore.framework */; };
+		4F6D68D2228E3129008C8A96 /* SalesforceSDKCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E37D2213A716003BBAC7 /* SalesforceSDKCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F6D68DA228E3129008C8A96 /* SmartSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E38D2213A719003BBAC7 /* SmartSync.framework */; };
+		4F6D68DB228E3129008C8A96 /* SmartSync.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E38D2213A719003BBAC7 /* SmartSync.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F6D68E3228E3129008C8A96 /* SmartStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E39D2213A71B003BBAC7 /* SmartStore.framework */; };
+		4F6D68E4228E3129008C8A96 /* SmartStore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E39D2213A71B003BBAC7 /* SmartStore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F6D68EB228E3129008C8A96 /* SalesforceHybridSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FFEE5FE1BFE912300B7AA8A /* SalesforceHybridSDK.framework */; };
+		4F6D68EC228E3129008C8A96 /* SalesforceHybridSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4FFEE5FE1BFE912300B7AA8A /* SalesforceHybridSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F6D68F0228E3129008C8A96 /* Cordova.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEF967C1EB7CE5A0059CA79 /* Cordova.framework */; };
+		4F6D68F1228E3129008C8A96 /* Cordova.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEEF967C1EB7CE5A0059CA79 /* Cordova.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F6D839A19525B66003EBB16 /* AppDelegate+SalesforceHybridSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6D839619525B66003EBB16 /* AppDelegate+SalesforceHybridSDK.m */; };
 		4F6D839B19525B66003EBB16 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6D839819525B66003EBB16 /* AppDelegate.m */; };
 		4FD3FC441DB05B2600646D6D /* force+promise.js in Copy js Files */ = {isa = PBXBuildFile; fileRef = 4FD3FC1F1DB05B1E00646D6D /* force+promise.js */; };
@@ -91,6 +105,55 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4F6D68C1228E3129008C8A96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE15E3412213A655003BBAC7 /* SalesforceSDKCommon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B7136CFD216684A700F6A221;
+			remoteInfo = SalesforceSDKCommon;
+		};
+		4F6D68CA228E3129008C8A96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE15E3642213A711003BBAC7 /* SalesforceAnalytics.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CE2B8BCE1CE900F500C6FC6A;
+			remoteInfo = SalesforceAnalytics;
+		};
+		4F6D68D3228E3129008C8A96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE15E3742213A716003BBAC7 /* SalesforceSDKCore.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CE4CE26A1C0E449C009F6029;
+			remoteInfo = SalesforceSDKCore;
+		};
+		4F6D68DC228E3129008C8A96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE15E3842213A719003BBAC7 /* SmartSync.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CE4CE2C81C0E463C009F6029;
+			remoteInfo = SmartSync;
+		};
+		4F6D68E5228E3129008C8A96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE15E3942213A71B003BBAC7 /* SmartStore.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CE4CE2B81C0E4581009F6029;
+			remoteInfo = SmartStore;
+		};
+		4F6D68ED228E3129008C8A96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FFEE5F61BFE912300B7AA8A /* SalesforceHybridSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CE4CE2E01C0E465B009F6029;
+			remoteInfo = SalesforceHybridSDK;
+		};
+		4F6D68F2228E3129008C8A96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEEF96741EB7CE5A0059CA79 /* CordovaLib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C0C01EB11E3911D50056E6CB;
+			remoteInfo = Cordova;
+		};
 		4FFEE5FD1BFE912300B7AA8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FFEE5F61BFE912300B7AA8A /* SalesforceHybridSDK.xcodeproj */;
@@ -297,6 +360,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4F6D68F4228E312A008C8A96 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4F6D68E4228E3129008C8A96 /* SmartStore.framework in Embed Frameworks */,
+				4F6D68D2228E3129008C8A96 /* SalesforceSDKCore.framework in Embed Frameworks */,
+				4F6D68C9228E3129008C8A96 /* SalesforceAnalytics.framework in Embed Frameworks */,
+				4F6D68C0228E3129008C8A96 /* SalesforceSDKCommon.framework in Embed Frameworks */,
+				4F6D68EC228E3129008C8A96 /* SalesforceHybridSDK.framework in Embed Frameworks */,
+				4F6D68F1228E3129008C8A96 /* Cordova.framework in Embed Frameworks */,
+				4F6D68DB228E3129008C8A96 /* SmartSync.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		824A9D6B1724C35700C9BD79 /* Copy Shared www Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -499,22 +579,28 @@
 				CE15E3A72213A74D003BBAC7 /* SmartStore.framework in Frameworks */,
 				CE15E3A82213A74D003BBAC7 /* SmartSync.framework in Frameworks */,
 				CE15E3A42213A745003BBAC7 /* SalesforceAnalytics.framework in Frameworks */,
+				4F6D68F0228E3129008C8A96 /* Cordova.framework in Frameworks */,
 				CE15E3A52213A745003BBAC7 /* SalesforceSDKCommon.framework in Frameworks */,
 				CE15E3A62213A745003BBAC7 /* SalesforceSDKCore.framework in Frameworks */,
 				CEEF96A21EB7CE750059CA79 /* Cordova.framework in Frameworks */,
 				CED747481E8C86EB0019AA9D /* WebKit.framework in Frameworks */,
 				8236AD101C4D9FF5004B69B8 /* SalesforceHybridSDK.framework in Frameworks */,
 				CE6AB3AE1C10C5B60012125E /* libz.tbd in Frameworks */,
+				4F6D68D1228E3129008C8A96 /* SalesforceSDKCore.framework in Frameworks */,
+				4F6D68E3228E3129008C8A96 /* SmartStore.framework in Frameworks */,
 				CE6AB3B01C10C5BD0012125E /* libxml2.tbd in Frameworks */,
 				4FF15E26190884C600705FE0 /* AssetsLibrary.framework in Frameworks */,
 				4F22156919DF5AA300FF2D26 /* ImageIO.framework in Frameworks */,
 				824A9DA61724C98900C9BD79 /* AddressBook.framework in Frameworks */,
 				824A9DA71724C98900C9BD79 /* AddressBookUI.framework in Frameworks */,
+				4F6D68C8228E3129008C8A96 /* SalesforceAnalytics.framework in Frameworks */,
 				824A9DA91724C99800C9BD79 /* AudioToolbox.framework in Frameworks */,
 				824A9DAB1724C9C900C9BD79 /* AVFoundation.framework in Frameworks */,
 				824A9DAD1724C9D100C9BD79 /* CFNetwork.framework in Frameworks */,
 				824A9DAF1724C9DB00C9BD79 /* CoreData.framework in Frameworks */,
 				824A9BD61721FCA400C9BD79 /* CoreGraphics.framework in Frameworks */,
+				4F6D68DA228E3129008C8A96 /* SmartSync.framework in Frameworks */,
+				4F6D68BF228E3129008C8A96 /* SalesforceSDKCommon.framework in Frameworks */,
 				824A9DB11724CA1400C9BD79 /* CoreLocation.framework in Frameworks */,
 				824A9DB31724CA1C00C9BD79 /* CoreMedia.framework in Frameworks */,
 				824A9BD41721FCA400C9BD79 /* Foundation.framework in Frameworks */,
@@ -524,6 +610,7 @@
 				824A9DBB1724CAB100C9BD79 /* QuartzCore.framework in Frameworks */,
 				824A9DBD1724CAB900C9BD79 /* Security.framework in Frameworks */,
 				824A9DBF1724CAF900C9BD79 /* SystemConfiguration.framework in Frameworks */,
+				4F6D68EB228E3129008C8A96 /* SalesforceHybridSDK.framework in Frameworks */,
 				824A9BD21721FCA400C9BD79 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -881,6 +968,7 @@
 				824A9D7A1724C51500C9BD79 /* Copy plugins Files */,
 				82AF5ABA1A0DAAB8006C7A4B /* Copy cordova-plugin-console plugin */,
 				CED7473D1E8C83290019AA9D /* Copy cordova-plugin-wkwebview-engine */,
+				4F6D68F4228E312A008C8A96 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -888,6 +976,13 @@
 				CEEF96A11EB7CE660059CA79 /* PBXTargetDependency */,
 				CE4CE4C91C0E6813009F6029 /* PBXTargetDependency */,
 				8236AD131C4D9FF5004B69B8 /* PBXTargetDependency */,
+				4F6D68C2228E3129008C8A96 /* PBXTargetDependency */,
+				4F6D68CB228E3129008C8A96 /* PBXTargetDependency */,
+				4F6D68D4228E3129008C8A96 /* PBXTargetDependency */,
+				4F6D68DD228E3129008C8A96 /* PBXTargetDependency */,
+				4F6D68E6228E3129008C8A96 /* PBXTargetDependency */,
+				4F6D68EE228E3129008C8A96 /* PBXTargetDependency */,
+				4F6D68F3228E3129008C8A96 /* PBXTargetDependency */,
 			);
 			name = AccountEditor;
 			productName = AccountEditor;
@@ -1186,6 +1281,41 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4F6D68C2228E3129008C8A96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SalesforceSDKCommon;
+			targetProxy = 4F6D68C1228E3129008C8A96 /* PBXContainerItemProxy */;
+		};
+		4F6D68CB228E3129008C8A96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SalesforceAnalytics;
+			targetProxy = 4F6D68CA228E3129008C8A96 /* PBXContainerItemProxy */;
+		};
+		4F6D68D4228E3129008C8A96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SalesforceSDKCore;
+			targetProxy = 4F6D68D3228E3129008C8A96 /* PBXContainerItemProxy */;
+		};
+		4F6D68DD228E3129008C8A96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SmartSync;
+			targetProxy = 4F6D68DC228E3129008C8A96 /* PBXContainerItemProxy */;
+		};
+		4F6D68E6228E3129008C8A96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SmartStore;
+			targetProxy = 4F6D68E5228E3129008C8A96 /* PBXContainerItemProxy */;
+		};
+		4F6D68EE228E3129008C8A96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SalesforceHybridSDK;
+			targetProxy = 4F6D68ED228E3129008C8A96 /* PBXContainerItemProxy */;
+		};
+		4F6D68F3228E3129008C8A96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Cordova;
+			targetProxy = 4F6D68F2228E3129008C8A96 /* PBXContainerItemProxy */;
+		};
 		8236AD131C4D9FF5004B69B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SalesforceHybridSDK;
