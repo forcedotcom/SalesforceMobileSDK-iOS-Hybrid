@@ -31,16 +31,11 @@ The Salesforce Mobile SDK for iOS requires iOS 11.0 or greater.  The install.sh 
 Introduction
 ==
 
-### What's New in 7.0
+### What's New in 7.1
 
 **Version Updates**
-- Cordova for iOS: 4.5.5
-- Cordova command line: 8.1.2
-- iOS minimum version (deployment target): iOS 11
-- iOS base version: iOS 12
-- Xcode minimum version: 10
-- SQLCipher: 3.5.9
-- SQLite: 3.20.1
+- Cordova for iOS: 5.0.0
+- SQLCipher: 4.0.1
 
 Documentation
 ==
