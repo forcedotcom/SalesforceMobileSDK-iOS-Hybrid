@@ -52,6 +52,13 @@
     // Need to use SalesforceHybridSDKManager in hybrid apps
     [SalesforceHybridSDKManager initializeSDK];
     
+#ifdef DEBUG
+    [SalesforceHybridSDKManager sharedManager].isDevSupportEnabled = YES;
+#else
+    [SalesforceHybridSDKManager sharedManager].isDevSupportEnabled = NO;
+#endif
+
+    
     //App Setup for any changes to the current authenticated user
     __weak __typeof (self) weakSelf = self;
     [SFSDKAuthHelper registerBlockForCurrentUserChangeNotifications:^{
@@ -92,9 +99,11 @@
     
     [self initializeAppViewState];
      __weak __typeof (self) weakSelf = self;
+
     [SFSDKAuthHelper loginIfRequired:^{
         [weakSelf setupRootViewController];
     }];
+
     return YES; // we don't want to run's Cordova didFinishLaunchingWithOptions - it creates another window with a webview
                 // if devs want to customize their AppDelegate.m, then they should get rid of AppDelegate+SalesforceHybrid.m
                 // and bring all of its code in their AppDelegate.m

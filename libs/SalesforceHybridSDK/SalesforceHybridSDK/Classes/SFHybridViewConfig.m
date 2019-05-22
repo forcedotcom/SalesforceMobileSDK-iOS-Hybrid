@@ -24,6 +24,7 @@
  */
 
 #import "SFHybridViewConfig.h"
+#import "SFSDKHybridLogger.h"
 #import <SalesforceSDKCore/SFSDKResourceUtils.h>
 
 @interface SFSDKAppConfig(Hybrid)
@@ -68,11 +69,11 @@ static NSString* const kDefaultErrorPage = @"error.html";
 }
 
 - (instancetype)initWithConfigFile:(NSString *)configFile {
-    
-    NSDictionary *hybridConfigDict = [SFSDKResourceUtils loadConfigFromFile:configFile];
+    NSError* error = nil;
+    NSDictionary *hybridConfigDict = [SFSDKResourceUtils loadConfigFromFile:configFile error:&error];
    
     if (nil == hybridConfigDict) {
-        [SFSDKHybridLogger i:[SFHybridViewConfig class] format:@"Hybrid view config at specified path '%@' not found, or data could not be parsed.", configFile];
+        [SFSDKHybridLogger i:[SFHybridViewConfig class] format:@"Hybrid view config at specified path '%@' not found, or data could not be parsed: %@", configFile, error];
         return nil;
     }
     return [self initWithDict:hybridConfigDict];

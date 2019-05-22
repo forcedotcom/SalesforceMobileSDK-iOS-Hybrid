@@ -31,25 +31,18 @@ The Salesforce Mobile SDK for iOS requires iOS 11.0 or greater.  The install.sh 
 Introduction
 ==
 
-### What's New in 7.0
+### What's New in 7.1
 
 **Version Updates**
-- Cordova for iOS: 4.5.5
-- Cordova command line: 8.1.2
-- iOS minimum version (deployment target): iOS 11
-- iOS base version: iOS 12
-- Xcode minimum version: 10
-- SQLCipher: 3.5.9
-- SQLite: 3.20.1
+- Cordova for iOS: 5.0.0
+- SQLCipher: 4.0.1
 
 Documentation
 ==
 
-* [SalesforceHybridSDK Library Reference](http://forcedotcom.github.io/SalesforceMobileSDK-iOS/Documentation/SalesforceHybridSDK/html/index.html)
 * Salesforce Mobile SDK Development Guide -- [PDF](https://github.com/forcedotcom/SalesforceMobileSDK-Shared/blob/master/doc/mobile_sdk.pdf) | [HTML](https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/preface_intro.htm)
 * [Mobile SDK Trail](https://trailhead.salesforce.com/trails/mobile_sdk_intro)
 
 Discussion
 ==
-
-If you would like to make suggestions, have questions, or encounter any issues, we'd love to hear from you. Post any feedback you have on our [Google+ community](https://plus.google.com/communities/114225252149514546445).
+If you would like to make suggestions, have questions, or encounter any issues, we'd love to hear from you. Post any feedback you have on [Salesforce StackExchange](https://salesforce.stackexchange.com/questions/tagged/mobilesdk).

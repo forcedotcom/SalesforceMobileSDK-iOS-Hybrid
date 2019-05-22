@@ -24,6 +24,7 @@
 
 #import "SFAccountManagerPlugin.h"
 #import "CDVPlugin+SFAdditions.h"
+#import "SFSDKHybridLogger.h"
 #import <Cordova/CDVPluginResult.h>
 #import <SalesforceSDKCore/SFUserAccountManager.h>
 #import <SalesforceSDKCore/SFUserAccount.h>
@@ -152,7 +153,7 @@ NSString * const kUserAccountClientIdDictKey       = @"clientId";
                                    kUserAccountInstanceServerDictKey : [account.credentials.instanceUrl absoluteString],
                                    kUserAccountOrgIdDictKey : account.credentials.organizationId,
                                    kUserAccountUserIdDictKey : account.credentials.userId,
-                                   kUserAccountUsernameDictKey : account.userName,
+                                   kUserAccountUsernameDictKey : account.idData.username,
                                    kUserAccountClientIdDictKey : account.credentials.clientId
                                    };
     return accountDict;

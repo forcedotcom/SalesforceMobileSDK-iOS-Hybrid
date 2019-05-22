@@ -3,13 +3,13 @@
 	url = https://github.com/forcedotcom/SalesforceMobileSDK-Shared
 [submodule "external/cordova-ios/cordova-ios"]
 	path = external/cordova-ios/cordova-ios
-	url = https://github.com/apache/cordova-ios
+	url = https://github.com/forcedotcom/cordova-ios
 [submodule "external/cordova-plugin-wkwebview-engine"]
 	path = external/cordova-plugin-wkwebview-engine
 	url = https://github.com/apache/cordova-plugin-wkwebview-engine
 [submodule "external/CocoaLumberjack"]
 	path = external/CocoaLumberjack
-	url = https://github.com/forcedotcom/cocoalumberjack
+	url = https://github.com/CocoaLumberjack/CocoaLumberjack
 [submodule "external/SalesforceMobileSDK-iOS"]
 	path = external/SalesforceMobileSDK-iOS
 	url = https://github.com/forcedotcom/SalesforceMobileSDK-iOS

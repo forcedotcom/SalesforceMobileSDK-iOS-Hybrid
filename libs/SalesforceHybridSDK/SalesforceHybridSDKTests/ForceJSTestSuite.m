@@ -78,4 +78,7 @@
     [self runTest:@"testDeleteFileShare"];
 }
 
+- (void)testRestEndpoint {
+    [self runTest:@"testRestEndpoint"];
+}
 @end
