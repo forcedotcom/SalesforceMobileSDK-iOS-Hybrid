@@ -39,6 +39,13 @@ update_podspec ()
     gsed -i "s/s\.version.*=.*$/s.version      = \"${version}\"/g" ${file}
 }
 
+update_test_cordova_plugin_js ()
+{
+    local file=$1
+    local version=$2
+    gsed -i "s/\"com.salesforce\":.*\"[^\"]*\"/\"com.salesforce\": \"${version}\"/g" ${file}
+}
+
 parse_opts "$@"
 
 echo -e "${YELLOW}*** SETTING VERSION TO ${OPT_VERSION} ***${NC}"
@@ -46,4 +53,7 @@ echo -e "${YELLOW}*** SETTING VERSION TO ${OPT_VERSION} ***${NC}"
 echo "*** Updating podspecs ***"
 update_podspec "./SalesforceFileLogger.podspec" "${OPT_VERSION}"
 update_podspec "./SalesforceHybridSDK.podspec" "${OPT_VERSION}"
+
+echo "*** Updating cordova_plugins.js for tests ***"
+update_test_cordova_plugin_js "./libs/SalesforceHybridSDK/SalesforceHybridSDKTestApp/cordova_plugins.js" "${OPT_VERSION}"
 
