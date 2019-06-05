@@ -133,7 +133,7 @@ workflows:
               only:
                 - dev
     jobs:
-      - SalesforceHybridSDK
+      - SalesforceHybridSDK:
             context: nightly-test11
-      - SalesforceFileLogger
+      - SalesforceFileLogger:
             context: nightly-test11
