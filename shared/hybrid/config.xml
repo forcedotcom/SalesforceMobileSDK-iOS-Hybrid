@@ -24,9 +24,20 @@
         version   = "1.0.0">
     <name>Hybrid Application</name>
 
+    <!-- To allow XHR requests with the Whitelist plugin -->
+    <allow-navigation href="https://localhost" />
+    <allow-navigation href="https://*.force.com" />
+    <allow-navigation href="https://*.salesforce.com" />
+    <allow-navigation href="https://*.visualforce.com" />
+    <allow-navigation href="https://*.documentforce.com" />
+    <allow-navigation href="https://*.salesforce-communities.com" />
+
     <access origin="https://localhost"/> <!-- allow local pages -->
     <access origin="https://*.force.com" />
     <access origin="https://*.salesforce.com" />
+    <access origin="https://*.visualforce.com" />
+    <access origin="https://*.documentforce.com" />
+    <access origin="https://*.salesforce-communities.com" />
 
     <!-- Preferences for iOS -->
     <preference name="AllowInlineMediaPlayback" value="false" />
