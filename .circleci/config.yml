@@ -47,7 +47,7 @@ aliases:
 defaults: &defaults
   working_directory: ~/SalesforceMobileSDK-iOS-Hybrid
   macos:
-    xcode: "10.1.0"
+    xcode: "10.2.1"
   shell: /bin/bash --login -eo pipefail
   environment:
     BASH_ENV: ~/.bashrc
@@ -103,14 +103,14 @@ jobs:
 workflows:
   version: 2
 
-  pr-build-all-apps:
+  pr-test-hybrid:
     jobs:
       - SalesforceHybridSDK
       - SalesforceFileLogger
 
   # Cron are on a timezone 8 hours ahead of PST
   # Build everything at ~10:30pm Sunday/Wednesday Nights
-  weekly-build-all-apps:
+  weekly-test-hybrid:
     triggers:
       - schedule:
           cron: "30 6 * * 1,4"
@@ -118,7 +118,22 @@ workflows:
             branches:
               only:
                 - dev
-
     jobs:
       - SalesforceHybridSDK
       - SalesforceFileLogger
+
+  # Cron are on a timezone 8 hours ahead of PST
+  # Build everything at ~11:30pm Sunday/Wednesday Nights
+  weekly-test-hybrid-iOS11:
+    triggers:
+      - schedule:
+          cron: "30 7 * * 1,4"
+          filters:
+            branches:
+              only:
+                - dev
+    jobs:
+      - SalesforceHybridSDK:
+            context: nightly-test11
+      - SalesforceFileLogger:
+            context: nightly-test11

@@ -21,12 +21,23 @@
 -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         id        = "com.salesforce.iossdk"
-        version   = "7.1.0">
+        version   = "1.0.0">
     <name>Hybrid Application</name>
+
+    <!-- To allow XHR requests with the Whitelist plugin -->
+    <allow-navigation href="https://localhost" />
+    <allow-navigation href="https://*.force.com" />
+    <allow-navigation href="https://*.salesforce.com" />
+    <allow-navigation href="https://*.visualforce.com" />
+    <allow-navigation href="https://*.documentforce.com" />
+    <allow-navigation href="https://*.salesforce-communities.com" />
 
     <access origin="https://localhost"/> <!-- allow local pages -->
     <access origin="https://*.force.com" />
     <access origin="https://*.salesforce.com" />
+    <access origin="https://*.visualforce.com" />
+    <access origin="https://*.documentforce.com" />
+    <access origin="https://*.salesforce-communities.com" />
 
     <!-- Preferences for iOS -->
     <preference name="AllowInlineMediaPlayback" value="false" />
@@ -48,6 +59,7 @@
     <feature name="com.salesforce.smartstore"><param name="ios-package" value="SFSmartStorePlugin"/></feature>
     <feature name="com.salesforce.smartsync"><param name="ios-package" value="SFSmartSyncPlugin"/></feature>
     <feature name="com.salesforce.network"><param name="ios-package" value="SFNetworkPlugin"/></feature>
+    <feature name="com.salesforce.testrunner"><param name="ios-package" value="SFTestRunnerPlugin"/></feature>
     
     <feature name="Console"><param name="ios-package" value="CDVLogger" /></feature>
 

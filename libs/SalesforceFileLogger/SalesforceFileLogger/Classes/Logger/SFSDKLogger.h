@@ -83,7 +83,7 @@
 /**
  * Resets and removes all components configured. Used only by tests.
  */
-+ (void)flushAllComponents:(void (^)(void))completionBlock;
++ (void)flushAllComponents:(void (^_Nullable)(void))completionBlock;
 
 /**
  * Returns an array of components that have loggers initialized.
