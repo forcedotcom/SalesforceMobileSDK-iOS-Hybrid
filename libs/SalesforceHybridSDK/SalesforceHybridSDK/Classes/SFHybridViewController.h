@@ -66,7 +66,7 @@ typedef void (^SFOAuthPluginFailureBlock)(SFOAuthInfo *, NSError *);
 /**
  Indicates if UIWebView is being used instead of WKWebView.
  */
-@property (nonatomic, readonly, assign) BOOL useUIWebView;
+@property (nonatomic, readonly, assign) BOOL useUIWebView SFSDK_DEPRECATED(7.2, 8.0, "Will be removed");
 
 /**
  The Remote Access object consumer key.
@@ -110,7 +110,7 @@ typedef void (^SFOAuthPluginFailureBlock)(SFOAuthInfo *, NSError *);
  @param viewConfig The hybrid view configuration associated with this component.
  @param useUIWebView YES - to use UIWebView, NO - to use WKWebView.
  */
-- (id) initWithConfig:(nullable SFHybridViewConfig *) viewConfig useUIWebView:(BOOL) useUIWebView;
+- (id) initWithConfig:(nullable SFHybridViewConfig *) viewConfig useUIWebView:(BOOL) useUIWebView SFSDK_DEPRECATED(7.2, 8.0, "Will be removed");
 
 /**
  * Initializes a new Cordova view with the specified bounds and engine.
