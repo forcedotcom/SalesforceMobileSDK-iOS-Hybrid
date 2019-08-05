@@ -109,7 +109,7 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
             NSString* fileUrl = [fileParam nonNullObjectForKey:kFileUrl];
             NSString* fileName = [fileParam nonNullObjectForKey:kFileName];
             NSData* fileData = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileUrl]];
-            [request addPostFileData:fileData paramName:fileParamName description:nil fileName:fileName mimeType:fileMimeType];
+            [request addPostFileData:fileData paramName:fileParamName fileName:fileName mimeType:fileMimeType params:nil];
         }
     }
     

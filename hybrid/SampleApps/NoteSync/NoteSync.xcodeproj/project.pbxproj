@@ -17,7 +17,6 @@
 		4F6D6937228E3353008C8A96 /* SalesforceSDKCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E3D62213E947003BBAC7 /* SalesforceSDKCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F6D6940228E3353008C8A96 /* SmartSync.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E3E62213E94B003BBAC7 /* SmartSync.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F6D6949228E3353008C8A96 /* SmartStore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E3F62213E94E003BBAC7 /* SmartStore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F6D6950228E3353008C8A96 /* SalesforceHybridSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 829DA2721C1263010040F5F1 /* SalesforceHybridSDK.framework */; };
 		4F6D6951228E3353008C8A96 /* SalesforceHybridSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 829DA2721C1263010040F5F1 /* SalesforceHybridSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F6D6956228E3353008C8A96 /* Cordova.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEEF96AC1EB7CEB30059CA79 /* Cordova.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F6D839A19525B66003EBB16 /* AppDelegate+SalesforceHybridSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6D839619525B66003EBB16 /* AppDelegate+SalesforceHybridSDK.m */; };
@@ -593,7 +592,6 @@
 				824A9DBB1724CAB100C9BD79 /* QuartzCore.framework in Frameworks */,
 				824A9DBD1724CAB900C9BD79 /* Security.framework in Frameworks */,
 				824A9DBF1724CAF900C9BD79 /* SystemConfiguration.framework in Frameworks */,
-				4F6D6950228E3353008C8A96 /* SalesforceHybridSDK.framework in Frameworks */,
 				824A9BD21721FCA400C9BD79 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -975,7 +973,7 @@
 		824A9BC61721FCA400C9BD79 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = salesforce.com;
 				TargetAttributes = {
 					824A9BCD1721FCA400C9BD79 = {
