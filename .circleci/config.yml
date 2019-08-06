@@ -115,11 +115,11 @@ workflows:
                 - dev
     jobs:
       - run-tests:
-          name: "SalesforceHybridSDK"
+          name: "SalesforceHybridSDK iOS 11 Nightly"
           device: "iPhone X"
           ios: "11.4"
       - run-tests:
           name: "SalesforceFileLogger iOS 11 Nightly"
-          lib: "SalesforceFileLogger iOS 11 Nightly"  
+          lib: "SalesforceFileLogger"  
           device: "iPhone X"
           ios: "11.4"
