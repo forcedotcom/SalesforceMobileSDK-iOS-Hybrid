@@ -331,7 +331,6 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
     __weak __typeof(self) weakSelf = self;
     SFUserAccountManagerSuccessCallbackBlock authCompletionBlock = ^(SFOAuthInfo *authInfo, SFUserAccount *userAccount) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [SFUserAccountManager sharedInstance].currentUser = userAccount;
         [strongSelf authenticationCompletion:nil authInfo:authInfo];
         if (authInfo.authType == SFOAuthTypeRefresh) {
             [strongSelf loadVFPingPage];
@@ -636,7 +635,6 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
             __weak typeof(self) weakSelf = self;
             SFUserAccountManagerSuccessCallbackBlock authSuccessCallbackBlock = ^(SFOAuthInfo *authInfo, SFUserAccount *userAccount) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
-                [SFUserAccountManager sharedInstance].currentUser = userAccount;
                 [strongSelf authenticationCompletion:refreshUrl authInfo:authInfo];
             };
 
@@ -718,7 +716,6 @@ static NSString * const kSFAppFeatureUsesUIWebView = @"WV";
             __weak typeof(self) weakSelf = self;
             SFUserAccountManagerSuccessCallbackBlock authSuccessCallbackBlock = ^(SFOAuthInfo *authInfo, SFUserAccount *userAccount) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
-                [SFUserAccountManager sharedInstance].currentUser = userAccount;
                 [strongSelf authenticationCompletion:refreshUrl authInfo:authInfo];
             };
 

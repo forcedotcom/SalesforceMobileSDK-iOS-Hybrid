@@ -1427,10 +1427,9 @@
 			};
 			buildConfigurationList = 82EFF2CB16E7C57100A63CDF /* Build configuration list for PBXProject "SalesforceHybridSDK" */;
 			compatibilityVersion = "Xcode 10.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 			);
 			mainGroup = 82EFF2C716E7C57100A63CDF;

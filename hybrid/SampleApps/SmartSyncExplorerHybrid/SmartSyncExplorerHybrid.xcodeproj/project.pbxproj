@@ -11,17 +11,11 @@
 		4F5B96191DA869D5001627F2 /* force.js in Copy js Files */ = {isa = PBXBuildFile; fileRef = 4F5B96111DA8693E001627F2 /* force.js */; };
 		4F5B96E51DAD9EF0001627F2 /* com.salesforce.plugin.smartstore.client.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4F5B96BE1DAD9ED8001627F2 /* com.salesforce.plugin.smartstore.client.js */; };
 		4F5B96E61DAD9EF0001627F2 /* com.salesforce.util.promiser.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4F5B96BF1DAD9ED8001627F2 /* com.salesforce.util.promiser.js */; };
-		4F6D689E228E2ECF008C8A96 /* SalesforceSDKCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E40F2213E9D3003BBAC7 /* SalesforceSDKCommon.framework */; };
 		4F6D689F228E2ECF008C8A96 /* SalesforceSDKCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E40F2213E9D3003BBAC7 /* SalesforceSDKCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F6D68A2228E2ECF008C8A96 /* SalesforceAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E41F2213E9D6003BBAC7 /* SalesforceAnalytics.framework */; };
 		4F6D68A3228E2ECF008C8A96 /* SalesforceAnalytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E41F2213E9D6003BBAC7 /* SalesforceAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F6D68A6228E2ECF008C8A96 /* SalesforceSDKCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E42F2213E9DA003BBAC7 /* SalesforceSDKCore.framework */; };
 		4F6D68A7228E2ECF008C8A96 /* SalesforceSDKCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E42F2213E9DA003BBAC7 /* SalesforceSDKCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F6D68AA228E2ECF008C8A96 /* SmartSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E43F2213E9DD003BBAC7 /* SmartSync.framework */; };
 		4F6D68AB228E2ECF008C8A96 /* SmartSync.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E43F2213E9DD003BBAC7 /* SmartSync.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F6D68AE228E2ECF008C8A96 /* SmartStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E44F2213E9E0003BBAC7 /* SmartStore.framework */; };
 		4F6D68AF228E2ECF008C8A96 /* SmartStore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E44F2213E9E0003BBAC7 /* SmartStore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F6D68B2228E2ECF008C8A96 /* SalesforceHybridSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 829DA28C1C1264E40040F5F1 /* SalesforceHybridSDK.framework */; };
 		4F6D68B3228E2ECF008C8A96 /* SalesforceHybridSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 829DA28C1C1264E40040F5F1 /* SalesforceHybridSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F6D68B6228E2ECF008C8A96 /* Cordova.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEF96DC1EB7CF050059CA79 /* Cordova.framework */; };
 		4F6D68B7228E2ECF008C8A96 /* Cordova.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEEF96DC1EB7CF050059CA79 /* Cordova.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -103,7 +97,6 @@
 		CED7473C1E8C82F00019AA9D /* ios-wkwebview-exec.js in Resources */ = {isa = PBXBuildFile; fileRef = CED7473B1E8C82F00019AA9D /* ios-wkwebview-exec.js */; };
 		CED747421E8C83990019AA9D /* ios-wkwebview-exec.js in Copy cordova-plugin-wkwebview-engine */ = {isa = PBXBuildFile; fileRef = CED7473B1E8C82F00019AA9D /* ios-wkwebview-exec.js */; };
 		CED747441E8C86C60019AA9D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED747431E8C86C60019AA9D /* WebKit.framework */; };
-		CEEF97021EB7CF160059CA79 /* Cordova.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEF96DC1EB7CF050059CA79 /* Cordova.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -588,25 +581,19 @@
 				4F6D68B6228E2ECF008C8A96 /* Cordova.framework in Frameworks */,
 				CE15E4572213E9F4003BBAC7 /* SalesforceSDKCommon.framework in Frameworks */,
 				CE15E4582213E9F4003BBAC7 /* SalesforceSDKCore.framework in Frameworks */,
-				CEEF97021EB7CF160059CA79 /* Cordova.framework in Frameworks */,
 				CED747441E8C86C60019AA9D /* WebKit.framework in Frameworks */,
 				CE6AB3DA1C10CE2A0012125E /* libz.tbd in Frameworks */,
 				CE6AB3DC1C10CE340012125E /* libxml2.tbd in Frameworks */,
-				4F6D68A6228E2ECF008C8A96 /* SalesforceSDKCore.framework in Frameworks */,
-				4F6D68AE228E2ECF008C8A96 /* SmartStore.framework in Frameworks */,
 				4FF15E26190884C600705FE0 /* AssetsLibrary.framework in Frameworks */,
 				4F22155F19DF549400FF2D26 /* ImageIO.framework in Frameworks */,
 				824A9DA61724C98900C9BD79 /* AddressBook.framework in Frameworks */,
 				824A9DA71724C98900C9BD79 /* AddressBookUI.framework in Frameworks */,
 				824A9DA91724C99800C9BD79 /* AudioToolbox.framework in Frameworks */,
-				4F6D68A2228E2ECF008C8A96 /* SalesforceAnalytics.framework in Frameworks */,
 				824A9DAB1724C9C900C9BD79 /* AVFoundation.framework in Frameworks */,
 				824A9DAD1724C9D100C9BD79 /* CFNetwork.framework in Frameworks */,
 				8236AE821C4DB616004B69B8 /* SalesforceHybridSDK.framework in Frameworks */,
 				824A9DAF1724C9DB00C9BD79 /* CoreData.framework in Frameworks */,
 				824A9BD61721FCA400C9BD79 /* CoreGraphics.framework in Frameworks */,
-				4F6D68AA228E2ECF008C8A96 /* SmartSync.framework in Frameworks */,
-				4F6D689E228E2ECF008C8A96 /* SalesforceSDKCommon.framework in Frameworks */,
 				824A9DB11724CA1400C9BD79 /* CoreLocation.framework in Frameworks */,
 				824A9DB31724CA1C00C9BD79 /* CoreMedia.framework in Frameworks */,
 				824A9BD41721FCA400C9BD79 /* Foundation.framework in Frameworks */,
@@ -616,7 +603,6 @@
 				824A9DBB1724CAB100C9BD79 /* QuartzCore.framework in Frameworks */,
 				824A9DBD1724CAB900C9BD79 /* Security.framework in Frameworks */,
 				824A9DBF1724CAF900C9BD79 /* SystemConfiguration.framework in Frameworks */,
-				4F6D68B2228E2ECF008C8A96 /* SalesforceHybridSDK.framework in Frameworks */,
 				824A9BD21721FCA400C9BD79 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1003,7 +989,7 @@
 		824A9BC61721FCA400C9BD79 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = salesforce.com;
 				TargetAttributes = {
 					824A9BCD1721FCA400C9BD79 = {
