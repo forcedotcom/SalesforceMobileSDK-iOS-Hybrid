@@ -25,7 +25,7 @@ jobs:
         default: "12.4"
     environment:
       DEVICE: << parameters.device >>
-      IOS: << parameters.ios >>
+      IOS_VERSION: << parameters.ios >>
     steps:
       - checkout
       - restore_cache: 
