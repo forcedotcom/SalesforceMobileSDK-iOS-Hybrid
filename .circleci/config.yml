@@ -2,17 +2,25 @@ executors:
   mac:
     working_directory: ~/SalesforceMobileSDK-iOS-Hybrid
     macos:
-      xcode: "10.3.0"
+      xcode: 10.3.0
     shell: /bin/bash --login -eo pipefail
     environment:
       BASH_ENV: ~/.bashrc
-      FASTLANE_SKIP_UPDATE_CHECK: true
+      FASTLANE_SKIP_UPDATE_CHECK: "true"
+      CHRUBY_VER: 2.6.3
+  mac-beta:
+    working_directory: ~/SalesforceMobileSDK-iOS-Hybrid
+    macos:
+      xcode: 11.0.0
+    shell: /bin/bash --login -eo pipefail
+    environment:
+      BASH_ENV: ~/.bashrc
+      FASTLANE_SKIP_UPDATE_CHECK: "true"
       CHRUBY_VER: 2.6.3
 
 version: 2.1
 jobs:
   run-tests:
-    executor: mac
     parameters:
       lib:
         type: string
@@ -23,7 +31,15 @@ jobs:
       ios:
         type: string
         default: "12.4"
+      lane:
+        type: string
+        default: "test"
+      env: 
+        type: executor
+        default: "mac"
+    executor: << parameters.env >> 
     environment:
+      LIB: << parameters.lib >> 
       DEVICE: << parameters.device >>
       IOS_VERSION: << parameters.ios >>
     steps:
@@ -33,34 +49,41 @@ jobs:
       - run: 
           name: Installing gem dependencies
           command:  |
+            npm install shelljs@0.8.3
             ./install.sh
             ./build/pre-build
             chruby ${CHRUBY_VER}
             cd .circleci
-            bundle check || bundle install
-            bundle update
+            bundle check || sudo bundle install
+            sudo bundle update
       - save_cache: 
           key: v5-gems-{{ checksum ".circleci/Gemfile.lock" }}
           paths:
             - /Users/distiller/.gem/ruby/${CHRUBY_VER}
-            - /Users/distiller/.rubies/ruby-2.4.5/lib/ruby/gems/${CHRUBY_VER}
-      - run: 
-          name: Setting up workspace
-          command:  |
-            ./install.sh
-            ./build/pre-build
       - run: 
           name: Compile
           command:  |
             chruby ${CHRUBY_VER}
             cd .circleci
-            fastlane build lib:<< parameters.lib >>
+            bundle exec fastlane build lib:<< parameters.lib >> 
       - run: 
             name: Run Tests
             command:  |
               chruby ${CHRUBY_VER}
               cd .circleci
-              fastlane test lib:<< parameters.lib >>
+              fastlane << parameters.lane >> lib:<< parameters.lib >>
+      - run: 
+          name: Danger Lib
+          command:  |
+            chruby ${CHRUBY_VER}
+            DANGER_GITHUB_API_TOKEN="279a29d75427e4178cef""b7b5b2d7646c540f025a" danger --dangerfile=.circleci/Dangerfile-Lib.rb --danger_id="${LIB}" --verbose
+          background: true
+          when: always
+      - run: 
+          name: Upload code coverage
+          command: bash <(curl -s https://codecov.io/bash) -X gcov -X xcode
+          background: true
+          when: always
       - store_test_results:
           path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/test_output
       - store_artifacts:
@@ -69,10 +92,6 @@ jobs:
       - store_artifacts:
           path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/clangReport
           destination: Static-Analysis
-      - run: 
-          name: Upload code coverage
-          command: bash <(curl -s https://codecov.io/bash) -X gcov -X xcode
-          when: always
 
 workflows:
   version: 2
@@ -81,13 +100,44 @@ workflows:
     jobs:
       - run-tests:
           name: "SalesforceHybridSDK"
+          lane: "PR"
+          filters:
+            branches:
+              only:
+                - /pull.*/
       - run-tests:
           name: "SalesforceFileLogger"
+          lib: "SalesforceFileLogger" 
+          lane: "PR"
+          filters:
+            branches:
+              only:
+                - /pull.*/
+
+  # Cron are on a timezone 8 hours ahead of PST
+  # Build everything at ~9:30pm Sunday/Wednesday Nights
+  hybrid-iOS11:
+    triggers:
+      - schedule:
+          cron: "30 5 * * 1,4"
+          filters:
+            branches:
+              only:
+                - dev
+    jobs:
+      - run-tests:
+          name: "SalesforceHybridSDK iOS 11"
+          device: "iPhone X"
+          ios: "11.4"
+      - run-tests:
+          name: "SalesforceFileLogger iOS 11"
           lib: "SalesforceFileLogger"  
+          device: "iPhone X"
+          ios: "11.4"
 
   # Cron are on a timezone 8 hours ahead of PST
   # Build everything at ~10:30pm Sunday/Wednesday Nights
-  nightly-test-hybrid:
+  hybrid-iOS12:
     triggers:
       - schedule:
           cron: "30 6 * * 1,4"
@@ -97,14 +147,14 @@ workflows:
                 - dev
     jobs:
       - run-tests:
-          name: "SalesforceHybridSDK Nightly"
+          name: "SalesforceHybridSDK iOS 12"
       - run-tests:
-          name: "SalesforceFileLogger Nightly"
+          name: "SalesforceFileLogger iOS 12"
           lib: "SalesforceFileLogger"  
 
   # Cron are on a timezone 8 hours ahead of PST
   # Build everything at ~11:30pm Sunday/Wednesday Nights
-  nightly-test-hybrid-iOS11:
+  hybrid-iOS13:
     triggers:
       - schedule:
           cron: "30 7 * * 1,4"
@@ -114,11 +164,11 @@ workflows:
                 - dev
     jobs:
       - run-tests:
-          name: "SalesforceHybridSDK iOS 11 Nightly"
-          device: "iPhone X"
-          ios: "11.4"
+          name: "SalesforceHybridSDK iOS 13"
+          env: "mac-beta"
+          ios: "13.0"
       - run-tests:
-          name: "SalesforceFileLogger iOS 11 Nightly"
+          name: "SalesforceFileLogger iOS 13"
           lib: "SalesforceFileLogger"  
-          device: "iPhone X"
-          ios: "11.4"
+          env: "mac-beta"
+          ios: "13.0"
