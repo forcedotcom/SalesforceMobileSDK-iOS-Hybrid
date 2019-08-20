@@ -26,12 +26,13 @@ def test_scheme(scheme)
 end
 
 def analyze_scheme(scheme)
-  xcodebuild(
-    xcargs: 'CLANG_ANALYZER_OUTPUT=plist-html CLANG_ANALYZER_OUTPUT_DIR=./clangReport RUN_CLANG_STATIC_ANALYZER=YES',
-    workspace: '../SalesforceMobileSDK-Hybrid.xcworkspace',
-    scheme: scheme,
-    sdk: 'iphonesimulator',
-)
+  begin
+    xcodebuild(
+      xcargs: 'CLANG_ANALYZER_OUTPUT=plist-html CLANG_ANALYZER_OUTPUT_DIR=./clangReport RUN_CLANG_STATIC_ANALYZER=YES',
+      workspace: '../SalesforceMobileSDK-Hybrid.xcworkspace',
+      scheme: scheme,
+      sdk: 'iphonesimulator',
+    )
   ensure
     #move clangReports to one folder
     system('mkdir -p ../clangReport/StaticAnalyzer')
