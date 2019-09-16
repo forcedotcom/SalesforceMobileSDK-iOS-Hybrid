@@ -125,7 +125,7 @@
         }];
         [self.viewController presentViewController:userSwitchVc animated:YES completion:NULL];
     } else if ([[SFUserAccountManager sharedInstance].allUserAccounts count] == 1) {
-        [SFUserAccountManager sharedInstance].currentUser = ([SFUserAccountManager sharedInstance].allUserAccounts)[0];
+        [[SFUserAccountManager sharedInstance] switchToUser:[SFUserAccountManager sharedInstance].allUserAccounts[0]];
         [self initializeAppViewState];
     } else {
         [self initializeAppViewState];

@@ -1,73 +1,89 @@
-aliases:
-  - &restore-gem-cache
-    key: v5-gems-{{ checksum ".circleci/Gemfile.lock" }}
+executors:
+  mac:
+    working_directory: ~/SalesforceMobileSDK-iOS-Hybrid
+    macos:
+      xcode: 10.3.0
+    shell: /bin/bash --login -eo pipefail
+    environment:
+      BASH_ENV: ~/.bashrc
+      FASTLANE_SKIP_UPDATE_CHECK: "true"
+      CHRUBY_VER: 2.6.3
+  mac-beta:
+    working_directory: ~/SalesforceMobileSDK-iOS-Hybrid
+    macos:
+      xcode: 11.0.0
+    shell: /bin/bash --login -eo pipefail
+    environment:
+      BASH_ENV: ~/.bashrc
+      FASTLANE_SKIP_UPDATE_CHECK: "true"
+      CHRUBY_VER: 2.6.3
 
-  - &save-gem-cache
-    key: v5-gems-{{ checksum ".circleci/Gemfile.lock" }}
-    paths:
-      - /Users/distiller/.gem/ruby/${CHRUBY_VER}
-      - /Users/distiller/.rubies/ruby-2.4.5/lib/ruby/gems/${CHRUBY_VER}
-
-  - &setup-workspace
-    name: Setting up workspace
-    command:  |
-      ./install.sh
-      ./build/pre-build
-
-  - &install-gem-dependencies
-    name: Installing gem dependencies
-    command:  |
-      ./install.sh
-      ./build/pre-build
-      chruby ${CHRUBY_VER}
-      cd .circleci
-      sudo gem install bundler
-      bundle check || bundle install
-      bundle update
-
-  - &compile
-    name: Compile
-    command:  |
-      chruby ${CHRUBY_VER}
-      cd .circleci
-      fastlane build lib:${SCHEME}
-
-  - &run-tests
-    name: Run Tests
-    command:  |
-      chruby ${CHRUBY_VER}
-      cd .circleci
-      fastlane test lib:${SCHEME}
-  
-  - &upload-codecov
-    name: Upload code coverage
-    command: bash <(curl -s https://codecov.io/bash) -X gcov -X xcode
-    when: always
-
-defaults: &defaults
-  working_directory: ~/SalesforceMobileSDK-iOS-Hybrid
-  macos:
-    xcode: "10.2.1"
-  shell: /bin/bash --login -eo pipefail
-  environment:
-    BASH_ENV: ~/.bashrc
-    FASTLANE_SKIP_UPDATE_CHECK: true
-    CHRUBY_VER: 2.5.3
-
-version: 2
+version: 2.1
 jobs:
-  SalesforceHybridSDK:
-    <<: *defaults
+  run-tests:
+    parameters:
+      lib:
+        type: string
+        default: "SalesforceHybridSDK"
+      device:
+        type: string
+        default: "iPhone XR"
+      ios:
+        type: string
+        default: "12.4"
+      lane:
+        type: string
+        default: "test"
+      env: 
+        type: executor
+        default: "mac"
+    executor: << parameters.env >> 
     environment:
-      - SCHEME: "SalesforceHybridSDK"
+      LIB: << parameters.lib >> 
+      DEVICE: << parameters.device >>
+      IOS_VERSION: << parameters.ios >>
     steps:
       - checkout
-      - restore_cache: *restore-gem-cache
-      - run: *install-gem-dependencies
-      - save_cache: *save-gem-cache
-      - run: *setup-workspace
-      - run: *compile
-      - run: *run-tests
+      - restore_cache: 
+          key: v5-gems-{{ checksum ".circleci/Gemfile.lock" }}
+      - run: 
+          name: Installing gem dependencies
+          command:  |
+            npm install shelljs@0.8.3
+            ./install.sh
+            ./build/pre-build
+            chruby ${CHRUBY_VER}
+            cd .circleci
+            bundle check || sudo bundle install
+            sudo bundle update
+      - save_cache: 
+          key: v5-gems-{{ checksum ".circleci/Gemfile.lock" }}
+          paths:
+            - /Users/distiller/.gem/ruby/${CHRUBY_VER}
+      - run: 
+          name: Compile
+          command:  |
+            chruby ${CHRUBY_VER}
+            cd .circleci
+            bundle exec fastlane build lib:<< parameters.lib >> 
+      - run: 
+            name: Run Tests
+            command:  |
+              chruby ${CHRUBY_VER}
+              cd .circleci
+              fastlane << parameters.lane >> lib:<< parameters.lib >>
+      - run: 
+          name: Danger Lib
+          command:  |
+            chruby ${CHRUBY_VER}
+            DANGER_GITHUB_API_TOKEN="279a29d75427e4178cef""b7b5b2d7646c540f025a" danger --dangerfile=.circleci/Dangerfile-Lib.rb --danger_id="${LIB}" --verbose
+          background: true
+          when: always
+      - run: 
+          name: Upload code coverage
+          command: bash <(curl -s https://codecov.io/bash) -X gcov -X xcode
+          background: true
+          when: always
       - store_test_results:
           path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/test_output
       - store_artifacts:
@@ -76,41 +92,52 @@ jobs:
       - store_artifacts:
           path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/clangReport
           destination: Static-Analysis
-      - run: *upload-codecov
-
-  SalesforceFileLogger:
-    <<: *defaults
-    environment:
-      - SCHEME: "SalesforceFileLogger"
-    steps:
-      - checkout
-      - restore_cache: *restore-gem-cache
-      - run: *install-gem-dependencies
-      - save_cache: *save-gem-cache
-      - run: *setup-workspace
-      - run: *compile
-      - run: *run-tests
-      - store_test_results:
-          path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/test_output
-      - store_artifacts:
-          path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/test_output
-          destination: Test-Results
-      - store_artifacts:
-          path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/clangReport
-          destination: Static-Analysis
-      - run: *upload-codecov
 
 workflows:
   version: 2
 
   pr-test-hybrid:
     jobs:
-      - SalesforceHybridSDK
-      - SalesforceFileLogger
+      - run-tests:
+          name: "SalesforceHybridSDK"
+          lane: "PR"
+          filters:
+            branches:
+              only:
+                - /pull.*/
+      - run-tests:
+          name: "SalesforceFileLogger"
+          lib: "SalesforceFileLogger" 
+          lane: "PR"
+          filters:
+            branches:
+              only:
+                - /pull.*/
+
+  # Cron are on a timezone 8 hours ahead of PST
+  # Build everything at ~9:30pm Sunday/Wednesday Nights
+  hybrid-iOS11:
+    triggers:
+      - schedule:
+          cron: "30 5 * * 1,4"
+          filters:
+            branches:
+              only:
+                - dev
+    jobs:
+      - run-tests:
+          name: "SalesforceHybridSDK iOS 11"
+          device: "iPhone X"
+          ios: "11.4"
+      - run-tests:
+          name: "SalesforceFileLogger iOS 11"
+          lib: "SalesforceFileLogger"  
+          device: "iPhone X"
+          ios: "11.4"
 
   # Cron are on a timezone 8 hours ahead of PST
   # Build everything at ~10:30pm Sunday/Wednesday Nights
-  weekly-test-hybrid:
+  hybrid-iOS12:
     triggers:
       - schedule:
           cron: "30 6 * * 1,4"
@@ -119,12 +146,15 @@ workflows:
               only:
                 - dev
     jobs:
-      - SalesforceHybridSDK
-      - SalesforceFileLogger
+      - run-tests:
+          name: "SalesforceHybridSDK iOS 12"
+      - run-tests:
+          name: "SalesforceFileLogger iOS 12"
+          lib: "SalesforceFileLogger"  
 
   # Cron are on a timezone 8 hours ahead of PST
   # Build everything at ~11:30pm Sunday/Wednesday Nights
-  weekly-test-hybrid-iOS11:
+  hybrid-iOS13:
     triggers:
       - schedule:
           cron: "30 7 * * 1,4"
@@ -133,7 +163,12 @@ workflows:
               only:
                 - dev
     jobs:
-      - SalesforceHybridSDK:
-            context: nightly-test11
-      - SalesforceFileLogger:
-            context: nightly-test11
+      - run-tests:
+          name: "SalesforceHybridSDK iOS 13"
+          env: "mac-beta"
+          ios: "13.0"
+      - run-tests:
+          name: "SalesforceFileLogger iOS 13"
+          lib: "SalesforceFileLogger"  
+          env: "mac-beta"
+          ios: "13.0"

@@ -1,33 +1,83 @@
+$git_pr_api = "https://api.github.com/repos/%s/SalesforceMobileSDK-iOS-Hybrid/pulls/%s/files"
+$schemes = ['SalesforceHybridSDK', 'SalesforceFileLogger']
 ENV['DEVICE'] = 'iPhone Xʀ' unless ENV.has_key?('DEVICE')
-ENV['IOS_VERSION'] = '12.2' unless ENV.has_key?('IOS_VERSION')
+ENV['IOS_VERSION'] = '12.4' unless ENV.has_key?('IOS_VERSION')
 
 lane :build do |options|
-    scheme = options[:lib]
-    analyze_scheme(scheme)
+  scheme = options[:lib]
+  analyze_scheme(scheme)
 end
 
 lane :test do |options|
-    scheme = options[:lib]
-    test_scheme(scheme)
+  scheme = options[:lib]
+  test_scheme(scheme)
 end
 
 def test_scheme(scheme)
   scan(
-      workspace: '../SalesforceMobileSDK-Hybrid.xcworkspace',
-      scheme: scheme,
-      device: ENV['DEVICE'] + ' (' + ENV['IOS_VERSION'] + ')',
-      output_directory: 'test_output',
-      output_types: 'html,junit',
-      code_coverage: true,
-      skip_build: true
+    workspace: '../SalesforceMobileSDK-Hybrid.xcworkspace',
+    scheme: scheme,
+    device: ENV['DEVICE'] + ' (' + ENV['IOS_VERSION'] + ')',
+    output_directory: 'test_output',
+    output_types: 'html,junit',
+    code_coverage: true,
+    skip_build: true
   )
 end
 
 def analyze_scheme(scheme)
+  begin
     xcodebuild(
-        xcargs: 'CLANG_ANALYZER_OUTPUT=plist-html CLANG_ANALYZER_OUTPUT_DIR=./clangReport RUN_CLANG_STATIC_ANALYZER=YES',
-        workspace: '../SalesforceMobileSDK-Hybrid.xcworkspace',
-        scheme: scheme,
-        sdk: 'iphonesimulator',
+      xcargs: 'CLANG_ANALYZER_OUTPUT=plist-html CLANG_ANALYZER_OUTPUT_DIR=./clangReport RUN_CLANG_STATIC_ANALYZER=YES',
+      workspace: '../SalesforceMobileSDK-Hybrid.xcworkspace',
+      scheme: scheme,
+      sdk: 'iphonesimulator',
     )
+  ensure
+    #move clangReports to one folder
+    system('mkdir -p ../clangReport/StaticAnalyzer')
+    system('mv ../libs/SalesforceHybridSDK/clangReport/StaticAnalyzer/SalesforceHybridSDK ../clangReport/StaticAnalyzer/')
+    system('mv ../libs/SalesforceFileLogger/clangReport/StaticAnalyzer/SalesforceFileLogger ../clangReport/StaticAnalyzer/')
+  end
+end
+
+lane :PR do |options|
+  lib_to_test = options[:lib]
+  Dir.chdir('../')
+  schemes = Set.new
+  
+  # Check if this is a PR.
+  # Rebuilds of PR's don't have the CIRCLE_PULL_REQUEST key, so check the branch instead.
+  if ENV.has_key?('CIRCLE_BRANCH') && ENV['CIRCLE_BRANCH'].include?('pull/')
+    # No PR Number indicates that this PR is running in a CircleCI env linked to a fork, so force the url to forcedotcom project.
+    if ENV.has_key?('CIRCLE_PR_NUMBER')
+      pr_files_api = $git_pr_api % [ENV['CIRCLE_PROJECT_USERNAME'], ENV['CIRCLE_PR_NUMBER']]
+    else
+      pr_files_api = $git_pr_api % ['forcedotcom', ENV['CIRCLE_BRANCH'].split('/').last]
+    end
+    pull_files = `#{"curl %s" % [pr_files_api]}`
+  else
+    UI.error 'Not a PR on CircleCI, stopping stop execution now.'
+    `circleci step halt`
+    next
+  end
+
+  # Determine which libs have been modified
+  pr_files = JSON.parse(pull_files)
+  for pr_file in pr_files
+  path = pr_file['filename']
+    for scheme in $schemes
+      if path.include? scheme
+        schemes.add(scheme)
+      end
+    end
+  end
+  UI.important "Schemes to test: " + schemes.to_a().join(',')
+
+  if schemes.include? lib_to_test
+    test_scheme(lib_to_test)
+  else
+    UI.important "Lib #{lib_to_test} not modified by this PR, no need to test."
+    `circleci step halt`
+  end
 end
