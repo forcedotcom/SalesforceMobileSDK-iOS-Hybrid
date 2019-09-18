@@ -643,10 +643,6 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
     NSArray *redactParams = @[@"sid"];
     NSString *redactedUrl = [requestUrl redactedAbsoluteString:redactParams];
     [SFSDKHybridLogger d:[self class] format:@"finishLoadActions: Loaded %@", redactedUrl];
-    if ([webView isEqual:self.vfPingPageHiddenWKWebView]) {
-        [SFSDKHybridLogger d:[self class] format:@"Finished loading VF ping page '%@'.", redactedUrl];
-        return;
-    }
     if ([webView isEqual:self.webView]) {
 
         /*
