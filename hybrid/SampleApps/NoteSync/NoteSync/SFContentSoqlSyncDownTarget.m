@@ -23,9 +23,9 @@
  */
 
 #import "SFContentSoqlSyncDownTarget.h"
-#import <SmartSync/SFSmartSyncSyncManager.h>
-#import <SmartSync/SFSmartSyncConstants.h>
-#import <SmartSync/SFSmartSyncNetworkUtils.h>
+#import <MobileSync/SFMobileSyncSyncManager.h>
+#import <MobileSync/SFMobileSyncConstants.h>
+#import <MobileSync/SFMobileSyncNetworkUtils.h>
 #import <SalesforceSDKCore/SFOAuthCredentials.h>
 
 // SOAP request
@@ -231,7 +231,7 @@ typedef void (^SFSoapSoqlResponseParseComplete) ();
 
 # pragma mark - Data fetching
 
-- (void) startFetch:(SFSmartSyncSyncManager*)syncManager
+- (void) startFetch:(SFMobileSyncSyncManager*)syncManager
        maxTimeStamp:(long long)maxTimeStamp
          errorBlock:(SFSyncDownTargetFetchErrorBlock)errorBlock
       completeBlock:(SFSyncDownTargetFetchCompleteBlock)completeBlock
@@ -243,7 +243,7 @@ typedef void (^SFSoapSoqlResponseParseComplete) ();
         errorBlock(e);
     } completeBlock:^(NSDictionary* d, NSURLResponse *rawResponse) { // cheap call to refresh session
         SFRestRequest* request = [[SFSoapSoqlRequest alloc] initWithQuery:queryToRun];
-        [SFSmartSyncNetworkUtils sendRequestWithSmartSyncUserAgent:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
+        [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
             errorBlock(e);
         } completeBlock:^(NSData * response, NSURLResponse *rawResponse) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -257,14 +257,14 @@ typedef void (^SFSoapSoqlResponseParseComplete) ();
     }];
 }
 
-- (void) continueFetch:(SFSmartSyncSyncManager *)syncManager
+- (void) continueFetch:(SFMobileSyncSyncManager *)syncManager
             errorBlock:(SFSyncDownTargetFetchErrorBlock)errorBlock
          completeBlock:(SFSyncDownTargetFetchCompleteBlock)completeBlock
 {
     if (self.queryLocator) {
         __weak typeof(self) weakSelf = self;
         SFSoapSoqlRequest* request = [[SFSoapSoqlRequest alloc] initWithQueryLocator:self.queryLocator];
-        [SFSmartSyncNetworkUtils sendRequestWithSmartSyncUserAgent:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
+        [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
             errorBlock(e);
         } completeBlock:^(NSData *response, NSURLResponse *rawResponse) {
             __strong typeof(weakSelf) strongSelf = weakSelf;

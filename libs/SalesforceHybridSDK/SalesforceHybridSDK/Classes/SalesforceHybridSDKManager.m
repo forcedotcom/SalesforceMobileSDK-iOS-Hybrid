@@ -32,7 +32,7 @@
 
 @end
 
-@interface SmartSyncSDKManager ()
+@interface MobileSyncSDKManager ()
 
 - (NSString*) pathForGlobalSyncsConfig;
 - (NSString*) pathForUserSyncsConfig;

@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'SmartSyncExplorerHybrid' target in the 'SmartSyncExplorerHybrid' project
+// Prefix header for all source files of the 'MobileSyncExplorerHybrid' target in the 'MobileSyncExplorerHybrid' project
 //
 
 #import <Availability.h>

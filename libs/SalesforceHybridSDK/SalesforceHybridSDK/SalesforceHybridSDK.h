@@ -29,7 +29,7 @@
 
 #import <SalesforceHybridSDK/SFSDKHybridLogger.h>
 #import <SalesforceHybridSDK/SalesforceOAuthPlugin.h>
-#import <SalesforceHybridSDK/SFSmartSyncPlugin.h>
+#import <SalesforceHybridSDK/SFMobileSyncPlugin.h>
 #import <SalesforceHybridSDK/SFForcePlugin.h>
 #import <SalesforceHybridSDK/SFHybridViewController.h>
 #import <SalesforceHybridSDK/SalesforceHybridSDKManager.h>

@@ -31,23 +31,23 @@
 #import "SFTestRunnerPlugin.h"
 #import "SFPluginTestSuite.h"
 
-@interface SmartSyncTestSuite : SFPluginTestSuite
+@interface MobileSyncTestSuite : SFPluginTestSuite
 @end
 
-@implementation SmartSyncTestSuite
+@implementation MobileSyncTestSuite
 
 - (void)setUp
 {
     [super setUp];
-    self.jsSuiteName = @"SmartSyncTestSuite";
+    self.jsSuiteName = @"MobileSyncTestSuite";
     if ([self isTestRunnerReady]) {
         [SFSmartStore removeAllStores];
         [SFSmartStore removeAllGlobalStores];
         AppDelegate *appDelegate = (AppDelegate *)[SFApplicationHelper sharedApplication].delegate;
         SFSmartStorePlugin *smartstorePlugin = [appDelegate.viewController.commandDelegate getCommandInstance:kSmartStorePluginIdentifier];
         [smartstorePlugin resetCursorCaches];
-        SFSmartSyncPlugin *smartsyncPlugin = [appDelegate.viewController.commandDelegate getCommandInstance:kSmartSyncPluginIdentifier];
-        [smartsyncPlugin resetSyncManager];
+        SFMobileSyncPlugin *mobilesyncPlugin = [appDelegate.viewController.commandDelegate getCommandInstance:kMobileSyncPluginIdentifier];
+        [mobilesyncPlugin resetSyncManager];
     }
 }
 

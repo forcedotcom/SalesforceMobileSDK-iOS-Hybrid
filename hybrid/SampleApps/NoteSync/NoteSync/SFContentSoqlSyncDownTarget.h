@@ -23,7 +23,7 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
 */
 
 #import <Foundation/Foundation.h>
-#import <SmartSync/SFSoqlSyncDownTarget.h>
+#import <MobileSync/SFSoqlSyncDownTarget.h>
 
 @interface SFContentSoqlSyncDownTarget : SFSoqlSyncDownTarget
 
