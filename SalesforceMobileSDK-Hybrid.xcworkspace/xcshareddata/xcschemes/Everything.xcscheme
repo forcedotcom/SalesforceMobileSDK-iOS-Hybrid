@@ -71,9 +71,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "824A9BCD1721FCA400C9BD79"
-               BuildableName = "SmartSyncExplorerHybrid.app"
-               BlueprintName = "SmartSyncExplorerHybrid"
-               ReferencedContainer = "container:hybrid/SampleApps/SmartSyncExplorerHybrid/SmartSyncExplorerHybrid.xcodeproj">
+               BuildableName = "MobileSyncExplorerHybrid.app"
+               BlueprintName = "MobileSyncExplorerHybrid"
+               ReferencedContainer = "container:hybrid/SampleApps/MobileSyncExplorerHybrid/MobileSyncExplorerHybrid.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry

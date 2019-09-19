@@ -17,7 +17,7 @@
 
     <target name="buildAll" />
 
-    <target name="libPackages" depends="packageSalesforceSDKCommon, packageSalesforceAnalytics, packageSmartSync, packageSmartStore, packageSalesforceHybridSDK, packageSalesforceSDKCore" />
+    <target name="libPackages" depends="packageSalesforceSDKCommon, packageSalesforceAnalytics, packageMobileSync, packageSmartStore, packageSalesforceHybridSDK, packageSalesforceSDKCore" />
 
     <target name="packageSalesforceHybridSDK" depends="buildSalesforceHybridSDK" description="Packages and builds the Salesforce Hybrid SDK library.">
         <antcall target="packageLib">
@@ -45,29 +45,29 @@
         </antcall>
     </target>
     
-    <target name="packageSmartSync" depends="buildSmartSync" description="Packages and builds the Salesforce SmartSync library.">
+    <target name="packageMobileSync" depends="buildMobileSync" description="Packages and builds the Salesforce MobileSync library.">
         <antcall target="packageLib">
-            <param name="projectName" value="SmartSync" />
-            <param name="libName" value="libSmartSync.a" />
-            <param name="headerDir" value="Headers/SmartSync" />
+            <param name="projectName" value="MobileSync" />
+            <param name="libName" value="libMobileSync.a" />
+            <param name="headerDir" value="Headers/MobileSync" />
         </antcall>
     </target>
     
-    <target name="buildSmartSync">
+    <target name="buildMobileSync">
         <antcall target="buildLib">
-            <param name="projectName" value="SmartSync" />
-            <param name="libName" value="libSmartSync.a" />
-            <param name="headerDir" value="Headers/SmartSync" />
-            <param name="schemeName" value="SmartSyncStatic" />
+            <param name="projectName" value="MobileSync" />
+            <param name="libName" value="libMobileSync.a" />
+            <param name="headerDir" value="Headers/MobileSync" />
+            <param name="schemeName" value="MobileSyncStatic" />
         </antcall>
     </target>
     
-    <target name="cleanSmartSync" description="Cleans the build artifacts and output of the Salesforce SmartSync library.">
+    <target name="cleanMobileSync" description="Cleans the build artifacts and output of the Salesforce MobileSync library.">
         <antcall target="cleanLib">
-            <param name="projectName" value="SmartSync" />
-            <param name="libName" value="libSmartSync.a" />
-            <param name="headerDir" value="Headers/SmartSync" />
-            <param name="schemeName" value="SmartSyncStatic" />
+            <param name="projectName" value="MobileSync" />
+            <param name="libName" value="libMobileSync.a" />
+            <param name="headerDir" value="Headers/MobileSync" />
+            <param name="schemeName" value="MobileSyncStatic" />
         </antcall>
     </target>
     
@@ -321,7 +321,7 @@
         </exec>
     </target>
     
-    <target name="clean" description="Cleans the build state." depends="cleanSalesforceSDKCommon, cleanSalesforceAnalytics, cleanSmartSync, cleanSmartStore, cleanSalesforceHybridSDK, cleanSalesforceSDKCore">
+    <target name="clean" description="Cleans the build state." depends="cleanSalesforceSDKCommon, cleanSalesforceAnalytics, cleanMobileSync, cleanSmartStore, cleanSalesforceHybridSDK, cleanSalesforceSDKCore">
         <delete dir="${artifactsDir}" />
     </target>
 </project>

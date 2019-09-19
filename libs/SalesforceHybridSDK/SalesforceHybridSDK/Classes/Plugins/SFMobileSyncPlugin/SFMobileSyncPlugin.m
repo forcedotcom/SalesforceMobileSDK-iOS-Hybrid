@@ -22,15 +22,15 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "SFSmartSyncPlugin.h"
+#import "SFMobileSyncPlugin.h"
 #import "CDVPlugin+SFAdditions.h"
 #import "SFSDKHybridLogger.h"
 #import <SalesforceSDKCore/NSDictionary+SFAdditions.h>
 #import <SmartStore/SFSmartStore.h>
-#import <SmartSync/SFSmartSyncSyncManager.h>
+#import <MobileSync/SFMobileSyncSyncManager.h>
 
 // NOTE: must match value in Cordova's config.xml file.
-NSString * const kSmartSyncPluginIdentifier = @"com.salesforce.smartsync";
+NSString * const kMobileSyncPluginIdentifier = @"com.salesforce.mobilesync";
 
 // Private constants.
 NSString *const kSyncSoupNameArg = @"soupName";
@@ -43,11 +43,11 @@ NSString *const kSyncDetail = @"detail";
 NSString *const kSyncIsGlobalStoreArg = @"isGlobalStore";
 NSString *const kSyncStoreNameArg = @"storeName";
 
-@implementation SFSmartSyncPlugin
+@implementation SFMobileSyncPlugin
 
 - (void) resetSyncManager
 {
-    [SFSmartSyncSyncManager removeSharedInstances];
+    [SFMobileSyncSyncManager removeSharedInstances];
 }
 
 - (void) handleSyncUpdate:(SFSyncState*)sync withArgs:(NSDictionary *)args
@@ -249,12 +249,12 @@ NSString *const kSyncStoreNameArg = @"storeName";
     return store;
 }
 
-- (SFSmartSyncSyncManager *)getSyncManagerInst:(NSDictionary *)args
+- (SFMobileSyncSyncManager *)getSyncManagerInst:(NSDictionary *)args
 {
     NSString *storeName = [self storeName:args];
     BOOL isGlobal = [self isGlobal:args];
     SFSmartStore *storeInst = [self storeWithName:storeName isGlobal:isGlobal];
-    return [SFSmartSyncSyncManager sharedInstanceForStore:storeInst];
+    return [SFMobileSyncSyncManager sharedInstanceForStore:storeInst];
 }
 
 - (NSString *)storeName:(NSDictionary *)args

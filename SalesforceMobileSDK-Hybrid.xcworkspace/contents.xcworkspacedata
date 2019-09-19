@@ -45,7 +45,7 @@
          location = "group:external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCore/SalesforceSDKCore.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:external/SalesforceMobileSDK-iOS/libs/SmartSync/SmartSync.xcodeproj">
+         location = "group:external/SalesforceMobileSDK-iOS/libs/MobileSync/MobileSync.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:external/SalesforceMobileSDK-iOS/libs/SmartStore/SmartStore.xcodeproj">
@@ -64,7 +64,7 @@
          location = "group:hybrid/SampleApps/NoteSync/NoteSync.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:hybrid/SampleApps/SmartSyncExplorerHybrid/SmartSyncExplorerHybrid.xcodeproj">
+         location = "group:hybrid/SampleApps/MobileSyncExplorerHybrid/MobileSyncExplorerHybrid.xcodeproj">
       </FileRef>
    </Group>
    <Group
