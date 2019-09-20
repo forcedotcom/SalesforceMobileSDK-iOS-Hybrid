@@ -83,7 +83,7 @@ NSString *const kSyncStoreNameArg = @"storeName";
     });
 }
 
-#pragma mark - Smart sync plugin methods
+#pragma mark - Mobile sync plugin methods
 
 - (void) getSyncStatus:(CDVInvokedUrlCommand *)command
 {
