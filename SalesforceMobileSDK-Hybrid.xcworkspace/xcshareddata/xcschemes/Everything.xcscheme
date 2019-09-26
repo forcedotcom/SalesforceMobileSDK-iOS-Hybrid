@@ -132,34 +132,6 @@
                ReferencedContainer = "container:libs/SalesforceHybridSDK/SalesforceHybridSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEA884421C191795008D871B"
-               BuildableName = "libSalesforceFileLogger.a"
-               BlueprintName = "SalesforceFileLoggerStatic"
-               ReferencedContainer = "container:libs/SalesforceFileLogger/SalesforceFileLogger.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEA884421C191795008D871B"
-               BuildableName = "libSalesforceHybridSDK.a"
-               BlueprintName = "SalesforceHybridSDKStatic"
-               ReferencedContainer = "container:libs/SalesforceHybridSDK/SalesforceHybridSDK.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
