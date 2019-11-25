@@ -119,12 +119,12 @@ workflows:
       - run-tests:
           name: "SalesforceHybridSDK iOS 12"
           ios: "12.2"
-          device: "iPhone XR"
+          device: "iPhone 8"
       - run-tests:
           name: "SalesforceFileLogger iOS 12"
           lib: "SalesforceFileLogger"  
           ios: "12.2"
-          device: "iPhone XR"
+          device: "iPhone 8"
 
   # Cron are on a timezone 8 hours ahead of PST
   # Build everything at ~11:30pm Sunday/Wednesday Nights
