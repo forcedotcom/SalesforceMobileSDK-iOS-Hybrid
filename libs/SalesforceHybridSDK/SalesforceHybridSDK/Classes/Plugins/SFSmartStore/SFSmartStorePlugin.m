@@ -37,6 +37,8 @@
 #import <Cordova/CDVPluginResult.h>
 #import <Cordova/CDVInvokedUrlCommand.h>
 
+static BOOL _useQueryAsString = YES;
+
 // NOTE: must match value in Cordova's config.xml file
 NSString * const kSmartStorePluginIdentifier = @"com.salesforce.smartstore";
 
@@ -103,6 +105,10 @@ NSString * const kStoreName           = @"storeName";
 @end
 
 @implementation SFSmartStorePlugin
+
++ (void)setUseQueryAsString:(BOOL)useQueryAsString {
+    _useQueryAsString = useQueryAsString;
+}
 
 - (void)resetCursorCaches
 {
@@ -204,18 +210,33 @@ NSString * const kStoreName           = @"storeName";
         [SFSDKHybridLogger d:[self class] format:@"pgQuerySoup with name: %@, querySpec: %@", soupName, querySpecDict];
         SFSmartStore* store = [self getStoreInst:argsDict];
         NSError* error = nil;
+        CDVPluginResult* pluginResult;
         SFStoreCursor* cursor = [[SFStoreCursor alloc] initWithStore:store querySpec:querySpec];
-        NSString* cursorSerialized = [cursor getDataSerialized:store error:&error];
+        
+        if (_useQueryAsString) {
+            NSString* cursorSerialized = [cursor getDataSerialized:store error:&error];
+            if (error == nil) {
+                pluginResult = [CDVPluginResultWithSerializedMessage resultWithStatus:CDVCommandStatus_OK serializedMessage:cursorSerialized];
+            }
+        } else {
+            NSDictionary* cursorDeserialized = [cursor getDataDeserialized:store error:&error];
+            if (error == nil) {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:cursorDeserialized];
+            }
+        }
+        
         if (error == nil) {
             NSString *internalCursorId = [self internalCursorId:cursor.cursorId withArgs:argsDict];
             dispatch_sync(self->_dispatchQueue, ^{
                self.cursorCache[internalCursorId] = cursor;
             });
-            return [CDVPluginResultWithSerializedMessage resultWithStatus:CDVCommandStatus_OK serializedMessage:cursorSerialized];
         } else {
             [SFSDKHybridLogger d:[self class] format:@"No cursor for query: %@", querySpec];
-            return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
         }
+     
+        return pluginResult;
+     
     } command:command];
 }
 

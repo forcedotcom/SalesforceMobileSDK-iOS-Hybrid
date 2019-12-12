@@ -71,9 +71,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "824A9BCD1721FCA400C9BD79"
-               BuildableName = "SmartSyncExplorerHybrid.app"
-               BlueprintName = "SmartSyncExplorerHybrid"
-               ReferencedContainer = "container:hybrid/SampleApps/SmartSyncExplorerHybrid/SmartSyncExplorerHybrid.xcodeproj">
+               BuildableName = "MobileSyncExplorerHybrid.app"
+               BlueprintName = "MobileSyncExplorerHybrid"
+               ReferencedContainer = "container:hybrid/SampleApps/MobileSyncExplorerHybrid/MobileSyncExplorerHybrid.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -129,34 +129,6 @@
                BlueprintIdentifier = "82EFF2FE16E8049500A63CDF"
                BuildableName = "SalesforceHybridSDKTestApp.app"
                BlueprintName = "SalesforceHybridSDKTestApp"
-               ReferencedContainer = "container:libs/SalesforceHybridSDK/SalesforceHybridSDK.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEA884421C191795008D871B"
-               BuildableName = "libSalesforceFileLogger.a"
-               BlueprintName = "SalesforceFileLoggerStatic"
-               ReferencedContainer = "container:libs/SalesforceFileLogger/SalesforceFileLogger.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEA884421C191795008D871B"
-               BuildableName = "libSalesforceHybridSDK.a"
-               BlueprintName = "SalesforceHybridSDKStatic"
                ReferencedContainer = "container:libs/SalesforceHybridSDK/SalesforceHybridSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

@@ -41,7 +41,6 @@
 		CE4CE2E91C0E465B009F6029 /* SalesforceFileLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CEA2A8EA2214C1B1009D923B /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA2A8C72214C184009D923B /* CocoaLumberjack.framework */; };
 		CEA2A8EB2214C1B9009D923B /* SalesforceSDKCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA2A8AC2214C174009D923B /* SalesforceSDKCommon.framework */; };
-		CEA884661C191899008D871B /* SalesforceFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 829DA2B01C12677B0040F5F1 /* SalesforceFileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,13 +78,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = B716A3E4218F6EEA009D407F;
 			remoteInfo = SalesforceSDKCommonTestApp;
-		};
-		CEA2A8B12214C174009D923B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CEA2A8A42214C174009D923B /* SalesforceSDKCommon.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B7686AD921929D3B00D4332A;
-			remoteInfo = SalesforceSDKCommonStatic;
 		};
 		CEA2A8C62214C184009D923B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -165,12 +157,9 @@
 		B7282F4C1D8C717200475F79 /* SalesforceFileLoggerTestApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SalesforceFileLoggerTestApp.entitlements; sourceTree = "<group>"; };
 		CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SalesforceFileLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE8F13061AD4A87200233F2F /* SalesforceFileLogger-Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Common.xcconfig"; path = "Configuration/SalesforceFileLogger-Common.xcconfig"; sourceTree = "<group>"; };
-		CE8F13071AD4A87200233F2F /* SalesforceFileLogger-Static-iOS-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Static-iOS-Debug.xcconfig"; path = "Configuration/SalesforceFileLogger-Static-iOS-Debug.xcconfig"; sourceTree = "<group>"; };
-		CE8F13081AD4A87200233F2F /* SalesforceFileLogger-Static-iOS-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Static-iOS-Release.xcconfig"; path = "Configuration/SalesforceFileLogger-Static-iOS-Release.xcconfig"; sourceTree = "<group>"; };
 		CE8F13091AD4A87200233F2F /* SalesforceFileLogger-Test.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Test.xcconfig"; path = "Configuration/SalesforceFileLogger-Test.xcconfig"; sourceTree = "<group>"; };
 		CEA2A8A42214C174009D923B /* SalesforceSDKCommon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SalesforceSDKCommon.xcodeproj; path = "../../external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCommon/SalesforceSDKCommon.xcodeproj"; sourceTree = "<group>"; };
 		CEA2A8B32214C184009D923B /* Lumberjack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lumberjack.xcodeproj; path = ../../external/CocoaLumberjack/Lumberjack.xcodeproj; sourceTree = "<group>"; };
-		CEA884431C191795008D871B /* libSalesforceFileLogger.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSalesforceFileLogger.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CECB662E1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig"; path = "Configuration/SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig"; sourceTree = "<group>"; };
 		CECB662F1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Dynamic-iOS-Release.xcconfig"; path = "Configuration/SalesforceFileLogger-Dynamic-iOS-Release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -198,13 +187,6 @@
 			files = (
 				CEA2A8EB2214C1B9009D923B /* SalesforceSDKCommon.framework in Frameworks */,
 				CEA2A8EA2214C1B1009D923B /* CocoaLumberjack.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CEA884401C191795008D871B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,7 +230,6 @@
 				82EFF2FF16E8049500A63CDF /* SalesforceFileLoggerTestApp.app */,
 				8222729D19C39F4500FC537E /* SalesforceFileLoggerTests.xctest */,
 				CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */,
-				CEA884431C191795008D871B /* libSalesforceFileLogger.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -342,8 +323,6 @@
 				CECB662E1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig */,
 				CECB662F1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Release.xcconfig */,
 				CE8F13061AD4A87200233F2F /* SalesforceFileLogger-Common.xcconfig */,
-				CE8F13071AD4A87200233F2F /* SalesforceFileLogger-Static-iOS-Debug.xcconfig */,
-				CE8F13081AD4A87200233F2F /* SalesforceFileLogger-Static-iOS-Release.xcconfig */,
 				CE8F13091AD4A87200233F2F /* SalesforceFileLogger-Test.xcconfig */,
 			);
 			name = Configuration;
@@ -355,7 +334,6 @@
 				CEA2A8AC2214C174009D923B /* SalesforceSDKCommon.framework */,
 				CEA2A8AE2214C174009D923B /* SalesforceSDKCommonTests.xctest */,
 				CEA2A8B02214C174009D923B /* SalesforceSDKCommonTestApp.app */,
-				CEA2A8B22214C174009D923B /* libSalesforceSDKCommon.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -381,14 +359,6 @@
 				4FAE62EC21966E8A003A5CD6 /* SFSDKLogger.h in Headers */,
 				829DA2B11C12677B0040F5F1 /* SalesforceFileLogger.h in Headers */,
 				4FAE62EB21966E8A003A5CD6 /* SFSDKLogFileManager.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CEA884511C19180A008D871B /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CEA884661C191899008D871B /* SalesforceFileLogger.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,23 +423,6 @@
 			productReference = CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		CEA884421C191795008D871B /* SalesforceFileLoggerStatic */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CEA884501C191796008D871B /* Build configuration list for PBXNativeTarget "SalesforceFileLoggerStatic" */;
-			buildPhases = (
-				CEA8843F1C191795008D871B /* Sources */,
-				CEA884401C191795008D871B /* Frameworks */,
-				CEA884511C19180A008D871B /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SalesforceFileLoggerStatic;
-			productName = SalesforceFileLoggerStatic;
-			productReference = CEA884431C191795008D871B /* libSalesforceFileLogger.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -491,9 +444,6 @@
 						};
 					};
 					CE4CE2E01C0E465B009F6029 = {
-						CreatedOnToolsVersion = 7.1;
-					};
-					CEA884421C191795008D871B = {
 						CreatedOnToolsVersion = 7.1;
 					};
 				};
@@ -524,7 +474,6 @@
 				82EFF2FE16E8049500A63CDF /* SalesforceFileLoggerTestApp */,
 				8222729C19C39F4500FC537E /* SalesforceFileLoggerTests */,
 				2DE48CC018BFA941008345C7 /* Documentation */,
-				CEA884421C191795008D871B /* SalesforceFileLoggerStatic */,
 			);
 		};
 /* End PBXProject section */
@@ -549,13 +498,6 @@
 			fileType = wrapper.application;
 			path = SalesforceSDKCommonTestApp.app;
 			remoteRef = CEA2A8AF2214C174009D923B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CEA2A8B22214C174009D923B /* libSalesforceSDKCommon.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSalesforceSDKCommon.a;
-			remoteRef = CEA2A8B12214C174009D923B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CEA2A8C72214C184009D923B /* CocoaLumberjack.framework */ = {
@@ -677,13 +619,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CEA8843F1C191795008D871B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -724,7 +659,7 @@
 		2DE48CC118BFA941008345C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -732,7 +667,7 @@
 		2DE48CC218BFA941008345C7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -760,7 +695,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "SalesforceFileLoggerTests/SalesforceFileLoggerTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -792,7 +727,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "SalesforceFileLoggerTests/SalesforceFileLoggerTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -849,7 +784,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -892,7 +827,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -911,7 +846,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "SalesforceFileLoggerTestApp/SalesforceFileLoggerTestApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -941,7 +876,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "SalesforceFileLoggerTestApp/SalesforceFileLoggerTestApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -972,7 +907,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -990,7 +925,7 @@
 				HEADER_SEARCH_PATHS = "$(OBJROOT)/UninstalledProducts/$(PLATFORM_NAME)/include";
 				INFOPLIST_FILE = SalesforceFileLogger/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1038,7 +973,7 @@
 				HEADER_SEARCH_PATHS = "$(OBJROOT)/UninstalledProducts/$(PLATFORM_NAME)/include";
 				INFOPLIST_FILE = SalesforceFileLogger/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1051,71 +986,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		CEA884491C191796008D871B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE8F13071AD4A87200233F2F /* SalesforceFileLogger-Static-iOS-Debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lxml2",
-					"-lz",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceFileLogger;
-				PRODUCT_NAME = SalesforceFileLogger;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		CEA8844A1C191796008D871B /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE8F13081AD4A87200233F2F /* SalesforceFileLogger-Static-iOS-Release.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lxml2",
-					"-lz",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceFileLogger;
-				PRODUCT_NAME = SalesforceFileLogger;
-				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -1163,15 +1033,6 @@
 			buildConfigurations = (
 				CE4CE2EA1C0E465C009F6029 /* Debug */,
 				CE4CE2EB1C0E465C009F6029 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CEA884501C191796008D871B /* Build configuration list for PBXNativeTarget "SalesforceFileLoggerStatic" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CEA884491C191796008D871B /* Debug */,
-				CEA8844A1C191796008D871B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

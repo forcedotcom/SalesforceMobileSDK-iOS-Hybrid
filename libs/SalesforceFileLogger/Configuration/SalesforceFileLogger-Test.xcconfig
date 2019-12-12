@@ -6,5 +6,4 @@
 //  Copyright (c) 2018-present, salesforce.com. All rights reserved.
 //
 
-#include "../../../external/SalesforceMobileSDK-iOS/configuration/Common-Test.xcconfig"
 #include "SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig"

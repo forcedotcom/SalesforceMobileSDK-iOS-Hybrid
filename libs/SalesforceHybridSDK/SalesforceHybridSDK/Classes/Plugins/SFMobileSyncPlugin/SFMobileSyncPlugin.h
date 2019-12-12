@@ -31,9 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * String used with Cordova to uniquely identify this plugin.
  */
-extern NSString * const kSmartSyncPluginIdentifier;
+extern NSString * const kMobileSyncPluginIdentifier;
 
-@interface SFSmartSyncPlugin : SFForcePlugin
+@interface SFMobileSyncPlugin : SFForcePlugin
 
 /**
  * Used for unit testing purposes only: allows the shared sync manager instance to be reset.
@@ -41,35 +41,35 @@ extern NSString * const kSmartSyncPluginIdentifier;
 - (void)resetSyncManager;
 
 /**
- * Return details about a sync operation previously created. See [SFSmartSyncSyncManager:getSyncStatus].
+ * Return details about a sync operation previously created. See [SFMobileSyncSyncManager:getSyncStatus].
  *
  * @param command Cordova arguments object containing "syncId".
  */
 - (void)getSyncStatus:(CDVInvokedUrlCommand *)command;
 
 /**
- * Starts a sync up operation. See [SFSmartSyncSyncManager syncUp].
+ * Starts a sync up operation. See [SFMobileSyncSyncManager syncUp].
  *
  * @param command Cordova arguments object containing "soupName" and "options".
  */
 - (void)syncUp:(CDVInvokedUrlCommand *)command;
 
 /**
- * Starts a sync down operation. See [SFSmartSyncSyncManager syncDown].
+ * Starts a sync down operation. See [SFMobileSyncSyncManager syncDown].
  *
  * @param command Cordova arguments object containing "soupName", "target" and "options".
  */
 - (void)syncDown:(CDVInvokedUrlCommand *)command;
 
 /**
- * Starts a re-sync operation. See [SFSmartSyncSyncManager reSync].
+ * Starts a re-sync operation. See [SFMobileSyncSyncManager reSync].
  *
  * @param command Cordova arguments object containing "syncId".
  */
 - (void)reSync:(CDVInvokedUrlCommand *)command;
 
 /**
- * Starts a ghost record clean operation. See [SFSmartSyncSyncManager cleanResyncGhosts].
+ * Starts a ghost record clean operation. See [SFMobileSyncSyncManager cleanResyncGhosts].
  *
  * @param command Cordova arguments object containing "syncId".
  */
