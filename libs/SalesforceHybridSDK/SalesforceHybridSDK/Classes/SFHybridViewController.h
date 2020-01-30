@@ -49,6 +49,8 @@ extern NSString * const kOrgIdCredentialsDictKey;
 extern NSString * const kLoginUrlCredentialsDictKey;
 extern NSString * const kInstanceUrlCredentialsDictKey;
 extern NSString * const kUserAgentCredentialsDictKey;
+extern NSString * const kCommunityIdCredentialsDictKey;
+extern NSString * const kCommunityUrlCredentialsDictKey;
 
 /**
  Callback block definition for OAuth plugin auth success.
