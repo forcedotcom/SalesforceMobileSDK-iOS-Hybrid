@@ -121,13 +121,13 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
     __weak typeof(self) weakSelf = self;
     SFRestAPI *restApiInstance = doesNotRequireAuthentication ? [SFRestAPI sharedGlobalInstance] : [SFRestAPI sharedInstance];
     
-    [restApiInstance sendRESTRequest:request
-                                      failBlock:^(NSError *e, NSURLResponse *rawResponse) {
+    [restApiInstance sendRequest:request
+                                      failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
                                           __strong typeof(self) strongSelf = weakSelf;
                                           CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:e.localizedDescription];
                                           [strongSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
                                       }
-                                  completeBlock:^(id response, NSURLResponse *rawResponse) {
+                                  successBlock:^(id response, NSURLResponse *rawResponse) {
                                       __strong typeof(self) strongSelf = weakSelf;
                                       CDVPluginResult *pluginResult = nil;
                                       // Binary response
