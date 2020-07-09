@@ -82,7 +82,7 @@
     [self runTest:@"testRestEndpoint"];
 }
 
-- (void)testRestEndpointErrorIOS {
-    [self runTest:@"testRestEndpointErrorIOS"];
+- (void)testRestEndpointError {
+    [self runTest:@"testRestEndpointError"];
 }
 @end
