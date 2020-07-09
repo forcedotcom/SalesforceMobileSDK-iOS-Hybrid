@@ -129,7 +129,7 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
                                           if ([response isKindOfClass:[NSDictionary class]] || [response isKindOfClass:[NSArray class]]) {
                                               errorDictionary[@"response"] = response;
                                           } else {
-                                              errorDictionary[@"response"] = [self stringForResponse:response encodingName:rawResponse.textEncodingName];
+                                              errorDictionary[@"response"] = [strongSelf stringForResponse:response encodingName:rawResponse.textEncodingName];
                                           }
                                           errorDictionary[@"error"] = e.localizedDescription;
                                           errorDictionary[@"urlResponse"] = [rawResponse asDictionary];
@@ -157,7 +157,7 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
                                               pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:response];
                                           } else {
                                               NSData *responseAsData = response;
-                                              NSString *responseAsString = [self stringForResponse:responseAsData encodingName:rawResponse.textEncodingName];
+                                              NSString *responseAsString = [strongSelf stringForResponse:responseAsData encodingName:rawResponse.textEncodingName];
                                               pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:responseAsString];
                                           }
                                       }
