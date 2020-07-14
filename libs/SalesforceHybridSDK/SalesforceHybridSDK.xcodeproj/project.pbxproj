@@ -37,6 +37,7 @@
 		4F458AEF1911CF4C00545F86 /* cordova.force.js in Copy sfdc libs */ = {isa = PBXBuildFile; fileRef = 4F1A59F1174FF0B100473EE8 /* cordova.force.js */; };
 		4F5B966A1DAD9D2B001627F2 /* com.salesforce.plugin.smartstore.client.js in Copy Salesforce plugin */ = {isa = PBXBuildFile; fileRef = 4F5B96661DAD9D09001627F2 /* com.salesforce.plugin.smartstore.client.js */; };
 		4F5B966B1DAD9D2B001627F2 /* com.salesforce.util.promiser.js in Copy Salesforce plugin */ = {isa = PBXBuildFile; fileRef = 4F5B96671DAD9D09001627F2 /* com.salesforce.util.promiser.js */; };
+		4F924C5D24BD4BA700D2F6DC /* SFHybridViewControllerTestSuite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F924C5C24BD4BA700D2F6DC /* SFHybridViewControllerTestSuite.m */; };
 		4FAA891D1750263200807E13 /* index.html in Copy files to www/ */ = {isa = PBXBuildFile; fileRef = 4FAA891B175025DF00807E13 /* index.html */; };
 		4FC404A91911C6CA0027AD76 /* qunit.css in Copy qunit lib */ = {isa = PBXBuildFile; fileRef = 4FC4049B1911C6720027AD76 /* qunit.css */; };
 		4FC404AA1911C6CA0027AD76 /* qunit.js in Copy qunit lib */ = {isa = PBXBuildFile; fileRef = 4FC4049C1911C6720027AD76 /* qunit.js */; };
@@ -466,6 +467,7 @@
 		4F37EB101DA3246B0049992D /* SFForceJSTestSuite.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SFForceJSTestSuite.js; sourceTree = "<group>"; };
 		4F5B96661DAD9D09001627F2 /* com.salesforce.plugin.smartstore.client.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = com.salesforce.plugin.smartstore.client.js; sourceTree = "<group>"; };
 		4F5B96671DAD9D09001627F2 /* com.salesforce.util.promiser.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = com.salesforce.util.promiser.js; sourceTree = "<group>"; };
+		4F924C5C24BD4BA700D2F6DC /* SFHybridViewControllerTestSuite.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFHybridViewControllerTestSuite.m; sourceTree = "<group>"; };
 		4FA19A571992C2B400FA3D69 /* SFLocalhostSubstitutionCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFLocalhostSubstitutionCache.h; sourceTree = "<group>"; };
 		4FA19A581992C2B400FA3D69 /* SFLocalhostSubstitutionCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFLocalhostSubstitutionCache.m; sourceTree = "<group>"; };
 		4FAA891B175025DF00807E13 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = ../../../external/shared/test/forcepluginstest/index.html; sourceTree = "<group>"; };
@@ -753,6 +755,7 @@
 				4F06AFA61C49A77200F70798 /* ForceJSTestSuite.m */,
 				4F06AFA81C49A77200F70798 /* SDKInfoTestSuite.m */,
 				82AB22641F9EB9C100A754C8 /* SFHybridViewConfigTestSuite.m */,
+				4F924C5C24BD4BA700D2F6DC /* SFHybridViewControllerTestSuite.m */,
 				4F06AFA91C49A77200F70798 /* SFPluginTestSuite.h */,
 				4F06AFAA1C49A77200F70798 /* SFPluginTestSuite.m */,
 				4F06AFAC1C49A77200F70798 /* SmartStoreLoadTestSuite.m */,
@@ -1534,6 +1537,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F06AFC11C49A7BF00F70798 /* SmartStoreTestSuite.m in Sources */,
+				4F924C5D24BD4BA700D2F6DC /* SFHybridViewControllerTestSuite.m in Sources */,
 				4F06AFBD1C49A7BF00F70798 /* ForceJSTestSuite.m in Sources */,
 				4F06AFC21C49A7BF00F70798 /* MobileSyncTestSuite.m in Sources */,
 				82AB22651F9EB9C100A754C8 /* SFHybridViewConfigTestSuite.m in Sources */,
