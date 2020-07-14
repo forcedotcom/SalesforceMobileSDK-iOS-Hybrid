@@ -412,7 +412,8 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
      */
     if (createAbsUrl && ![returnUrlString hasPrefix:@"http"]) {
         NSURLComponents *retUrlComponents = [NSURLComponents componentsWithURL:instUrl resolvingAgainstBaseURL:NO];
-        retUrlComponents.path = [retUrlComponents.path stringByAppendingString:returnUrlString];
+        NSString* pathToAppend = [returnUrlString hasPrefix:@"/"] ? returnUrlString : [NSString stringWithFormat:@"/%@", returnUrlString];
+        retUrlComponents.path = [retUrlComponents.path stringByAppendingString:pathToAppend];
         fullReturnUrlString = retUrlComponents.string;
     }
 
