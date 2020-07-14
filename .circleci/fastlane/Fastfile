@@ -5,17 +5,19 @@ ENV['IOS_VERSION'] = '13.0' unless ENV.has_key?('IOS_VERSION')
 
 lane :build do |options|
   scheme = options[:lib]
+  Dir.chdir('../')
   analyze_scheme(scheme)
 end
 
 lane :test do |options|
   scheme = options[:lib]
+  Dir.chdir('../')
   test_scheme(scheme)
 end
 
 def test_scheme(scheme)
   scan(
-    workspace: '../SalesforceMobileSDK-Hybrid.xcworkspace',
+    workspace: 'SalesforceMobileSDK-Hybrid.xcworkspace',
     scheme: scheme,
     device: ENV['DEVICE'] + ' (' + ENV['IOS_VERSION'] + ')',
     output_directory: 'test_output',
@@ -29,7 +31,7 @@ def analyze_scheme(scheme)
   begin
     xcodebuild(
       xcargs: 'CLANG_ANALYZER_OUTPUT=plist-html CLANG_ANALYZER_OUTPUT_DIR=./clangReport RUN_CLANG_STATIC_ANALYZER=YES',
-      workspace: '../SalesforceMobileSDK-Hybrid.xcworkspace',
+      workspace: 'SalesforceMobileSDK-Hybrid.xcworkspace',
       scheme: scheme,
       sdk: 'iphonesimulator',
     )
