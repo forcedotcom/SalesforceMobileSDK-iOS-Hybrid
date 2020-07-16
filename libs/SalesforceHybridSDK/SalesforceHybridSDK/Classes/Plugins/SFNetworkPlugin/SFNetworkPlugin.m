@@ -125,14 +125,15 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
     [restApiInstance sendRequest:request
                                       failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
                                           __strong typeof(self) strongSelf = weakSelf;
-                                          NSMutableDictionary *errorDictionary = [NSMutableDictionary new];
+                                          NSMutableDictionary *responseDictionary = [[rawResponse asDictionary] mutableCopy];
                                           if ([response isKindOfClass:[NSDictionary class]] || [response isKindOfClass:[NSArray class]]) {
-                                              errorDictionary[@"response"] = response;
+                                              responseDictionary[@"body"] = response;
                                           } else {
-                                              errorDictionary[@"response"] = [strongSelf stringForResponse:response encodingName:rawResponse.textEncodingName];
+                                              responseDictionary[@"body"] = [strongSelf stringForResponse:response encodingName:rawResponse.textEncodingName];
                                           }
+                                          NSMutableDictionary *errorDictionary = [NSMutableDictionary new];
+                                          errorDictionary[@"response"] = responseDictionary;
                                           errorDictionary[@"error"] = e.localizedDescription;
-                                          errorDictionary[@"urlResponse"] = [rawResponse asDictionary];
                                           NSString *error = [SFJsonUtils JSONRepresentation:errorDictionary];
                                           CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error];
                                           [strongSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
