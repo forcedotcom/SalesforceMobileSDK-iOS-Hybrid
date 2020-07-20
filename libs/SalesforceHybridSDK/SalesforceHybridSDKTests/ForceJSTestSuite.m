@@ -81,4 +81,8 @@
 - (void)testRestEndpoint {
     [self runTest:@"testRestEndpoint"];
 }
+
+- (void)testRestEndpointError {
+    [self runTest:@"testRestEndpointError"];
+}
 @end

@@ -30,6 +30,7 @@
 #import "SFNetworkPlugin.h"
 #import "CDVPlugin+SFAdditions.h"
 #import <SalesforceSDKCore/NSDictionary+SFAdditions.h>
+#import <SalesforceSDKCore/NSURLResponse+SFAdditions.h>
 #import <SalesforceSDKCore/SFRestAPI+Blocks.h>
 #import <SalesforceSDKCommon/SFJsonUtils.h>
 
@@ -121,13 +122,23 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
     __weak typeof(self) weakSelf = self;
     SFRestAPI *restApiInstance = doesNotRequireAuthentication ? [SFRestAPI sharedGlobalInstance] : [SFRestAPI sharedInstance];
     
-    [restApiInstance sendRESTRequest:request
-                                      failBlock:^(NSError *e, NSURLResponse *rawResponse) {
+    [restApiInstance sendRequest:request
+                                      failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
                                           __strong typeof(self) strongSelf = weakSelf;
-                                          CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:e.localizedDescription];
+                                          NSMutableDictionary *responseDictionary = [[rawResponse asDictionary] mutableCopy];
+                                          if ([response isKindOfClass:[NSDictionary class]] || [response isKindOfClass:[NSArray class]]) {
+                                              responseDictionary[@"body"] = response;
+                                          } else {
+                                              responseDictionary[@"body"] = [strongSelf stringForResponse:response encodingName:rawResponse.textEncodingName];
+                                          }
+                                          NSMutableDictionary *errorDictionary = [NSMutableDictionary new];
+                                          errorDictionary[@"response"] = responseDictionary;
+                                          errorDictionary[@"error"] = e.localizedDescription;
+                                          NSString *error = [SFJsonUtils JSONRepresentation:errorDictionary];
+                                          CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error];
                                           [strongSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
                                       }
-                                  completeBlock:^(id response, NSURLResponse *rawResponse) {
+                                  successBlock:^(id response, NSURLResponse *rawResponse) {
                                       __strong typeof(self) strongSelf = weakSelf;
                                       CDVPluginResult *pluginResult = nil;
                                       // Binary response
@@ -146,9 +157,8 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
                                           } else if ([response isKindOfClass:[NSArray class]]) {
                                               pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:response];
                                           } else {
-                                              NSData* responseAsData = response;
-                                              NSStringEncoding encodingType = rawResponse.textEncodingName == nil ? NSUTF8StringEncoding :  CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding((CFStringRef)rawResponse.textEncodingName));
-                                              NSString* responseAsString = [[NSString alloc] initWithData:responseAsData encoding:encodingType];
+                                              NSData *responseAsData = response;
+                                              NSString *responseAsString = [strongSelf stringForResponse:responseAsData encodingName:rawResponse.textEncodingName];
                                               pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:responseAsString];
                                           }
                                       }
@@ -160,6 +170,11 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
                                       [strongSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
                                   }
      ];
+}
+
+- (NSString *)stringForResponse:(NSData *)response encodingName:(NSString *)encodingName {
+    NSStringEncoding encodingType = encodingName == nil ? NSUTF8StringEncoding :  CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding((CFStringRef)encodingName));
+    return [[NSString alloc] initWithData:response encoding:encodingType];
 }
 
 @end

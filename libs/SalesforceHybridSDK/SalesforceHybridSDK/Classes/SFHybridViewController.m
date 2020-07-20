@@ -412,7 +412,8 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
      */
     if (createAbsUrl && ![returnUrlString hasPrefix:@"http"]) {
         NSURLComponents *retUrlComponents = [NSURLComponents componentsWithURL:instUrl resolvingAgainstBaseURL:NO];
-        retUrlComponents.path = [retUrlComponents.path stringByAppendingString:returnUrlString];
+        NSString* pathToAppend = [returnUrlString hasPrefix:@"/"] ? returnUrlString : [NSString stringWithFormat:@"/%@", returnUrlString];
+        retUrlComponents.path = [retUrlComponents.path stringByAppendingString:pathToAppend];
         fullReturnUrlString = retUrlComponents.string;
     }
 
@@ -763,11 +764,11 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
      */
     SFOAuthInfo *authInfo = [[SFOAuthInfo alloc] initWithAuthType:SFOAuthTypeRefresh];
     SFRestRequest *request = [[SFRestAPI sharedInstance] requestForUserInfo];
-    [[SFRestAPI sharedInstance] sendRESTRequest:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
+    [[SFRestAPI sharedInstance] sendRequest:request failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
         dispatch_async(dispatch_get_main_queue(), ^{
             failureBlock(authInfo, e);
         });
-    } completeBlock:^(id response, NSURLResponse *rawResponse) {
+    } successBlock:^(id response, NSURLResponse *rawResponse) {
         SFUserAccount *currentAccount = [SFUserAccountManager sharedInstance].currentUser;
         dispatch_async(dispatch_get_main_queue(), ^{
             completionBlock(authInfo, currentAccount);
