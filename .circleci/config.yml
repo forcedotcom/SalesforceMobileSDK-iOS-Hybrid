@@ -52,8 +52,9 @@ jobs:
             npm install shelljs@0.8.3
             ./install.sh
             ./build/pre-build
-            chruby ${CHRUBY_VER}
             cd .circleci
+            chruby ${CHRUBY_VER}
+            sudo bundle update --bundler
             bundle check || sudo bundle install
             sudo bundle update
       - save_cache: 
