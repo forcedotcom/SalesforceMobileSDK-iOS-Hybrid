@@ -118,7 +118,7 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httpclient (2.8.3)
-    json (2.2.0)
+    json (2.3.1)
     jwt (2.1.0)
     kramdown (2.3.0)
       rexml
@@ -194,9 +194,10 @@ PLATFORMS
 DEPENDENCIES
   danger
   danger-junit
-  fastlane (~> 2.127, >= 2.127.2)
+  fastlane (>= 2.127.2)
+  json (>= 2.3.0)
   plist
   xcpretty
 
 BUNDLED WITH
-   1.16.6
+   1.17.2
