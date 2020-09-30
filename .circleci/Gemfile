@@ -1,7 +1,8 @@
 source("https://rubygems.org")
 
-gem 'fastlane', '~> 2.127', '>= 2.127.2'
+gem 'fastlane', '>= 2.127.2'
 gem 'xcpretty'
 gem 'danger'
 gem 'danger-junit'
 gem 'plist'
+gem 'json', '>= 2.3.0'
