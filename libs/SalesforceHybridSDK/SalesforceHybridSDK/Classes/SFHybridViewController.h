@@ -28,7 +28,7 @@
 #import <Cordova/CDVViewController.h>
 #import <SalesforceSDKCore/SFOAuthInfo.h>
 #import <SalesforceSDKCore/SFUserAccountManager.h>
-#import "SFHybridViewConfig.h"
+#import <SalesforceHybridSDK/SFHybridViewConfig.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

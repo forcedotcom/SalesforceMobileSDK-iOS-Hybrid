@@ -500,8 +500,10 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
 
 - (BOOL)logoutOnInvalidCredentials:(NSError *)error
 {
-    return [SFUserAccountManager errorIsInvalidAuthCredentials:error];
-  
+    if (error.domain == kSFOAuthErrorDomain && error.code == kSFOAuthErrorInvalidGrant) {
+        return YES;
+    }
+    return NO;
 }
 
 - (NSURL *)fullFileUrlForPage:(NSString *)page
