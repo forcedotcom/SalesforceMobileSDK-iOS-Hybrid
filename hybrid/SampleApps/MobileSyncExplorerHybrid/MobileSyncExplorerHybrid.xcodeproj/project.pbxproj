@@ -39,7 +39,6 @@
 		4FCA4AE51FBE7A8700F081B3 /* userstore.json in Copy Shared www Files */ = {isa = PBXBuildFile; fileRef = 4FCA4ABD1FBE78B900F081B3 /* userstore.json */; };
 		4FCA4AE61FBE7A8700F081B3 /* usersyncs.json in Copy Shared www Files */ = {isa = PBXBuildFile; fileRef = 4FCA4AE21FBE78BA00F081B3 /* usersyncs.json */; };
 		4FD3FC901DB05B7F00646D6D /* force+promise.js in Copy js Files */ = {isa = PBXBuildFile; fileRef = 4FD3FC6B1DB05B6A00646D6D /* force+promise.js */; };
-		4FF15E26190884C600705FE0 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF15E25190884C600705FE0 /* AssetsLibrary.framework */; };
 		4FF15E94190885CC00705FE0 /* com.salesforce.plugin.oauth.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4FF15E611908852E00705FE0 /* com.salesforce.plugin.oauth.js */; };
 		4FF15E95190885CC00705FE0 /* com.salesforce.plugin.sdkinfo.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4FF15E621908852E00705FE0 /* com.salesforce.plugin.sdkinfo.js */; };
 		4FF15E96190885CC00705FE0 /* com.salesforce.plugin.sfaccountmanager.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4FF15E631908852E00705FE0 /* com.salesforce.plugin.sfaccountmanager.js */; };
@@ -55,8 +54,6 @@
 		824A9BD41721FCA400C9BD79 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9BD31721FCA400C9BD79 /* Foundation.framework */; };
 		824A9BD61721FCA400C9BD79 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9BD51721FCA400C9BD79 /* CoreGraphics.framework */; };
 		824A9BDE1721FCA400C9BD79 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 824A9BDD1721FCA400C9BD79 /* main.m */; };
-		824A9DA61724C98900C9BD79 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9DA41724C98900C9BD79 /* AddressBook.framework */; };
-		824A9DA71724C98900C9BD79 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9DA51724C98900C9BD79 /* AddressBookUI.framework */; };
 		824A9DA91724C99800C9BD79 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9DA81724C99800C9BD79 /* AudioToolbox.framework */; };
 		824A9DAB1724C9C900C9BD79 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9DAA1724C9C900C9BD79 /* AVFoundation.framework */; };
 		824A9DAD1724C9D100C9BD79 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9DAC1724C9D100C9BD79 /* CFNetwork.framework */; };
@@ -65,7 +62,6 @@
 		824A9DB31724CA1C00C9BD79 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9DB21724CA1C00C9BD79 /* CoreMedia.framework */; };
 		824A9DB51724CA5000C9BD79 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9DB41724CA5000C9BD79 /* MediaPlayer.framework */; };
 		824A9DB71724CA5700C9BD79 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9DB61724CA5700C9BD79 /* MessageUI.framework */; };
-		824A9DB91724CAA900C9BD79 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9DB81724CAA900C9BD79 /* MobileCoreServices.framework */; };
 		824A9DBB1724CAB100C9BD79 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9DBA1724CAB100C9BD79 /* QuartzCore.framework */; };
 		824A9DBD1724CAB900C9BD79 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9DBC1724CAB900C9BD79 /* Security.framework */; };
 		824A9DBF1724CAF900C9BD79 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9DBE1724CAF900C9BD79 /* SystemConfiguration.framework */; };
@@ -82,6 +78,10 @@
 		CE15E4582213E9F4003BBAC7 /* SalesforceSDKCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E42F2213E9DA003BBAC7 /* SalesforceSDKCore.framework */; };
 		CE15E4592213E9FC003BBAC7 /* SmartStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E44F2213E9E0003BBAC7 /* SmartStore.framework */; };
 		CE15E45A2213E9FC003BBAC7 /* MobileSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE15E43F2213E9DD003BBAC7 /* MobileSync.framework */; };
+		CE3903F22536978F007313FD /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3903F12536978F007313FD /* Photos.framework */; };
+		CE3903F42536979F007313FD /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3903F32536979F007313FD /* Contacts.framework */; };
+		CE3903F6253697B0007313FD /* ContactsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3903F5253697B0007313FD /* ContactsUI.framework */; };
+		CE3903F8253697BF007313FD /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3903F7253697BF007313FD /* CoreServices.framework */; };
 		CE6AB3DA1C10CE2A0012125E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6AB3D91C10CE2A0012125E /* libz.tbd */; };
 		CE6AB3DC1C10CE340012125E /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6AB3DB1C10CE340012125E /* libxml2.tbd */; };
 		CE7BA1ED1D8CB355000B91D7 /* com.salesforce.plugin.network.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = CE7BA1931D8CA3D5000B91D7 /* com.salesforce.plugin.network.js */; };
@@ -485,6 +485,10 @@
 		CE15E4262213E9DA003BBAC7 /* SalesforceSDKCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SalesforceSDKCore.xcodeproj; path = "../../../external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCore/SalesforceSDKCore.xcodeproj"; sourceTree = "<group>"; };
 		CE15E4362213E9DD003BBAC7 /* MobileSync.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MobileSync.xcodeproj; path = "../../../external/SalesforceMobileSDK-iOS/libs/MobileSync/MobileSync.xcodeproj"; sourceTree = "<group>"; };
 		CE15E4462213E9E0003BBAC7 /* SmartStore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SmartStore.xcodeproj; path = "../../../external/SalesforceMobileSDK-iOS/libs/SmartStore/SmartStore.xcodeproj"; sourceTree = "<group>"; };
+		CE3903F12536978F007313FD /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		CE3903F32536979F007313FD /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		CE3903F5253697B0007313FD /* ContactsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ContactsUI.framework; path = System/Library/Frameworks/ContactsUI.framework; sourceTree = SDKROOT; };
+		CE3903F7253697BF007313FD /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		CE6AB3D91C10CE2A0012125E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		CE6AB3DB1C10CE340012125E /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		CE7BA1931D8CA3D5000B91D7 /* com.salesforce.plugin.network.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = com.salesforce.plugin.network.js; sourceTree = "<group>"; };
@@ -513,16 +517,17 @@
 				CE15E4592213E9FC003BBAC7 /* SmartStore.framework in Frameworks */,
 				CE15E45A2213E9FC003BBAC7 /* MobileSync.framework in Frameworks */,
 				CE15E4562213E9F4003BBAC7 /* SalesforceAnalytics.framework in Frameworks */,
+				CE3903F6253697B0007313FD /* ContactsUI.framework in Frameworks */,
 				4F6D68B6228E2ECF008C8A96 /* Cordova.framework in Frameworks */,
 				CE15E4572213E9F4003BBAC7 /* SalesforceSDKCommon.framework in Frameworks */,
 				CE15E4582213E9F4003BBAC7 /* SalesforceSDKCore.framework in Frameworks */,
 				CED747441E8C86C60019AA9D /* WebKit.framework in Frameworks */,
 				CE6AB3DA1C10CE2A0012125E /* libz.tbd in Frameworks */,
 				CE6AB3DC1C10CE340012125E /* libxml2.tbd in Frameworks */,
-				4FF15E26190884C600705FE0 /* AssetsLibrary.framework in Frameworks */,
 				4F22155F19DF549400FF2D26 /* ImageIO.framework in Frameworks */,
-				824A9DA61724C98900C9BD79 /* AddressBook.framework in Frameworks */,
-				824A9DA71724C98900C9BD79 /* AddressBookUI.framework in Frameworks */,
+				CE3903F22536978F007313FD /* Photos.framework in Frameworks */,
+				CE3903F42536979F007313FD /* Contacts.framework in Frameworks */,
+				CE3903F8253697BF007313FD /* CoreServices.framework in Frameworks */,
 				824A9DA91724C99800C9BD79 /* AudioToolbox.framework in Frameworks */,
 				824A9DAB1724C9C900C9BD79 /* AVFoundation.framework in Frameworks */,
 				824A9DAD1724C9D100C9BD79 /* CFNetwork.framework in Frameworks */,
@@ -534,7 +539,6 @@
 				824A9BD41721FCA400C9BD79 /* Foundation.framework in Frameworks */,
 				824A9DB51724CA5000C9BD79 /* MediaPlayer.framework in Frameworks */,
 				824A9DB71724CA5700C9BD79 /* MessageUI.framework in Frameworks */,
-				824A9DB91724CAA900C9BD79 /* MobileCoreServices.framework in Frameworks */,
 				824A9DBB1724CAB100C9BD79 /* QuartzCore.framework in Frameworks */,
 				824A9DBD1724CAB900C9BD79 /* Security.framework in Frameworks */,
 				824A9DBF1724CAF900C9BD79 /* SystemConfiguration.framework in Frameworks */,
@@ -624,6 +628,10 @@
 		824A9BD01721FCA400C9BD79 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE3903F7253697BF007313FD /* CoreServices.framework */,
+				CE3903F5253697B0007313FD /* ContactsUI.framework */,
+				CE3903F32536979F007313FD /* Contacts.framework */,
+				CE3903F12536978F007313FD /* Photos.framework */,
 				CE15E4462213E9E0003BBAC7 /* SmartStore.xcodeproj */,
 				CE15E4362213E9DD003BBAC7 /* MobileSync.xcodeproj */,
 				CE15E4262213E9DA003BBAC7 /* SalesforceSDKCore.xcodeproj */,
@@ -915,7 +923,7 @@
 		824A9BC61721FCA400C9BD79 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1030;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = salesforce.com;
 				TargetAttributes = {
 					824A9BCD1721FCA400C9BD79 = {
@@ -1228,6 +1236,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1289,6 +1298,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
