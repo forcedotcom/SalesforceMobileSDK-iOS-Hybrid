@@ -451,11 +451,7 @@
 		82AF5AB61A0DAA8D006C7A4B /* logger.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = logger.js; sourceTree = "<group>"; };
 		82E855E01D88AA6B0000EECB /* AccountEditor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AccountEditor.entitlements; sourceTree = "<group>"; };
 		B7168F6B1FACC29800A48DB5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "../../../../external/SalesforceMobileSDK-iOS/shared/resources/LaunchScreen.storyboard"; sourceTree = "<group>"; };
-		B7BAD7381FBB7DEE0046629F /* IDPLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDPLoginViewController.h; path = "../../../../external/SalesforceMobileSDK-iOS/shared/classes/IDPLoginViewController.h"; sourceTree = "<group>"; };
-		B7BAD75D1FBB7DEE0046629F /* IDPLoginNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDPLoginNavViewController.h; path = "../../../../external/SalesforceMobileSDK-iOS/shared/classes/IDPLoginNavViewController.h"; sourceTree = "<group>"; };
-		B7BAD75E1FBB7DEE0046629F /* IDPLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IDPLoginViewController.m; path = "../../../../external/SalesforceMobileSDK-iOS/shared/classes/IDPLoginViewController.m"; sourceTree = "<group>"; };
 		B7BAD75F1FBB7DEE0046629F /* IDPLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IDPLoginViewController.xib; path = "../../../../external/SalesforceMobileSDK-iOS/shared/classes/IDPLoginViewController.xib"; sourceTree = "<group>"; };
-		B7BAD7601FBB7DEE0046629F /* IDPLoginNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IDPLoginNavViewController.m; path = "../../../../external/SalesforceMobileSDK-iOS/shared/classes/IDPLoginNavViewController.m"; sourceTree = "<group>"; };
 		B7DF84331DADAD6300DC7A8F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "../../../../external/SalesforceMobileSDK-iOS/shared/resources/Images.xcassets"; sourceTree = "<group>"; };
 		CE15E3412213A655003BBAC7 /* SalesforceSDKCommon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SalesforceSDKCommon.xcodeproj; path = "../../../external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCommon/SalesforceSDKCommon.xcodeproj"; sourceTree = "<group>"; };
 		CE15E3642213A711003BBAC7 /* SalesforceAnalytics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SalesforceAnalytics.xcodeproj; path = "../../../external/SalesforceMobileSDK-iOS/libs/SalesforceAnalytics/SalesforceAnalytics.xcodeproj"; sourceTree = "<group>"; };
@@ -696,10 +692,6 @@
 		824A9C5E1722021D00C9BD79 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				B7BAD75D1FBB7DEE0046629F /* IDPLoginNavViewController.h */,
-				B7BAD7601FBB7DEE0046629F /* IDPLoginNavViewController.m */,
-				B7BAD7381FBB7DEE0046629F /* IDPLoginViewController.h */,
-				B7BAD75E1FBB7DEE0046629F /* IDPLoginViewController.m */,
 				B7BAD75F1FBB7DEE0046629F /* IDPLoginViewController.xib */,
 				CEBDA0AF1D3C059900DBDBD0 /* MainViewController.h */,
 				CEBDA0B01D3C059900DBDBD0 /* MainViewController.m */,
