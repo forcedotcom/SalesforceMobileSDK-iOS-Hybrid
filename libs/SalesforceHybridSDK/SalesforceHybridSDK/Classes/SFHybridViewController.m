@@ -70,6 +70,7 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
 static NSString * const kHybridSessionRedirect = @"/services/identity/mobileauthredirect";
 static NSString * const kFrontdoor = @"frontdoor.jsp";
 static NSString * const kStartURLParam = @"startURL";
+static NSString * const kRetURLParam = @"retURL";
 static NSString * const kECParam = @"ec";
 static NSString * const kEC301 = @"301";
 static NSString * const kEC302 = @"302";
@@ -458,12 +459,13 @@ static NSString * const kHTTP = @"http";
     }
     if ([url.scheme.lowercaseString hasPrefix:kHTTP]) {
         if (url.query != nil) {
-            NSString *startUrlValue = [url valueForParameterName:kStartURLParam];
-            if (startUrlValue == nil || [startUrlValue containsString:kFrontdoor]) {
-                startUrlValue = self.startPage;
+            NSString *retUrlValue = [url valueForParameterName:kRetURLParam];
+            retUrlValue = (retUrlValue == nil) ? [url valueForParameterName:kStartURLParam] : retUrlValue;
+            if (retUrlValue == nil || [retUrlValue containsString:kFrontdoor]) {
+                retUrlValue = self.startPage;
             }
             if ([self isSessionExpirationRedirect:url.absoluteString] || [self isSamlLoginRedirect:url.absoluteString] || [self isVFPageRedirect:url]) {
-                return startUrlValue;
+                return retUrlValue;
             }
         }
     }
