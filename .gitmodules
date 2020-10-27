@@ -4,9 +4,6 @@
 [submodule "external/cordova-ios/cordova-ios"]
 	path = external/cordova-ios/cordova-ios
 	url = https://github.com/apache/cordova-ios
-[submodule "external/cordova-plugin-wkwebview-engine"]
-	path = external/cordova-plugin-wkwebview-engine
-	url = https://github.com/apache/cordova-plugin-wkwebview-engine
 [submodule "external/CocoaLumberjack"]
 	path = external/CocoaLumberjack
 	url = https://github.com/CocoaLumberjack/CocoaLumberjack
