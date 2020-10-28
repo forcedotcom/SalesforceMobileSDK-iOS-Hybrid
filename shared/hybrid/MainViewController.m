@@ -74,21 +74,6 @@
     // Do any additional setup after loading the view from its nib.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return [super shouldAutorotateToInterfaceOrientation:interfaceOrientation];
-}
-
-/* Comment out the block below to over-ride */
-
-/*
-- (UIView*) newCordovaViewWithFrame:(CGRect)bounds
-{
-    return[super newCordovaViewWithFrame:bounds];
-}
-*/
-
 @end
 
 @implementation MainCommandDelegate

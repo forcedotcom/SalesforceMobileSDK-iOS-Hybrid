@@ -192,17 +192,6 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
     return self;
 }
 
-- (UIView *)newCordovaViewWithFrame:(CGRect)bounds
-{
-    return [self newCordovaViewWithFrameAndEngine:bounds webViewEngine:@"CDVWKWebViewEngine"];
-}
-
-- (UIView *)newCordovaViewWithFrameAndEngine:(CGRect)bounds webViewEngine:(NSString *)webViewEngine
-{
-    [self.settings setCordovaSetting:webViewEngine forKey:@"CordovaWebViewEngine"];
-    return [super newCordovaViewWithFrame:bounds];
-}
-
 - (void)dealloc
 {
     self.vfPingPageHiddenWKWebView.navigationDelegate = nil;
