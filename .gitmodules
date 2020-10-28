@@ -1,9 +1,9 @@
 [submodule "external/shared"]
 	path = external/shared
 	url = https://github.com/forcedotcom/SalesforceMobileSDK-Shared
-[submodule "external/cordova-ios/cordova-ios"]
-	path = external/cordova-ios/cordova-ios
-	url = https://github.com/wmathurin/cordova-ios
+[submodule "external/cordova-ios"]
+	path = external/cordova-ios
+	url = https://github.com/forcedotcom/cordova-ios
 [submodule "external/CocoaLumberjack"]
 	path = external/CocoaLumberjack
 	url = https://github.com/CocoaLumberjack/CocoaLumberjack
