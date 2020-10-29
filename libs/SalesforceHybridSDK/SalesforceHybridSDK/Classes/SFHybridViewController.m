@@ -40,7 +40,6 @@
 #import <SalesforceSDKCore/SFSDKWebViewStateManager.h>
 #import <SalesforceSDKCore/SFRestAPI+Blocks.h>
 #import <Cordova/NSDictionary+CordovaPreferences.h>
-#import <Cordova/CDVUserAgentUtil.h>
 #import <objc/message.h>
 
 // Public constants.
@@ -193,17 +192,6 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
     return self;
 }
 
-- (UIView *)newCordovaViewWithFrame:(CGRect)bounds
-{
-    return [self newCordovaViewWithFrameAndEngine:bounds webViewEngine:@"CDVWKWebViewEngine"];
-}
-
-- (UIView *)newCordovaViewWithFrameAndEngine:(CGRect)bounds webViewEngine:(NSString *)webViewEngine
-{
-    [self.settings setCordovaSetting:webViewEngine forKey:@"CordovaWebViewEngine"];
-    return [super newCordovaViewWithFrame:bounds];
-}
-
 - (void)dealloc
 {
     self.vfPingPageHiddenWKWebView.navigationDelegate = nil;
@@ -216,7 +204,7 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
 {
     NSString *hybridViewUserAgentString = [self sfHybridViewUserAgentString];
     [SFSDKWebUtils configureUserAgent:hybridViewUserAgentString];
-    self.baseUserAgent = hybridViewUserAgentString;
+    [self.settings setCordovaSetting:hybridViewUserAgentString forKey:@"OverrideUserAgent"];
 
     // If this app requires authentication at startup, and authentication hasn't happened, that's an error.
     NSString *accessToken = [SFUserAccountManager sharedInstance].currentUser.credentials.accessToken;
@@ -666,7 +654,6 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
                 _foundHomeUrl = YES;
             }
         }
-        [CDVUserAgentUtil releaseLock:self.userAgentLockToken];
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPageDidLoadNotification object:self.webView]];
     }
 }
