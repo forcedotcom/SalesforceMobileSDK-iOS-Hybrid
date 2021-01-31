@@ -65,6 +65,17 @@ static NSString * const kErrorContextAppLoading = @"AppLoading";
 static NSString * const kErrorContextAuthExpiredSessionRefresh = @"AuthRefreshExpiredSession";
 static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
 
+// Session redirect constants.
+static NSString * const kHybridSessionRedirect = @"/services/identity/mobileauthredirect";
+static NSString * const kFrontdoor = @"frontdoor.jsp";
+static NSString * const kStartURLParam = @"startURL";
+static NSString * const kRetURLParam = @"retURL";
+static NSString * const kECParam = @"ec";
+static NSString * const kEC301 = @"301";
+static NSString * const kEC302 = @"302";
+static NSString * const kQuestionMark = @"?";
+static NSString * const kHTTP = @"http";
+
 @interface SFHybridViewController()
 {
     BOOL _foundHomeUrl;
@@ -387,7 +398,7 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
 {
 
     // Special case: if returnUrlString itself is a frontdoor.jsp URL, parse its parameters and rebuild.
-    if ([returnUrlString containsString:@"frontdoor.jsp"]) {
+    if ([returnUrlString containsString:kFrontdoor]) {
         return [self parseFrontDoorReturnUrlString:returnUrlString encoded:isEncoded];
     }
     SFOAuthCredentials *creds = [SFUserAccountManager sharedInstance].currentUser.credentials;
@@ -398,7 +409,7 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
      * We need to use the absolute URL in some cases and relative URL in some
      * other cases, because of differences between instance URL and community URL.
      */
-    if (createAbsUrl && ![returnUrlString hasPrefix:@"http"]) {
+    if (createAbsUrl && ![returnUrlString hasPrefix:kHTTP]) {
         NSURLComponents *retUrlComponents = [NSURLComponents componentsWithURL:instUrl resolvingAgainstBaseURL:NO];
         NSString* pathToAppend = [returnUrlString hasPrefix:@"/"] ? returnUrlString : [NSString stringWithFormat:@"/%@", returnUrlString];
         retUrlComponents.path = [retUrlComponents.path stringByAppendingString:pathToAppend];
@@ -434,26 +445,23 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
     if (url == nil || url.absoluteString == nil || url.absoluteString.length == 0) {
         return nil;
     }
-    if ([url.scheme.lowercaseString hasPrefix:@"http"]) {
+    if ([url.scheme.lowercaseString hasPrefix:kHTTP]) {
         if (url.query != nil) {
-            NSString *startUrlValue = [url valueForParameterName:@"startURL"];
-            NSString *ecValue = [url valueForParameterName:@"ec"];
-            BOOL foundStartURL = (startUrlValue != nil);
-            BOOL foundValidEcValue = ([ecValue isEqualToString:@"301"] || [ecValue isEqualToString:@"302"]);
-            if (foundValidEcValue) {
-                if (foundStartURL) {
-                    return startUrlValue;
-                } else {
-                    return self.startPage;
-                }
-            } else if ([self isSamlLoginRedirect:url.absoluteString]) {
-                return self.startPage;
+            NSString *retUrlValue = [url valueForParameterName:kRetURLParam];
+            retUrlValue = (retUrlValue == nil) ? [url valueForParameterName:kStartURLParam] : retUrlValue;
+            if (retUrlValue == nil || [retUrlValue containsString:kFrontdoor]) {
+                retUrlValue = self.startPage;
             }
-        } else if ([self isSamlLoginRedirect:url.absoluteString]) {
-            return self.startPage;
+            if ([self isSessionExpirationRedirect:url.absoluteString] || [self isSamlLoginRedirect:url.absoluteString] || [self isVFPageRedirect:url]) {
+                return retUrlValue;
+            }
         }
     }
     return nil;
+}
+
+- (BOOL)isSessionExpirationRedirect:(NSString *)url {
+    return (url && [url containsString:kHybridSessionRedirect]);
 }
 
 - (BOOL)isSamlLoginRedirect:(NSString *)url {
@@ -466,7 +474,7 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
         if (ssoUrls && ssoUrls.count > 0) {
             for (NSString *ssoUrl in ssoUrls) {
                 NSString *baseUrl = [ssoUrl copy];
-                NSRange index = [ssoUrl rangeOfString:@"?"];
+                NSRange index = [ssoUrl rangeOfString:kQuestionMark];
                 if (index.location != NSNotFound) {
                     baseUrl = [ssoUrl substringToIndex:index.location];
                 }
@@ -477,6 +485,11 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
         }
     }
     return NO;
+}
+
+- (BOOL)isVFPageRedirect:(NSURL *)url {
+    NSString *ecValue = [url valueForParameterName:kECParam];
+    return ([ecValue isEqualToString:kEC301] || [ecValue isEqualToString:kEC302]);
 }
 
 - (BOOL)isOffline
