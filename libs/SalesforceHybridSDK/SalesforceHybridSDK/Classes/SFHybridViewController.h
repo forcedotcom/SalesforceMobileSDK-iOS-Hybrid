@@ -103,11 +103,6 @@ typedef void (^SFOAuthPluginFailureBlock)(SFOAuthInfo *, NSError *);
 - (id) initWithConfig:(nullable SFHybridViewConfig *) viewConfig;
 
 /**
- * Initializes a new Cordova view with the specified bounds and engine.
- */
-- (UIView *)newCordovaViewWithFrameAndEngine:(CGRect)bounds webViewEngine:(NSString *)webViewEngine;
-
-/**
  Used by the OAuth plugin to authenticate the user.
  @param completionBlock The block to call upon successsful authentication.
  @param failureBlock The block to call in the event of an auth failure.
