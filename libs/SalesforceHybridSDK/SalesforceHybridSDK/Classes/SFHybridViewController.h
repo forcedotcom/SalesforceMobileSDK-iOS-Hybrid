@@ -28,7 +28,7 @@
 #import <Cordova/CDVViewController.h>
 #import <SalesforceSDKCore/SFOAuthInfo.h>
 #import <SalesforceSDKCore/SFUserAccountManager.h>
-#import "SFHybridViewConfig.h"
+#import <SalesforceHybridSDK/SFHybridViewConfig.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -101,11 +101,6 @@ typedef void (^SFOAuthPluginFailureBlock)(SFOAuthInfo *, NSError *);
  @param viewConfig The hybrid view configuration associated with this component.
  */
 - (id) initWithConfig:(nullable SFHybridViewConfig *) viewConfig;
-
-/**
- * Initializes a new Cordova view with the specified bounds and engine.
- */
-- (UIView *)newCordovaViewWithFrameAndEngine:(CGRect)bounds webViewEngine:(NSString *)webViewEngine;
 
 /**
  Used by the OAuth plugin to authenticate the user.

@@ -71,7 +71,7 @@
          location = "group:external/CocoaLumberjack/Lumberjack.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:external/cordova-ios/cordova-ios/CordovaLib/CordovaLib.xcodeproj">
+         location = "group:external/cordova/CordovaLib/CordovaLib.xcodeproj">
       </FileRef>
    </Group>
    <Group
