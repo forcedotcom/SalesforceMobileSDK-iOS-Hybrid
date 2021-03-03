@@ -501,7 +501,7 @@ static NSString * const kHTTP = @"http";
 
 - (BOOL)logoutOnInvalidCredentials:(NSError *)error
 {
-    if (error.domain == kSFOAuthErrorDomain && error.code == kSFOAuthErrorInvalidGrant) {
+    if ([error.domain isEqualToString:kSFOAuthErrorDomain] && error.code == kSFOAuthErrorInvalidGrant) {
         return YES;
     }
     return NO;
