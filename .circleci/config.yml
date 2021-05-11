@@ -77,11 +77,6 @@ jobs:
             DANGER_GITHUB_API_TOKEN="279a29d75427e4178cef""b7b5b2d7646c540f025a" danger --dangerfile=.circleci/Dangerfile-Lib.rb --danger_id="${LIB}" --verbose
           background: true
           when: always
-      - run: 
-          name: Upload code coverage
-          command: bash <(curl -s https://codecov.io/bash) -X gcov -X xcode
-          background: true
-          when: always
       - store_test_results:
           path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/test_output
       - store_artifacts:
