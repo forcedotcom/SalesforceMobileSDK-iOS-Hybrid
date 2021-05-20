@@ -1,5 +1,4 @@
 [![CircleCI](https://circleci.com/gh/forcedotcom/SalesforceMobileSDK-iOS-Hybrid/tree/dev.svg?style=svg)](https://circleci.com/gh/forcedotcom/SalesforceMobileSDK-iOS-Hybrid/tree/dev)
-[![codecov](https://codecov.io/gh/forcedotcom/SalesforceMobileSDK-iOS-Hybrid/branch/dev/graph/badge.svg)](https://codecov.io/gh/forcedotcom/SalesforceMobileSDK-iOS-Hybrid/branch/dev)
 
 # Hybrid library / sample apps and tests for Salesforce.com Mobile SDK on iOS
 

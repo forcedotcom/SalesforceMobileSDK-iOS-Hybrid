@@ -121,10 +121,6 @@
     [self runTest:@"testQuerySoupWithRangeQueryWithOrderPath"];
 }
 
-- (void) testQuerySoupBadQuerySpec {
-    [self runTest:@"testQuerySoupBadQuerySpec"];
-}
-
 - (void) testQuerySoupEndKeyNoBeginKey {
     [self runTest:@"testQuerySoupEndKeyNoBeginKey"];
 }
