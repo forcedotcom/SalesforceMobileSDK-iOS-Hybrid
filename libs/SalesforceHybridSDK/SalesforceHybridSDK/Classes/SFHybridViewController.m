@@ -446,15 +446,16 @@ static NSString * const kHTTP = @"http";
         return nil;
     }
     if ([url.scheme.lowercaseString hasPrefix:kHTTP]) {
+        NSString *retUrlValue = nil;
         if (url.query != nil) {
-            NSString *retUrlValue = [url valueForParameterName:kRetURLParam];
+            retUrlValue = [url valueForParameterName:kRetURLParam];
             retUrlValue = (retUrlValue == nil) ? [url valueForParameterName:kStartURLParam] : retUrlValue;
-            if (retUrlValue == nil || [retUrlValue containsString:kFrontdoor]) {
-                retUrlValue = self.startPage;
-            }
-            if ([self isSessionExpirationRedirect:url.absoluteString] || [self isSamlLoginRedirect:url.absoluteString] || [self isVFPageRedirect:url]) {
-                return retUrlValue;
-            }
+        }
+        if (retUrlValue == nil || [retUrlValue containsString:kFrontdoor]) {
+            retUrlValue = self.startPage;
+        }
+        if ([self isSessionExpirationRedirect:url.absoluteString] || [self isSamlLoginRedirect:url.absoluteString] || [self isVFPageRedirect:url]) {
+            return retUrlValue;
         }
     }
     return nil;
