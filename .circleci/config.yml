@@ -1,7 +1,11 @@
 anchors:
-  - &latest-xcode "12.0.1"
-  - &latest-ios   "14.0"
-  - &min-ios      "13.5"
+  - &latest-xcode "12.5.1"
+  - &latest-ios   "14.5"
+  - &min-ios      "13.7"
+  - &chruby       "2.7.3"
+  - &beta-xcode   "13.0.0"
+  - &beta-ios     "15.0"
+  - &beta-chruby  "3.0.2"
 
 executors:
   mac:
@@ -12,7 +16,16 @@ executors:
     environment:
       BASH_ENV: ~/.bashrc
       FASTLANE_SKIP_UPDATE_CHECK: "true"
-      CHRUBY_VER: 2.7.1
+      CHRUBY_VER: *chruby
+  mac-beta:
+    working_directory: ~/SalesforceMobileSDK-iOS-Hybrid
+    macos:
+      xcode: *beta-xcode
+    shell: /bin/bash --login -eo pipefail
+    environment:
+      BASH_ENV: ~/.bashrc
+      FASTLANE_SKIP_UPDATE_CHECK: "true"
+      CHRUBY_VER: *beta-chruby
 
 version: 2.1
 jobs:
@@ -23,7 +36,7 @@ jobs:
         default: "SalesforceHybridSDK"
       device:
         type: string
-        default: "iPhone 11"
+        default: "iPhone 12"
       ios:
         type: string
         default: *latest-ios
@@ -119,3 +132,10 @@ workflows:
               lib: ["SalesforceHybridSDK", "SalesforceFileLogger"]
               ios: [*min-ios, *latest-ios]
               device: ["iPhone 8"]
+      - run-tests:
+          name: test << matrix.lib >> iOS << matrix.ios >>
+          matrix:
+            parameters:
+              lib: ["SalesforceHybridSDK", "SalesforceFileLogger"]
+              ios: [*beta-ios]
+              env: [mac-beta]
