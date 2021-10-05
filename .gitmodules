@@ -3,7 +3,7 @@
 	url = https://github.com/forcedotcom/SalesforceMobileSDK-Shared
 [submodule "external/cordova"]
 	path = external/cordova
-	url = https://github.com/forcedotcom/cordova-ios
+	url = https://github.com/apache/cordova-ios
 [submodule "external/CocoaLumberjack"]
 	path = external/CocoaLumberjack
 	url = https://github.com/CocoaLumberjack/CocoaLumberjack

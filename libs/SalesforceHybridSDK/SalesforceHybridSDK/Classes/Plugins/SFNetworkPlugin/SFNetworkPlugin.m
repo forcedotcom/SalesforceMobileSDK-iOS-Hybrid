@@ -84,7 +84,9 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
     // Sets HTTP body explicitly for a POST, PATCH or PUT request.
     if (method == SFRestMethodPOST || method == SFRestMethodPATCH || method == SFRestMethodPUT) {
         request = [SFRestRequest requestWithMethod:method path:path queryParams:nil];
-        [request setCustomRequestBodyDictionary:queryParams contentType:@"application/json"];
+        if (!fileParams || fileParams.count == 0) { // when there are file params, the non-binary params need to be passed in the call to addPostFileData
+            [request setCustomRequestBodyDictionary:queryParams contentType:@"application/json"];
+        }
     } else {
         request = [SFRestRequest requestWithMethod:method path:path queryParams:queryParams];
     }
@@ -110,7 +112,7 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
             NSString* fileUrl = [fileParam nonNullObjectForKey:kFileUrl];
             NSString* fileName = [fileParam nonNullObjectForKey:kFileName];
             NSData* fileData = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileUrl]];
-            [request addPostFileData:fileData paramName:fileParamName fileName:fileName mimeType:fileMimeType params:nil];
+            [request addPostFileData:fileData paramName:fileParamName fileName:fileName mimeType:fileMimeType params:queryParams];
         }
     }
     
