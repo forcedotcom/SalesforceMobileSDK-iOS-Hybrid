@@ -29,6 +29,8 @@
 		4FAE62EC21966E8A003A5CD6 /* SFSDKLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FAE62E621966E8A003A5CD6 /* SFSDKLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4FAE62ED21966E8A003A5CD6 /* SFSDKLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62E721966E8A003A5CD6 /* SFSDKLogger.m */; };
 		4FAE63002196714C003A5CD6 /* SFSDKLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62FF2196714C003A5CD6 /* SFSDKLoggerTests.m */; };
+		691BBAAD278663820098A716 /* CocoaLumberjack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEA2A8C72214C184009D923B /* CocoaLumberjack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		691BBAB02786638C0098A716 /* SalesforceSDKCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEA2A8AC2214C174009D923B /* SalesforceSDKCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		829DA2B11C12677B0040F5F1 /* SalesforceFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 829DA2B01C12677B0040F5F1 /* SalesforceFileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82EFF30A16E8049500A63CDF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 82EFF30816E8049500A63CDF /* InfoPlist.strings */; };
 		82EFF30C16E8049500A63CDF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EFF30B16E8049500A63CDF /* main.m */; };
@@ -123,6 +125,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				691BBAB02786638C0098A716 /* SalesforceSDKCommon.framework in Embed Frameworks */,
+				691BBAAD278663820098A716 /* CocoaLumberjack.framework in Embed Frameworks */,
 				CE4CE2E91C0E465B009F6029 /* SalesforceFileLogger.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -587,7 +591,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$SRCROOT/../../shared/common/build/tools/generate_headers.sh\" -o \"$TARGET_BUILD_DIR/$PRODUCT_NAME.framework/Headers/$PRODUCT_NAME.h\" -u \"$SRCROOT/$TARGET_NAME/$TARGET_NAME.h\"\n";
+			shellScript = "\"$SRCROOT/../../external/SalesforceMobileSDK-iOS/shared/common/build/tools/generate_headers.sh\" -o \"$TARGET_BUILD_DIR/$PRODUCT_NAME.framework/Headers/$PRODUCT_NAME.h\" -u \"$SRCROOT/$TARGET_NAME/$TARGET_NAME.h\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -860,6 +864,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceFileLoggerTestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -891,6 +896,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceFileLoggerTestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -937,6 +943,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceFileLogger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -985,6 +992,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceFileLogger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
