@@ -1,8 +1,13 @@
+#  Xcode version announcments can be found here: https://discuss.circleci.com/c/announcements/
+#  Each post contains a full image manifest, including iOS runtimes, devices, CocoaPods version, etc.
+#  NOTE: When updaing Xcode check the manifest for compatible chruby versions.
 anchors:
-  - &latest-xcode "13.2.1"
-  - &latest-ios   "15.0"
+  - &latest-xcode "13.4.1"
+  - &beta-xcode   "14.0.0"
+  - &latest-ios   "15.5"
   - &min-ios      "14.5"
-  - &chruby       "3.0.3"
+  - &beta-ios     "16.0"
+  - &chruby       "3.1.2"
 
 executors:
   mac:
@@ -14,6 +19,16 @@ executors:
       BASH_ENV: ~/.bashrc
       FASTLANE_SKIP_UPDATE_CHECK: "true"
       CHRUBY_VER: *chruby
+  mac-beta:
+    working_directory: ~/SalesforceMobileSDK-iOS-Hybrid
+    macos:
+      xcode: *beta-xcode
+    shell: /bin/bash --login -eo pipefail
+    environment:
+      BASH_ENV: ~/.bashrc
+      FASTLANE_SKIP_UPDATE_CHECK: "true"
+      CHRUBY_VER: *chruby
+
 
 version: 2.1
 jobs:
@@ -39,7 +54,6 @@ jobs:
       LIB: << parameters.lib >> 
       DEVICE: << parameters.device >>
       IOS_VERSION: << parameters.ios >>
-    parallelism: 5
     steps:
       - checkout
       - restore_cache: 
@@ -47,7 +61,7 @@ jobs:
       - run: 
           name: Installing gem dependencies
           command:  |
-            npm install shelljs@0.8.3
+            npm install shelljs@0.8.5
             ./install.sh
             ./build/pre-build
             cd .circleci
@@ -87,6 +101,15 @@ jobs:
           path: /Users/distiller/SalesforceMobileSDK-iOS-Hybrid/.circleci/clangReport
           destination: Static-Analysis
 
+#  Potential parameters that can come from the project GUI Triggers
+parameters:
+  run-schedule:
+    type: boolean
+    default: false
+  beta:
+    type: boolean
+    default: false
+
 workflows:
   version: 2
 
@@ -102,16 +125,12 @@ workflows:
               only:
                 - /pull.*/
 
-  # Cron are on a timezone 8 hours ahead of PST
-  # Build everything at ~10:30pm Sunday/Wednesday Nights
+  # Build everything at ~10 PM PST Sunday/Wednesday Nights
   hybrid-iOS:
-    triggers:
-      - schedule:
-          cron: "30 6 * * 1,4"
-          filters:
-            branches:
-              only:
-                - dev
+    when: 
+      and:
+        - << pipeline.parameters.run-schedule >>
+        - equal: [ false, << pipeline.parameters.beta >> ]
     jobs:
       - run-tests:
           name: test << matrix.lib >> iOS << matrix.ios >>
@@ -119,4 +138,19 @@ workflows:
             parameters:
               lib: ["SalesforceHybridSDK", "SalesforceFileLogger"]
               ios: [*min-ios, *latest-ios]
-              device: ["iPhone 8"]
+
+  # Build everything at ~11 PM PST Sunday/Wednesday Nights
+  hybrid-iOS-beta:
+    when: 
+      and:
+        - << pipeline.parameters.run-schedule >>
+        - << pipeline.parameters.beta >>
+    jobs:
+      - run-tests:
+          name: test << matrix.lib >> iOS << matrix.ios >>
+          matrix:
+            parameters:
+              lib: ["SalesforceHybridSDK", "SalesforceFileLogger"]
+              ios: [*beta-ios]
+              device: ["iPhone 13"]
+              env: ["mac-beta"]
