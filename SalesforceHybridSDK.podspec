@@ -7,8 +7,7 @@ Pod::Spec.new do |s|
   s.author       = { "Bharath Hariharan" => "bhariharan@salesforce.com" }
   s.platform     = :ios, "14.0"
   s.source       = { :git => "https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid.git",
-                     :tag => "v#{s.version}",
-                     :submodules => true }
+                     :tag => "v#{s.version}" }
   s.requires_arc = true
   s.default_subspec  = 'SalesforceHybridSDK'
   s.subspec 'SalesforceHybridSDK' do |sdkhybrid|
