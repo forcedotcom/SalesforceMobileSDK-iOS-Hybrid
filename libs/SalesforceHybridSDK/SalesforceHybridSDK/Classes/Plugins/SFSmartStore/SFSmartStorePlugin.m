@@ -26,7 +26,6 @@
 #import "CDVPlugin+SFAdditions.h"
 #import <SalesforceSDKCore/NSDictionary+SFAdditions.h>
 #import <SalesforceSDKCore/SalesforceSDKConstants.h>
-#import <SmartStore/SFSoupSpec.h>
 #import <SmartStore/SFStoreCursor.h>
 #import <SmartStore/SFSmartStore.h>
 #import <SmartStore/SFQuerySpec.h>
@@ -165,27 +164,20 @@ NSString * const kStoreName           = @"storeName";
     NSDictionary *argsDict = [self getArgument:command.arguments atIndex:0];
     SFSmartStore *smartStore = [self getStoreInst:argsDict];
     [self runCommand:^(NSDictionary* argsDict) {
-        NSDictionary *soupSpecDict = [argsDict nonNullObjectForKey:kSoupSpecArg];
-        SFSoupSpec *soupSpec = nil;
-        if (soupSpecDict) {
-            soupSpec = [SFSoupSpec newSoupSpecWithDictionary:soupSpecDict];
-        } else {
-            NSString *soupName = [argsDict nonNullObjectForKey:kSoupNameArg];
-            soupSpec = [SFSoupSpec newSoupSpec:soupName withFeatures:nil];
-        }
+        NSString *soupName = [argsDict nonNullObjectForKey:kSoupNameArg];
         NSArray *indexSpecs = [SFSoupIndex asArraySoupIndexes:[argsDict nonNullObjectForKey:kIndexesArg]];
-        [SFSDKHybridLogger d:[self class] format:@"pgRegisterSoup with name: %@, soup features: %@, indexSpecs: %@", soupSpec.soupName, soupSpec.features, indexSpecs];
+        [SFSDKHybridLogger d:[self class] format:@"pgRegisterSoup with name: %@, soup indexSpecs: %@", soupName, indexSpecs];
         if (smartStore) {
             NSError *error = nil;
-            BOOL result = [smartStore registerSoupWithSpec:soupSpec withIndexSpecs:indexSpecs error:&error];
+            BOOL result = [smartStore registerSoup:soupName withIndexSpecs:indexSpecs error:&error];
             if (result) {
-                return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:soupSpec.soupName];
+                return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:soupName];
             } else {
-                NSString *errorMessage = [NSString stringWithFormat:@"Register soup with spec '%@' failed, error: %@, `argsDict`: %@.", soupSpec, error, argsDict];
+                NSString *errorMessage = [NSString stringWithFormat:@"Register soup with name '%@' failed, error: %@, `argsDict`: %@.", soupName, error, argsDict];
                 return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
             }
         } else {
-            NSString *errorMessage = [NSString stringWithFormat:@"Register soup with spec '%@' failed, the smart store instance is nil, `argsDict`: %@.", soupSpec, argsDict];
+            NSString *errorMessage = [NSString stringWithFormat:@"Register soup with name '%@' failed, the smart store instance is nil, `argsDict`: %@.", soupName, argsDict];
             return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         }
     } command:command];
@@ -354,16 +346,10 @@ NSString * const kStoreName           = @"storeName";
     [self runCommand:^(NSDictionary* argsDict) {
         NSString *soupName = [argsDict nonNullObjectForKey:kSoupNameArg];
         NSDictionary *soupSpecDict = [argsDict nonNullObjectForKey:kSoupSpecArg];
-        SFSoupSpec *soupSpec = nil;
-        if (soupSpecDict) {
-            soupSpec = [SFSoupSpec newSoupSpecWithDictionary:soupSpecDict];
-        } else {
-            soupSpec = [SFSoupSpec newSoupSpec:soupName withFeatures:nil];
-        }
         NSArray *indexSpecs = [SFSoupIndex asArraySoupIndexes:[argsDict nonNullObjectForKey:kIndexesArg]];
         BOOL reIndexData = [[argsDict nonNullObjectForKey:kReIndexDataArg] boolValue];
-        [SFSDKHybridLogger d:[self class] format:@"pgAlterSoup with name: %@, soup features: %@, indexSpecs: %@, reIndexData: %@", soupName, soupSpec.features, indexSpecs, reIndexData ? @"true" : @"false"];
-        BOOL alterOk = [[self getStoreInst:argsDict] alterSoup:soupName withSoupSpec:soupSpec withIndexSpecs:indexSpecs reIndexData:reIndexData];
+        [SFSDKHybridLogger d:[self class] format:@"pgAlterSoup with name: %@, indexSpecs: %@, reIndexData: %@", soupName, indexSpecs, reIndexData ? @"true" : @"false"];
+        BOOL alterOk = [[self getStoreInst:argsDict] alterSoup:soupName withIndexSpecs:indexSpecs reIndexData:reIndexData];
         if (alterOk) {
             return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:soupName];
         } else {
@@ -409,20 +395,6 @@ NSString * const kStoreName           = @"storeName";
             return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:indexSpecsAsDicts];
         } else {
             return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-        }
-    } command:command];
-}
-
-- (void)pgGetSoupSpec:(CDVInvokedUrlCommand *)command {
-    [self runCommand:^(NSDictionary* argsDict) {
-        SFSmartStore *store = [self getStoreInst:argsDict];
-        NSString *soupName = [argsDict nonNullObjectForKey:kSoupNameArg];
-        [SFSDKHybridLogger d:[self class] format:@"pgGetSoupSpec with soup name: %@", soupName];
-        SFSoupSpec *soupSpec = [store attributesForSoup:soupName];
-        if (soupSpec) {
-            return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[soupSpec asDictionary]];
-        } else {
-            return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Couldn't fetch SoupSpec for the given soup"];
         }
     } command:command];
 }
