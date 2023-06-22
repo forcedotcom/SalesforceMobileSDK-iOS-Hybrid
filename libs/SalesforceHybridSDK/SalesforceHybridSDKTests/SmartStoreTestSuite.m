@@ -73,10 +73,6 @@
     [self runTest:@"testRegisterRemoveSoup"];
 }
 
-- (void) testRegisterWithSpec {
-    [self runTest:@"testRegisterWithSpec"];
-}
-
 - (void) testRegisterBogusSoup {
     [self runTest:@"testRegisterBogusSoup"];
 }
@@ -219,14 +215,6 @@
 
 - (void) testAlterSoupWithReIndexing {
     [self runTest:@"testAlterSoupWithReIndexing"];
-}
-
-- (void) testAlterSoupWithSpecNoReIndexing {
-    [self runTest:@"testAlterSoupWithSpecNoReIndexing"];
-}
-
-- (void) testAlterSoupWithSpecWithReIndexing {
-    [self runTest:@"testAlterSoupWithSpecWithReIndexing"];
 }
 
 - (void) testAlterSoupWithBogusSoupName {
