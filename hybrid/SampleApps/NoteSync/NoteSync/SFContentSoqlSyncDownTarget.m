@@ -239,21 +239,22 @@ typedef void (^SFSoapSoqlResponseParseComplete) ();
 {
     __weak typeof(self) weakSelf = self;
     NSString* queryToRun = [self getQueryToRun:maxTimeStamp];
-    [[SFUserAccountManager sharedInstance] refreshCredentials:[SFUserAccountManager sharedInstance].currentUser.credentials completion:^(SFOAuthInfo *authInfo, SFUserAccount *account) {
-            SFRestRequest* request = [[SFSoapSoqlRequest alloc] initWithQuery:queryToRun];
-            [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
-                errorBlock(e);
-            } successBlock:^(NSData * response, NSURLResponse *rawResponse) { // cheap call to refresh session
-                __strong typeof(weakSelf) strongSelf = weakSelf;
-                [strongSelf parseRestResponse:response parseCompletion:^(SFSoapSoqlResponse *soapSoqlResponse) {
-                    strongSelf.queryLocator = soapSoqlResponse.queryLocator;
-                    strongSelf.totalSize = soapSoqlResponse.totalSize;
-                    completeBlock(soapSoqlResponse.records);
-                }];
+    SFRestRequest *request = [[SFRestAPI sharedInstance] requestForLimits:nil];
+    [[SFRestAPI sharedInstance] sendRequest:request failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
+        errorBlock(e);
+    } successBlock:^(id response, NSURLResponse *rawResponse) {
+        SFRestRequest* request = [[SFSoapSoqlRequest alloc] initWithQuery:queryToRun];
+        [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
+            errorBlock(e);
+        } successBlock:^(NSData * response, NSURLResponse *rawResponse) { // cheap call to refresh session
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf parseRestResponse:response parseCompletion:^(SFSoapSoqlResponse *soapSoqlResponse) {
+                strongSelf.queryLocator = soapSoqlResponse.queryLocator;
+                strongSelf.totalSize = soapSoqlResponse.totalSize;
+                completeBlock(soapSoqlResponse.records);
             }];
-        } failure:^(SFOAuthInfo *authInfo, NSError *error) {
-            errorBlock(error);
         }];
+    }];
 }
 
 - (void) continueFetch:(SFMobileSyncSyncManager *)syncManager
