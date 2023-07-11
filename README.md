@@ -7,7 +7,7 @@ You have arrived at the source repository for the Hybrid library of the Salesfor
 - If you'd like to work with the source code of the SDK itself, you've come to the right place!  You can browse sample app source code and debug down through the layers to get a feel for how everything works under the covers.  Read on for instructions on how to get started with the SDK in your development environment.
 - If you're just eager to start developing your own new application, the quickest way is to use our npm binary distribution package, called [forcehybrid](https://npmjs.org/package/forcehybrid), which is hosted on [npmjs.org](https://npmjs.org/).  Getting started is as simple as installing the npm package and launching your template app.  You'll find more details on the forcehybrid package page.
 
-Installation (do this first - really)
+Installation (do this first - really) test
 ==
 Working with this repository requires working with git.  Any workflow that leaves you with a functioning git clone of this repository should set you up for success.  Downloading the ZIP file from GitHub, on the other hand, is likely to put you at a dead end.
 
