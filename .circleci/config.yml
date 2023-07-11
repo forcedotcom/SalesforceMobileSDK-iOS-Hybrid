@@ -4,7 +4,7 @@ anchors:
   - &latest-xcode    "14.3.1"
   - &latest-ios      "16.4"
   - &min-ios         "15.5"
-  - &device          "iPhone 13"
+  - &device          "iPhone SE (3rd generation)"
   - &invalid         ""
 
 executors:
@@ -42,6 +42,10 @@ jobs:
       LIB: << parameters.lib >>
     steps:
       - checkout
+      - restore_cache: 
+          keys:
+            - v1-gem-cahce{{ checksum ".circleci/Gemfile.lock" }}
+            - v1-gem-cahce
       - run: 
           name: Installing gem dependencies
           command:  |
@@ -50,8 +54,11 @@ jobs:
             ./build/pre-build
             cd .circleci
             sudo bundle update --bundler
-            bundle check || sudo bundle install
-            sudo bundle update
+            bundle check || sudo bundle install --path vendor/bundle
+      - save_cache: 
+          key: v1-gem-cahce{{ checksum ".circleci/Gemfile.lock" }}
+          paths:
+            - vendor/bundle
       - run: 
           name: Compile
           command:  |
