@@ -18,3 +18,8 @@ if [ ! -f "shared/test/test_credentials.json" ]
 then
     cp shared/test/test_credentials.json.sample shared/test/test_credentials.json
 fi
+
+# Prepare cordova.js
+cd external/cordova
+npm install
+npm run prepare
