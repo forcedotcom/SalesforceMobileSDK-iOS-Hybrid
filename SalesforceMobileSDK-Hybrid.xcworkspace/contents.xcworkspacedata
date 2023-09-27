@@ -58,9 +58,6 @@
          location = "group:hybrid/SampleApps/AccountEditor/AccountEditor.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:hybrid/SampleApps/NoteSync/NoteSync.xcodeproj">
-      </FileRef>
-      <FileRef
          location = "group:hybrid/SampleApps/MobileSyncExplorerHybrid/MobileSyncExplorerHybrid.xcodeproj">
       </FileRef>
    </Group>
