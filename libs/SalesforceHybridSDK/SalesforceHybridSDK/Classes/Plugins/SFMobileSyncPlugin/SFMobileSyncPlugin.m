@@ -88,8 +88,8 @@ NSString *const kSyncStoreNameArg = @"storeName";
 - (void) getSyncStatus:(CDVInvokedUrlCommand *)command
 {
     [self runCommand:^(NSDictionary* argsDict) {
-        NSNumber *syncId = (NSNumber *) [argsDict nonNullObjectForKey:kSyncIdArg];
-        NSString *syncName = (NSString *) [argsDict nonNullObjectForKey:kSyncNameArg];
+        NSNumber *syncId = (NSNumber *) [argsDict sfsdk_nonNullObjectForKey:kSyncIdArg];
+        NSString *syncName = (NSString *) [argsDict sfsdk_nonNullObjectForKey:kSyncNameArg];
 
         SFSyncState *sync;
         if (syncId) {
@@ -115,8 +115,8 @@ NSString *const kSyncStoreNameArg = @"storeName";
 - (void) deleteSync:(CDVInvokedUrlCommand *)command
 {
     [self runCommand:^(NSDictionary* argsDict) {
-        NSNumber *syncId = (NSNumber *) [argsDict nonNullObjectForKey:kSyncIdArg];
-        NSString *syncName = (NSString *) [argsDict nonNullObjectForKey:kSyncNameArg];
+        NSNumber *syncId = (NSNumber *) [argsDict sfsdk_nonNullObjectForKey:kSyncIdArg];
+        NSString *syncName = (NSString *) [argsDict sfsdk_nonNullObjectForKey:kSyncNameArg];
 
         if (syncId) {
             [SFSDKHybridLogger d:[self class] format:@"getSyncStatus with sync id: %@", syncId];
@@ -139,10 +139,10 @@ NSString *const kSyncStoreNameArg = @"storeName";
 - (void) syncDown:(CDVInvokedUrlCommand *)command
 {
     [self runCommand:^(NSDictionary* argsDict) {
-        NSString *syncName = [argsDict nonNullObjectForKey:kSyncNameArg];
-        NSString *soupName = [argsDict nonNullObjectForKey:kSyncSoupNameArg];
-        SFSyncOptions *options = [SFSyncOptions newFromDict:[argsDict nonNullObjectForKey:kSyncOptionsArg]];
-        SFSyncDownTarget *target = [SFSyncDownTarget newFromDict:[argsDict nonNullObjectForKey:kSyncTargetArg]];
+        NSString *syncName = [argsDict sfsdk_nonNullObjectForKey:kSyncNameArg];
+        NSString *soupName = [argsDict sfsdk_nonNullObjectForKey:kSyncSoupNameArg];
+        SFSyncOptions *options = [SFSyncOptions newFromDict:[argsDict sfsdk_nonNullObjectForKey:kSyncOptionsArg]];
+        SFSyncDownTarget *target = [SFSyncDownTarget newFromDict:[argsDict sfsdk_nonNullObjectForKey:kSyncTargetArg]];
         __weak typeof(self) weakSelf = self;
         
         NSError *error = nil;
@@ -162,8 +162,8 @@ NSString *const kSyncStoreNameArg = @"storeName";
 - (void) reSync:(CDVInvokedUrlCommand *)command
 {
     [self runCommand:^(NSDictionary* argsDict) {
-        NSNumber *syncId = (NSNumber *) [argsDict nonNullObjectForKey:kSyncIdArg];
-        NSString *syncName = (NSString *) [argsDict nonNullObjectForKey:kSyncNameArg];
+        NSNumber *syncId = (NSNumber *) [argsDict sfsdk_nonNullObjectForKey:kSyncIdArg];
+        NSString *syncName = (NSString *) [argsDict sfsdk_nonNullObjectForKey:kSyncNameArg];
 
         NSError *error=nil;
         SFSyncState *sync;
@@ -196,7 +196,7 @@ NSString *const kSyncStoreNameArg = @"storeName";
 - (void) cleanResyncGhosts:(CDVInvokedUrlCommand *)command
 {
     NSDictionary *argsDict = [self getArgument:command.arguments atIndex:0];
-    NSNumber* syncId = (NSNumber*) [argsDict nonNullObjectForKey:kSyncIdArg];
+    NSNumber* syncId = (NSNumber*) [argsDict sfsdk_nonNullObjectForKey:kSyncIdArg];
     Class selfClass = [self class];
     id <CDVCommandDelegate> commandDelegate = self.commandDelegate;
     NSString* callbackId = command.callbackId;
@@ -223,10 +223,10 @@ NSString *const kSyncStoreNameArg = @"storeName";
 - (void) syncUp:(CDVInvokedUrlCommand *)command
 {
     [self runCommand:^(NSDictionary* argsDict) {
-        NSString *syncName = [argsDict nonNullObjectForKey:kSyncNameArg];
-        NSString *soupName = [argsDict nonNullObjectForKey:kSyncSoupNameArg];
-        SFSyncOptions *options = [SFSyncOptions newFromDict:[argsDict nonNullObjectForKey:kSyncOptionsArg]];
-        SFSyncUpTarget *target = [SFSyncUpTarget newFromDict:[argsDict nonNullObjectForKey:kSyncTargetArg]];
+        NSString *syncName = [argsDict sfsdk_nonNullObjectForKey:kSyncNameArg];
+        NSString *soupName = [argsDict sfsdk_nonNullObjectForKey:kSyncSoupNameArg];
+        SFSyncOptions *options = [SFSyncOptions newFromDict:[argsDict sfsdk_nonNullObjectForKey:kSyncOptionsArg]];
+        SFSyncUpTarget *target = [SFSyncUpTarget newFromDict:[argsDict sfsdk_nonNullObjectForKey:kSyncTargetArg]];
         __weak typeof(self) weakSelf = self;
         NSError* error = nil;
         SFSyncState* sync = [[self getSyncManagerInst:argsDict] syncUpWithTarget:target options:options soupName:soupName syncName:syncName updateBlock:^(SFSyncState* sync) {
@@ -259,7 +259,7 @@ NSString *const kSyncStoreNameArg = @"storeName";
 
 - (NSString *)storeName:(NSDictionary *)args
 {
-    NSString *storeName = [args nonNullObjectForKey:kSyncStoreNameArg];
+    NSString *storeName = [args sfsdk_nonNullObjectForKey:kSyncStoreNameArg];
     if(storeName==nil) {
         storeName = kDefaultSmartStoreName;
     }
