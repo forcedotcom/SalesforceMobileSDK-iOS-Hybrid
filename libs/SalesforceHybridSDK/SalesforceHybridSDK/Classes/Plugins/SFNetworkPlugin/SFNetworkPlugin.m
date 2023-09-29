@@ -58,11 +58,11 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
 - (void) pgSendRequest:(CDVInvokedUrlCommand *) command
 {
     NSDictionary *argsDict = [self getArgument:command.arguments atIndex:0];
-    SFRestMethod method = [SFRestRequest sfRestMethodFromHTTPMethod:[argsDict nonNullObjectForKey:kMethodArg]];
-    NSString* endPoint = [argsDict nonNullObjectForKey:kEndPointArg];
-    NSString* path = [argsDict nonNullObjectForKey:kPathArg];
+    SFRestMethod method = [SFRestRequest sfRestMethodFromHTTPMethod:[argsDict sfsdk_nonNullObjectForKey:kMethodArg]];
+    NSString* endPoint = [argsDict sfsdk_nonNullObjectForKey:kEndPointArg];
+    NSString* path = [argsDict sfsdk_nonNullObjectForKey:kPathArg];
     NSDictionary* queryParams = [[NSDictionary alloc] init];
-    id queryParamsObj = [argsDict nonNullObjectForKey:kQueryParams];
+    id queryParamsObj = [argsDict sfsdk_nonNullObjectForKey:kQueryParams];
 
     /*
      * Query params are NSDictionary for GET and encoded JSON in NSString
@@ -73,11 +73,11 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
     } else {
         queryParams = queryParamsObj;
     }
-    NSMutableDictionary<NSString*, NSString*>* headerParams = [argsDict nonNullObjectForKey:kHeaderParams];
-    NSDictionary<NSString*, NSDictionary*>* fileParams = [argsDict nonNullObjectForKey:kfileParams];
-    BOOL returnBinary = [argsDict nonNullObjectForKey:kReturnBinary] != nil && [[argsDict nonNullObjectForKey:kReturnBinary] boolValue];
+    NSMutableDictionary<NSString*, NSString*>* headerParams = [argsDict sfsdk_nonNullObjectForKey:kHeaderParams];
+    NSDictionary<NSString*, NSDictionary*>* fileParams = [argsDict sfsdk_nonNullObjectForKey:kfileParams];
+    BOOL returnBinary = [argsDict sfsdk_nonNullObjectForKey:kReturnBinary] != nil && [[argsDict sfsdk_nonNullObjectForKey:kReturnBinary] boolValue];
     
-    BOOL doesNotRequireAuthentication = [argsDict nonNullObjectForKey:kDoesNotRequireAuthentication] != nil && [[argsDict nonNullObjectForKey:kDoesNotRequireAuthentication] boolValue];
+    BOOL doesNotRequireAuthentication = [argsDict sfsdk_nonNullObjectForKey:kDoesNotRequireAuthentication] != nil && [[argsDict sfsdk_nonNullObjectForKey:kDoesNotRequireAuthentication] boolValue];
     
     SFRestRequest* request = nil;
     
@@ -108,9 +108,9 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
         NSArray<NSString*>* fileParamKeys = fileParams.allKeys;
         for (NSString* fileParamName in fileParamKeys) {
             NSDictionary* fileParam = fileParams[fileParamName];
-            NSString* fileMimeType = [fileParam nonNullObjectForKey:kFileMimeType];
-            NSString* fileUrl = [fileParam nonNullObjectForKey:kFileUrl];
-            NSString* fileName = [fileParam nonNullObjectForKey:kFileName];
+            NSString* fileMimeType = [fileParam sfsdk_nonNullObjectForKey:kFileMimeType];
+            NSString* fileUrl = [fileParam sfsdk_nonNullObjectForKey:kFileUrl];
+            NSString* fileName = [fileParam sfsdk_nonNullObjectForKey:kFileName];
             NSData* fileData = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileUrl]];
             [request addPostFileData:fileData paramName:fileParamName fileName:fileName mimeType:fileMimeType params:queryParams];
         }
@@ -127,7 +127,7 @@ static NSString * const kDoesNotRequireAuthentication = @"doesNotRequireAuthenti
     [restApiInstance sendRequest:request
                                       failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
                                           __strong typeof(self) strongSelf = weakSelf;
-                                          NSMutableDictionary *responseDictionary = [[rawResponse asDictionary] mutableCopy];
+                                          NSMutableDictionary *responseDictionary = [[rawResponse sfsdk_asDictionary] mutableCopy];
                                           if ([response isKindOfClass:[NSDictionary class]] || [response isKindOfClass:[NSArray class]]) {
                                               responseDictionary[@"body"] = response;
                                           } else {
