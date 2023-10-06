@@ -31,6 +31,7 @@
 		4FAE63002196714C003A5CD6 /* SFSDKLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62FF2196714C003A5CD6 /* SFSDKLoggerTests.m */; };
 		691BBAAD278663820098A716 /* CocoaLumberjack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEA2A8C72214C184009D923B /* CocoaLumberjack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		691BBAB02786638C0098A716 /* SalesforceSDKCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEA2A8AC2214C174009D923B /* SalesforceSDKCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		696E91742AD0CD7E00205884 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 696E916E2AD0CC8200205884 /* PrivacyInfo.xcprivacy */; };
 		829DA2B11C12677B0040F5F1 /* SalesforceFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 829DA2B01C12677B0040F5F1 /* SalesforceFileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82EFF30A16E8049500A63CDF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 82EFF30816E8049500A63CDF /* InfoPlist.strings */; };
 		82EFF30C16E8049500A63CDF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 82EFF30B16E8049500A63CDF /* main.m */; };
@@ -144,6 +145,7 @@
 		4FAE62E721966E8A003A5CD6 /* SFSDKLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFSDKLogger.m; path = Logger/SFSDKLogger.m; sourceTree = "<group>"; };
 		4FAE62FF2196714C003A5CD6 /* SFSDKLoggerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDKLoggerTests.m; sourceTree = "<group>"; };
 		4FC2B26A219A44880064EB46 /* SalesforceFileLoggerTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SalesforceFileLoggerTests-Info.plist"; sourceTree = "<group>"; };
+		696E916E2AD0CC8200205884 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		8222729D19C39F4500FC537E /* SalesforceFileLoggerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalesforceFileLoggerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		829DA2B01C12677B0040F5F1 /* SalesforceFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalesforceFileLogger.h; sourceTree = "<group>"; };
 		82D0AB3D1C4980200081F833 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				82D0AB3D1C4980200081F833 /* Info.plist */,
+				696E916E2AD0CC8200205884 /* PrivacyInfo.xcprivacy */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				CE4CE2DC1C0E465B009F6029 /* Sources */,
 				CE4CE2DD1C0E465B009F6029 /* Frameworks */,
 				CE4CE2DE1C0E465B009F6029 /* Headers */,
+				696E91732AD0CD7700205884 /* Resources */,
 				CE4CE4F91C0E6DCC009F6029 /* ShellScript */,
 				4F6A4A5921ADF3AB00A33B50 /* ShellScript */,
 			);
@@ -528,6 +532,14 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		696E91732AD0CD7700205884 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				696E91742AD0CD7E00205884 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8222729B19C39F4500FC537E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
