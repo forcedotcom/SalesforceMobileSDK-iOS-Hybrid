@@ -766,7 +766,7 @@ static NSString * const kHTTP = @"http";
      * instead of going through the entire OAuth dance all over again.
      */
     SFOAuthInfo *authInfo = [[SFOAuthInfo alloc] initWithAuthType:SFOAuthTypeRefresh];
-    SFRestRequest *request = [[SFRestAPI sharedInstance] requestForLimits:nil];
+    SFRestRequest *request = [[SFRestAPI sharedInstance] cheapRequest:nil];
     [[SFRestAPI sharedInstance] sendRequest:request failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
         dispatch_async(dispatch_get_main_queue(), ^{
             failureBlock(authInfo, e);
