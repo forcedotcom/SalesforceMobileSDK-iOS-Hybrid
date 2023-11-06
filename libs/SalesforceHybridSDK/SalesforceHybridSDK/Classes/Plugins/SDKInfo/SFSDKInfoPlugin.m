@@ -116,7 +116,7 @@ static NSString * const kAppFeatureKey   = @"feature";
     [self getVersion:@"registerAppFeature" withArguments:command.arguments];
     NSDictionary *argsDict = [self getArgument:command.arguments atIndex:0];
     if(argsDict != nil){
-        NSString *appFeatureCode = [argsDict nonNullObjectForKey:kAppFeatureKey];
+        NSString *appFeatureCode = [argsDict sfsdk_nonNullObjectForKey:kAppFeatureKey];
         if(appFeatureCode != nil){
             [SFSDKAppFeatureMarkers registerAppFeature:appFeatureCode];
         }
@@ -128,7 +128,7 @@ static NSString * const kAppFeatureKey   = @"feature";
     [self getVersion:@"unregisterAppFeature" withArguments:command.arguments];
     NSDictionary *argsDict = [self getArgument:command.arguments atIndex:0];
     if(argsDict != nil){
-        NSString *appFeatureCode = [argsDict nonNullObjectForKey:kAppFeatureKey];
+        NSString *appFeatureCode = [argsDict sfsdk_nonNullObjectForKey:kAppFeatureKey];
         if(appFeatureCode != nil){
             [SFSDKAppFeatureMarkers unregisterAppFeature:appFeatureCode];
         }

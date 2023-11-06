@@ -112,8 +112,8 @@ NSString * const kUserAccountClientIdDictKey       = @"clientId";
         }
     } else {
         // User data was passed in.  Assume API-level user switching.
-        NSString *userId = [argsDict nonNullObjectForKey:kUserAccountUserIdDictKey];
-        NSString *orgId = [argsDict nonNullObjectForKey:kUserAccountOrgIdDictKey];
+        NSString *userId = [argsDict sfsdk_nonNullObjectForKey:kUserAccountUserIdDictKey];
+        NSString *orgId = [argsDict sfsdk_nonNullObjectForKey:kUserAccountOrgIdDictKey];
         SFUserAccountIdentity *accountIdentity = [SFUserAccountIdentity identityWithUserId:userId orgId:orgId];
         SFUserAccount *account = [[SFUserAccountManager sharedInstance] userAccountForUserIdentity:accountIdentity];
         [SFSDKHybridLogger d:[self class] format:@"switchToUser: Switching to user account: %@", account];
@@ -127,8 +127,8 @@ NSString * const kUserAccountClientIdDictKey       = @"clientId";
     NSString *callbackId = command.callbackId;
     [self getVersion:@"logout" withArguments:command.arguments];
     NSDictionary *argsDict = [self getArgument:command.arguments atIndex:0];
-    NSString *userId = [argsDict nonNullObjectForKey:kUserAccountUserIdDictKey];
-    NSString *orgId = [argsDict nonNullObjectForKey:kUserAccountOrgIdDictKey];
+    NSString *userId = [argsDict sfsdk_nonNullObjectForKey:kUserAccountUserIdDictKey];
+    NSString *orgId = [argsDict sfsdk_nonNullObjectForKey:kUserAccountOrgIdDictKey];
     SFUserAccountIdentity *accountIdentity = [SFUserAccountIdentity identityWithUserId:userId orgId:orgId];
     SFUserAccount *account = [[SFUserAccountManager sharedInstance] userAccountForUserIdentity:accountIdentity];
     if (account == nil || account == [SFUserAccountManager sharedInstance].currentUser) {

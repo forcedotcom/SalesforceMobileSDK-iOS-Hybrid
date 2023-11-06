@@ -422,8 +422,8 @@ static NSString * const kHTTP = @"http";
 
     // NB: We're not using NSURLComponents.queryItems here, because it unsufficiently encodes query params.
     NSMutableString *frontDoorUrlString = [NSMutableString stringWithString:frontDoorUrlComponents.string];
-    NSString *encodedRetUrlValue = (isEncoded ? fullReturnUrlString : [fullReturnUrlString stringByURLEncoding]);
-    NSString *encodedSidValue = [creds.accessToken stringByURLEncoding];
+    NSString *encodedRetUrlValue = (isEncoded ? fullReturnUrlString : [fullReturnUrlString sfsdk_stringByURLEncoding]);
+    NSString *encodedSidValue = [creds.accessToken sfsdk_stringByURLEncoding];
     [frontDoorUrlString appendFormat:@"?sid=%@&retURL=%@&display=touch", encodedSidValue, encodedRetUrlValue];
     return [NSURL URLWithString:frontDoorUrlString];
 }
@@ -448,8 +448,8 @@ static NSString * const kHTTP = @"http";
     if ([url.scheme.lowercaseString hasPrefix:kHTTP]) {
         NSString *retUrlValue = nil;
         if (url.query != nil) {
-            retUrlValue = [url valueForParameterName:kRetURLParam];
-            retUrlValue = (retUrlValue == nil) ? [url valueForParameterName:kStartURLParam] : retUrlValue;
+            retUrlValue = [url sfsdk_valueForParameterName:kRetURLParam];
+            retUrlValue = (retUrlValue == nil) ? [url sfsdk_valueForParameterName:kStartURLParam] : retUrlValue;
         }
         if (retUrlValue == nil || [retUrlValue containsString:kFrontdoor]) {
             retUrlValue = self.startPage;
@@ -489,7 +489,7 @@ static NSString * const kHTTP = @"http";
 }
 
 - (BOOL)isVFPageRedirect:(NSURL *)url {
-    NSString *ecValue = [url valueForParameterName:kECParam];
+    NSString *ecValue = [url sfsdk_valueForParameterName:kECParam];
     return ([ecValue isEqualToString:kEC301] || [ecValue isEqualToString:kEC302]);
 }
 
@@ -524,8 +524,8 @@ static NSString * const kHTTP = @"http";
     NSMutableString *errorPageUrlString = [NSMutableString stringWithString:[rootUrl absoluteString]];
     [rootUrl query] == nil ? [errorPageUrlString appendString:@"?"] : [errorPageUrlString appendString:@"&"];
     [errorPageUrlString appendFormat:@"%@=%ld", kErrorCodeParameterName, (long)errorCode];
-    [errorPageUrlString appendFormat:@"&%@=%@", kErrorDescriptionParameterName, [errorDescription stringByURLEncoding]];
-    [errorPageUrlString appendFormat:@"&%@=%@", kErrorContextParameterName, [errorContext stringByURLEncoding]];
+    [errorPageUrlString appendFormat:@"&%@=%@", kErrorDescriptionParameterName, [errorDescription sfsdk_stringByURLEncoding]];
+    [errorPageUrlString appendFormat:@"&%@=%@", kErrorContextParameterName, [errorContext sfsdk_stringByURLEncoding]];
     return [NSURL URLWithString:errorPageUrlString];
 }
 
@@ -578,7 +578,7 @@ static NSString * const kHTTP = @"http";
 - (void) webView:(WKWebView *) webView decidePolicyForNavigationAction:(WKNavigationAction *) navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy)) decisionHandler
 {
     [SFSDKHybridLogger d:[self class] format:@"webView:decidePolicyForNavigationAction:decisionHandler: Loading URL '%@'",
-             [navigationAction.request.URL redactedAbsoluteString:@[@"sid"]]];
+             [navigationAction.request.URL sfsdk_redactedAbsoluteString:@[@"sid"]]];
     BOOL shouldAllowRequest = YES;
     if ([webView isEqual:self.vfPingPageHiddenWKWebView]) { // Hidden ping page load.
         [SFSDKHybridLogger d:[self class] message:@"Setting up VF web state after plugin-based refresh."];
@@ -651,7 +651,7 @@ static NSString * const kHTTP = @"http";
 - (void) webView:(WKWebView *) webView didFinishNavigation:(WKNavigation *) navigation {
     NSURL *requestUrl = webView.URL;
     NSArray *redactParams = @[@"sid"];
-    NSString *redactedUrl = [requestUrl redactedAbsoluteString:redactParams];
+    NSString *redactedUrl = [requestUrl sfsdk_redactedAbsoluteString:redactParams];
     [SFSDKHybridLogger d:[self class] format:@"finishLoadActions: Loaded %@", redactedUrl];
     if ([webView isEqual:self.webView]) {
 
@@ -717,7 +717,7 @@ static NSString * const kHTTP = @"http";
 
     // If there's an original URL, load it through frontdoor.
     if (originalUrl != nil) {
-        [SFSDKHybridLogger d:[self class] format:@"Authentication complete. Redirecting to '%@' through frontdoor.", [originalUrl stringByURLEncoding]];
+        [SFSDKHybridLogger d:[self class] format:@"Authentication complete. Redirecting to '%@' through frontdoor.", [originalUrl sfsdk_stringByURLEncoding]];
         BOOL createAbsUrl = YES;
         if (authInfo.authType == SFOAuthTypeRefresh) {
             createAbsUrl = NO;
@@ -745,7 +745,7 @@ static NSString * const kHTTP = @"http";
         SFOAuthCredentials *creds = [SFUserAccountManager sharedInstance].currentUser.credentials;
         if (nil != creds.apiUrl) {
             NSMutableString *instanceUrl = [[NSMutableString alloc] initWithString:creds.apiUrl.absoluteString];
-            NSString *encodedPingUrlParam = [kVFPingPageUrl stringByURLEncoding];
+            NSString *encodedPingUrlParam = [kVFPingPageUrl sfsdk_stringByURLEncoding];
             [instanceUrl appendFormat:@"/visualforce/session?url=%@&autoPrefixVFDomain=true", encodedPingUrlParam];
             NSURL *pingURL = [[NSURL alloc] initWithString:instanceUrl];
             NSURLRequest *pingRequest = [[NSURLRequest alloc] initWithURL:pingURL];
@@ -766,7 +766,7 @@ static NSString * const kHTTP = @"http";
      * instead of going through the entire OAuth dance all over again.
      */
     SFOAuthInfo *authInfo = [[SFOAuthInfo alloc] initWithAuthType:SFOAuthTypeRefresh];
-    SFRestRequest *request = [[SFRestAPI sharedInstance] requestForLimits:nil];
+    SFRestRequest *request = [[SFRestAPI sharedInstance] cheapRequest:nil];
     [[SFRestAPI sharedInstance] sendRequest:request failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
         dispatch_async(dispatch_get_main_queue(), ^{
             failureBlock(authInfo, e);

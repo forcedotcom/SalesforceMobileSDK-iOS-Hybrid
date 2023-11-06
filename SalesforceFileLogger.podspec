@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SalesforceFileLogger"
-  s.version      = "11.0.1"
+  s.version      = "11.1.0"
   s.summary      = "Salesforce Mobile SDK for iOS"
   s.homepage     = "https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid"
 
@@ -19,6 +19,7 @@ Pod::Spec.new do |s|
   s.subspec 'SalesforceFileLogger' do |filelogger|
       filelogger.dependency 'SalesforceSDKCommon', "~>#{s.version}"
       filelogger.dependency 'CocoaLumberjack', '~> 3.7.4'
+      filelogger.resource = 'libs/SalesforceFileLogger/SalesforceFileLogger/PrivacyInfo.xcprivacy'
       filelogger.source_files = 'libs/SalesforceFileLogger/SalesforceFileLogger/Classes/**/*.{h,m}', 'libs/SalesforceFileLogger/SalesforceFileLogger/SalesforceFileLogger.h'
       filelogger.public_header_files = 'libs/SalesforceFileLogger/SalesforceFileLogger/Classes/Logger/SFSDKFileLogger.h', 'libs/SalesforceFileLogger/SalesforceFileLogger/Classes/Logger/SFSDKLogFileManager.h', 'libs/SalesforceFileLogger/SalesforceFileLogger/Classes/Logger/SFSDKLogger.h', 'libs/SalesforceFileLogger/SalesforceFileLogger/SalesforceFileLogger.h'
       filelogger.prefix_header_contents = ''
