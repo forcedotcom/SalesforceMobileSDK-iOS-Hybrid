@@ -30,7 +30,7 @@
 #define DD_LEGACY_MACROS 0
 #import <CocoaLumberjack/DDLog.h>
 #import <SalesforceSDKCommon/SalesforceSDKCommon.h>
-#import "SFSDKFileLogger.h"
+#import <SalesforceFileLogger/SFSDKFileLogger.h>
 
 @interface SFSDKLogger : NSObject<SFLogging>
 
