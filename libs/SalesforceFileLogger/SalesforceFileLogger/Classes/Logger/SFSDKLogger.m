@@ -213,7 +213,7 @@ static NSMutableDictionary<NSString *, SFSDKLogger *> *loggerList = nil;
 
 - (void)logInternal:(Class)cls level:(DDLogLevel)level message:(NSString *)message  {
     NSString *tag = [NSString stringWithFormat:kLogIdentifierFormat, self.componentName, cls];
-    DDLogMessage *logMessage = [[DDLogMessage alloc] initWithMessage:message level:level flag:DDLogFlagForLogLevel(level) context:0 file:self.componentName function:nil line:0 tag:tag options:0 timestamp:[NSDate date]];
+    DDLogMessage *logMessage = [[DDLogMessage alloc] initWithFormat:message formatted:message level:level flag:DDLogFlagForLogLevel(level) context:0 file:self.componentName function:nil line:0 tag:tag options:0 timestamp:[NSDate date]];
     [self.logger log:YES message:logMessage];
 }
 
