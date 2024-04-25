@@ -267,7 +267,7 @@ unsigned long long const kDefaultMaxFileSize = 1024 * 1024; // 1 MB.
 }
 
 - (DDLogMessage *)messageForLogLine:(NSString *)logLine logger:(SFSDKLogger *)logger {
-    return [[DDLogMessage alloc] initWithMessage:logLine level:DDLogLevelError flag:DDLogFlagError context:0 file:logger.componentName function:nil line:0 tag:[self class] options:0 timestamp:[NSDate date]];
+    return [[DDLogMessage alloc] initWithFormat:logLine formatted:logLine level:DDLogLevelError flag:DDLogFlagError context:0 file:logger.componentName function:nil line:0 tag:[self class] options:0 timestamp:[NSDate date]];
 }
 
 @end
