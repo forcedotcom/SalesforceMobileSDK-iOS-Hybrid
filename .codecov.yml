@@ -1,0 +1,36 @@
+# Validate changes to this class with: curl -X POST --data-binary @.codecov.yml https://codecov.io/validate
+
+codecov:
+  branch: dev
+
+coverage:
+  precision: 2
+  round: down
+  range: "25...75"
+  
+  status:
+    project:
+      default: false  # disable the default status that measures entire project
+      SalesforceHybridSDK:
+        target: auto
+        paths: 
+          - "libs/SalesforceHybridSDK/SalesforceHybridSDK/"
+        flags: 
+          - SalesforceHybridSDK
+      SalesforceFileLogger:
+        target: auto
+        paths: 
+          - "libs/SalesforceFileLogger/SalesforceFileLogger/"
+        flags: 
+          - SalesforceFileLogger
+      
+ignore:
+  - "shared"
+  - "hybrid"
+  - "native"
+  - "libs/**/*Test*/*"
+    
+comment:
+  layout: "reach, diff"
+  behavior: default
+  require_changes: false
