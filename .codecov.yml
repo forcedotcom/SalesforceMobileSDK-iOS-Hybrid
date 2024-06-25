@@ -29,8 +29,12 @@ ignore:
   - "hybrid"
   - "native"
   - "libs/**/*Test*/*"
+
+flag_management:
+  default_rules: # the rules that will be followed for any flag added, generally
+    carryforward: true
     
 comment:
-  layout: "reach, diff"
+  layout: "diff, flags, files"
   behavior: default
   require_changes: false
