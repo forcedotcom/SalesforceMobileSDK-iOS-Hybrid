@@ -66,7 +66,7 @@ jobs:
           name: Compile
           command:  |
             cd .circleci
-            bundle exec fastlane build lib:<< parameters.lib >> 
+            fastlane build lib:<< parameters.lib >> 
       - run: 
             name: Run Tests
             command:  |
