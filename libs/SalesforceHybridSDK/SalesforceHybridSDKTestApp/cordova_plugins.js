@@ -69,7 +69,7 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "com.salesforce": "12.2.0",
+    "com.salesforce": "12.1.1",
     "org.apache.cordova.console": "0.2.11"
 }
 // BOTTOM OF METADATA
