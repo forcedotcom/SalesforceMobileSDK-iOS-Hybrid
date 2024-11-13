@@ -41,6 +41,7 @@
 #import <SalesforceSDKCore/SFRestAPI+Blocks.h>
 #import <Cordova/NSDictionary+CordovaPreferences.h>
 #import <objc/message.h>
+#import <SalesforceHybridSDK/SalesforceHybridSDK-Swift.h>
 
 // Public constants.
 NSString * const kAppHomeUrlPropKey = @"AppHomeUrl";
@@ -83,16 +84,17 @@ static NSString * const kHTTP = @"http";
 }
 
 /**
- * Hidden WKWebView used to load the VF ping page.
- */
-@property (nonatomic, strong) WKWebView *vfPingPageHiddenWKWebView;
-
-/**
  * WKWebView for processing the error page, in the event of a fatal error during bootstrap.
  */
 @property (nonatomic, strong) WKWebView *errorPageWKWebView;
 
 @property (nonatomic, strong) SFOAuthOrgAuthConfiguration *authConfig;
+
+/**
+ * Cookie manager responsible for hydrating session of web view in hybrid remote apps
+ */
+@property (nonatomic, strong) SFSDKSalesforceWebViewCookieManager *cookieManager;
+
 
 /**
  * Whether or not the input URL is one of the reserved URLs in the login flow, for consideration
@@ -148,11 +150,6 @@ static NSString * const kHTTP = @"http";
  */
 - (NSString *)createDefaultErrorPageContentWithCode:(NSInteger)errorCode description:(NSString *)errorDescription context:(NSString *)errorContext;
 
-/**
- * Loads the VF ping page in an invisible WKWebView and sets session cookies for the VF domain.
- */
-- (void)loadVFPingPage;
-
 @end
 
 @implementation SFHybridViewController
@@ -166,6 +163,7 @@ static NSString * const kHTTP = @"http";
 {
     self = [super init];
     if (self) {
+        _cookieManager = [[SFSDKSalesforceWebViewCookieManager alloc] init];
         _hybridViewConfig = (viewConfig == nil ? [SFHybridViewConfig fromDefaultConfigFile] : viewConfig);
         NSAssert(_hybridViewConfig != nil, @"_hybridViewConfig was not properly initialized. See output log for errors.");
         self.startPage = _hybridViewConfig.startPage;
@@ -199,14 +197,16 @@ static NSString * const kHTTP = @"http";
                 [strongSelf loadErrorPageWithCode:error.code description:error.localizedDescription context:kErrorContextAuthExpiredSessionRefresh];
             }
         };
+        
+        // Watch for token refreshes
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAccessTokenRefresh:) name:kSFNotificationUserDidRefreshToken object:nil];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    self.vfPingPageHiddenWKWebView.navigationDelegate = nil;
-    SFRelease(_vfPingPageHiddenWKWebView);
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.errorPageWKWebView.navigationDelegate = nil;
     SFRelease(_errorPageWKWebView);
 }
@@ -257,10 +257,14 @@ static NSString * const kHTTP = @"http";
     // Remote app. Device is online.
     if ([self userIsAuthenticated]) {
         [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: Initiating web state cleanup strategy before loading start page.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
-        [self webStateCleanupStrategy];
+        [self prepareWebState:^{
+            [self configureRemoteStartPage];
+            [super viewDidLoad];
+        }];
+    } else {
+        [self configureRemoteStartPage];
+        [super viewDidLoad];
     }
-    [self configureRemoteStartPage];
-    [super viewDidLoad];
 }
 
 - (NSString *)remoteAccessConsumerKey
@@ -306,9 +310,6 @@ static NSString * const kHTTP = @"http";
     SFUserAccountManagerSuccessCallbackBlock authCompletionBlock = ^(SFOAuthInfo *authInfo, SFUserAccount *userAccount) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf authenticationCompletion:nil authInfo:authInfo];
-        if (authInfo.authType == SFOAuthTypeRefresh) {
-            [strongSelf loadVFPingPage];
-        }
         if (completionBlock != NULL) {
             NSDictionary *authDict = [self credentialsAsDictionary];
             completionBlock(authInfo, authDict);
@@ -394,6 +395,23 @@ static NSString * const kHTTP = @"http";
     return userAgentString;
 }
 
+- (NSURL *)absoluteUrlWithUrl:(NSString *)url
+{
+
+    SFOAuthCredentials *creds = [SFUserAccountManager sharedInstance].currentUser.credentials;
+    NSURL *instUrl = creds.apiUrl;
+    NSString *fullUrl = url;
+
+    if (![url hasPrefix:kHTTP]) {
+        NSURLComponents *retUrlComponents = [NSURLComponents componentsWithURL:instUrl resolvingAgainstBaseURL:NO];
+        NSString* pathToAppend = [url hasPrefix:@"/"] ? url : [NSString stringWithFormat:@"/%@", url];
+        retUrlComponents.path = [retUrlComponents.path stringByAppendingString:pathToAppend];
+        fullUrl = retUrlComponents.string;
+    }
+
+    return [NSURL URLWithString:fullUrl];
+}
+
 - (NSURL *)frontDoorUrlWithReturnUrl:(NSString *)returnUrlString returnUrlIsEncoded:(BOOL)isEncoded createAbsUrl:(BOOL)createAbsUrl
 {
 
@@ -450,6 +468,7 @@ static NSString * const kHTTP = @"http";
         if (url.query != nil) {
             retUrlValue = [url sfsdk_valueForParameterName:kRetURLParam];
             retUrlValue = (retUrlValue == nil) ? [url sfsdk_valueForParameterName:kStartURLParam] : retUrlValue;
+//            retUrlValue = [retUrlValue stringByRemovingPercentEncoding];
         }
         if (retUrlValue == nil || [retUrlValue containsString:kFrontdoor]) {
             retUrlValue = self.startPage;
@@ -552,17 +571,33 @@ static NSString * const kHTTP = @"http";
     // Note: You only want this to ever run once in the view controller's lifetime.
     static BOOL startPageConfigured = NO;
     if ([self userIsAuthenticated]) {
-        self.startPage = [[self frontDoorUrlWithReturnUrl:_hybridViewConfig.startPage returnUrlIsEncoded:NO createAbsUrl:YES] absoluteString];
+        self.startPage = [[self absoluteUrlWithUrl:_hybridViewConfig.startPage] absoluteString];
     } else {
         self.startPage = _hybridViewConfig.unauthenticatedStartPage;
     }
     startPageConfigured = YES;
 }
 
-- (void)webStateCleanupStrategy
+- (void)onAccessTokenRefresh:(NSNotification *)notification {
+    [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: access token was refreshed.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
+    [self prepareWebState:^{
+        [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: done setting session cookies.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
+    }];
+}
+
+- (void)prepareWebState:(void (^)(void))completion
 {
-    [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: resetting session cookies.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
-    [SFSDKWebViewStateManager resetSessionCookie];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // TODO cleanup old cookies
+        [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: setting session cookies.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
+        [self.cookieManager setCookiesWithUserAccount:[SFUserAccountManager sharedInstance].currentUser
+                                           completion:^{
+
+            if (completion) {
+                completion();
+            }
+        }];
+    });
 }
 
 - (BOOL)userIsAuthenticated
@@ -572,6 +607,7 @@ static NSString * const kHTTP = @"http";
 
 - (void) webView:(WKWebView *) webView didStartProvisionalNavigation:(WKNavigation *) navigation
 {
+    [SFSDKHybridLogger d:[self class] message:@"webView:didStartProvisionalNavigation"];
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginResetNotification object:webView]];
 }
 
@@ -580,9 +616,7 @@ static NSString * const kHTTP = @"http";
     [SFSDKHybridLogger d:[self class] format:@"webView:decidePolicyForNavigationAction:decisionHandler: Loading URL '%@'",
              [navigationAction.request.URL sfsdk_redactedAbsoluteString:@[@"sid"]]];
     BOOL shouldAllowRequest = YES;
-    if ([webView isEqual:self.vfPingPageHiddenWKWebView]) { // Hidden ping page load.
-        [SFSDKHybridLogger d:[self class] message:@"Setting up VF web state after plugin-based refresh."];
-    } else if ([webView isEqual:self.errorPageWKWebView]) { // Local error page load.
+    if ([webView isEqual:self.errorPageWKWebView]) { // Local error page load.
         [SFSDKHybridLogger d:[self class] format:@"Local error page ('%@') is loading.", navigationAction.request.URL.absoluteString];
     } else if ([webView isEqual:self.webView]) { // Cordova web view load.
 
@@ -613,8 +647,7 @@ static NSString * const kHTTP = @"http";
             }
             shouldAllowRequest = NO;
         } else {
-            [self defaultWKNavigationHandling:webView decidePolicyForNavigationAction:navigationAction decisionHandler:decisionHandler];
-            return;
+            shouldAllowRequest = YES;
         }
     }
     if (shouldAllowRequest) {
@@ -713,49 +746,13 @@ static NSString * const kHTTP = @"http";
 - (void)authenticationCompletion:(NSString *)originalUrl authInfo:(SFOAuthInfo *)authInfo
 {
     [SFSDKHybridLogger d:[self class] message:@"authenticationCompletion:authInfo: - Initiating post-auth configuration."];
-    [self webStateCleanupStrategy];
-
-    // If there's an original URL, load it through frontdoor.
-    if (originalUrl != nil) {
-        [SFSDKHybridLogger d:[self class] format:@"Authentication complete. Redirecting to '%@' through frontdoor.", [originalUrl sfsdk_stringByURLEncoding]];
-        BOOL createAbsUrl = YES;
-        if (authInfo.authType == SFOAuthTypeRefresh) {
-            createAbsUrl = NO;
+    [self prepareWebState:^{
+        if (originalUrl != nil) {
+            NSURL *urlToLoad = [self absoluteUrlWithUrl:originalUrl];
+            NSURLRequest *newRequest = [NSURLRequest requestWithURL:urlToLoad];
+            [(WKWebView *)(self.webView) loadRequest:newRequest];
         }
-        BOOL encoded = YES;
-        if ([originalUrl containsString:@"frontdoor.jsp"]) {
-            if ([originalUrl rangeOfString:@"retURL="].location != NSNotFound) {
-                encoded = NO;
-            }
-        }
-        NSURL *returnUrlAfterAuth = [self frontDoorUrlWithReturnUrl:originalUrl returnUrlIsEncoded:encoded createAbsUrl:createAbsUrl];
-        NSURLRequest *newRequest = [NSURLRequest requestWithURL:returnUrlAfterAuth];
-        [(WKWebView *)(self.webView) loadRequest:newRequest];
-    }
-}
-
-- (void)loadVFPingPage
-{
-    // Make sure loadVFPingPage is called on the main thread.
-    if (!NSThread.isMainThread) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [self loadVFPingPage];
-        });
-    } else {
-        SFOAuthCredentials *creds = [SFUserAccountManager sharedInstance].currentUser.credentials;
-        if (nil != creds.apiUrl) {
-            NSMutableString *instanceUrl = [[NSMutableString alloc] initWithString:creds.apiUrl.absoluteString];
-            NSString *encodedPingUrlParam = [kVFPingPageUrl sfsdk_stringByURLEncoding];
-            [instanceUrl appendFormat:@"/visualforce/session?url=%@&autoPrefixVFDomain=true", encodedPingUrlParam];
-            NSURL *pingURL = [[NSURL alloc] initWithString:instanceUrl];
-            NSURLRequest *pingRequest = [[NSURLRequest alloc] initWithURL:pingURL];
-            WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-            config.processPool = SFSDKWebViewStateManager.sharedProcessPool;
-            self.vfPingPageHiddenWKWebView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:config];
-            self.vfPingPageHiddenWKWebView.navigationDelegate = self;
-            [self.vfPingPageHiddenWKWebView loadRequest:pingRequest];
-        }
-    }
+    }];
 }
 
 - (void)refreshCredentialsWithCompletion:(nullable SFUserAccountManagerSuccessCallbackBlock)completionBlock

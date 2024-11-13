@@ -53,6 +53,7 @@
 		4FC7B5E718AC3CC2006922FD /* bootconfig.json in Copy files to www/ */ = {isa = PBXBuildFile; fileRef = 4FC7B5D618AC3BB8006922FD /* bootconfig.json */; };
 		4FD3FC1D1DB0568C00646D6D /* force+files.js in Copy sfdc libs */ = {isa = PBXBuildFile; fileRef = 4FD3FC161DB0566900646D6D /* force+files.js */; };
 		4FD3FC1E1DB0568C00646D6D /* force+promise.js in Copy sfdc libs */ = {isa = PBXBuildFile; fileRef = 4FD3FC171DB0566900646D6D /* force+promise.js */; };
+		4FE22A292CDC1C97002C7484 /* SalesforceWebViewCookieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE22A152CDC1C80002C7484 /* SalesforceWebViewCookieManager.swift */; };
 		696E91A02AD0CF6D00205884 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 696E918B2AD0CE1600205884 /* PrivacyInfo.xcprivacy */; };
 		8222729F19C39F4500FC537E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8222729E19C39F4500FC537E /* XCTest.framework */; };
 		822272A019C39F4500FC537E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82EFF2D316E7C57100A63CDF /* Foundation.framework */; };
@@ -481,8 +482,9 @@
 		4FD3FC171DB0566900646D6D /* force+promise.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "force+promise.js"; sourceTree = "<group>"; };
 		4FD72F2418C955E200610988 /* SFHybridConnectionMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHybridConnectionMonitor.h; sourceTree = "<group>"; };
 		4FD72F2518C955E200610988 /* SFHybridConnectionMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHybridConnectionMonitor.m; sourceTree = "<group>"; };
+		4FE22A152CDC1C80002C7484 /* SalesforceWebViewCookieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesforceWebViewCookieManager.swift; sourceTree = "<group>"; };
 		4FFDAD6C1C06918A009BCD6D /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = ../../external/cordova/CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
-		696E918B2AD0CE1600205884 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = file; name = PrivacyInfo.xcprivacy; path = SalesforceHybridSDK/PrivacyInfo.xcprivacy; sourceTree = SOURCE_ROOT; };
+		696E918B2AD0CE1600205884 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = SalesforceHybridSDK/PrivacyInfo.xcprivacy; sourceTree = SOURCE_ROOT; };
 		8222729D19C39F4500FC537E /* SalesforceHybridSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalesforceHybridSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8222729E19C39F4500FC537E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		822272E419C3A84E00FC537E /* libsqlcipher.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsqlcipher.a; path = ../../external/ThirdPartyDependencies/sqlcipher/libsqlcipher.a; sourceTree = "<group>"; };
@@ -923,6 +925,7 @@
 		82EFF2E116E7C84900A63CDF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4FE22A152CDC1C80002C7484 /* SalesforceWebViewCookieManager.swift */,
 				CE4712811EFC8CC500D9E059 /* SFSDKHybridLogger.h */,
 				CE4712821EFC8CC500D9E059 /* SFSDKHybridLogger.m */,
 				82EFF2E216E7C84900A63CDF /* Plugins */,
@@ -1251,6 +1254,7 @@
 					};
 					CE4CE2E01C0E465B009F6029 = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 1600;
 					};
 				};
 			};
@@ -1534,6 +1538,7 @@
 				CE4CE4531C0E5ADF009F6029 /* SFMobileSyncPlugin.m in Sources */,
 				CE4712841EFC8CC500D9E059 /* SFSDKHybridLogger.m in Sources */,
 				CE4CE4611C0E5B2A009F6029 /* SFHybridConnectionMonitor.m in Sources */,
+				4FE22A292CDC1C97002C7484 /* SalesforceWebViewCookieManager.swift in Sources */,
 				CE4CE4511C0E5AD2009F6029 /* SFForcePlugin.m in Sources */,
 				CE4CE45D1C0E5B1F009F6029 /* SFSmartStorePlugin.m in Sources */,
 				CE4CE4551C0E5AEE009F6029 /* SFSDKInfoPlugin.m in Sources */,
@@ -1857,6 +1862,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceHybridSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1902,6 +1909,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.salesforce.mobilesdk.SalesforceHybridSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
