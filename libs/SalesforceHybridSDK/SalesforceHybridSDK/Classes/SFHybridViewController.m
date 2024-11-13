@@ -468,7 +468,6 @@ static NSString * const kHTTP = @"http";
         if (url.query != nil) {
             retUrlValue = [url sfsdk_valueForParameterName:kRetURLParam];
             retUrlValue = (retUrlValue == nil) ? [url sfsdk_valueForParameterName:kStartURLParam] : retUrlValue;
-//            retUrlValue = [retUrlValue stringByRemovingPercentEncoding];
         }
         if (retUrlValue == nil || [retUrlValue containsString:kFrontdoor]) {
             retUrlValue = self.startPage;
@@ -607,7 +606,6 @@ static NSString * const kHTTP = @"http";
 
 - (void) webView:(WKWebView *) webView didStartProvisionalNavigation:(WKNavigation *) navigation
 {
-    [SFSDKHybridLogger d:[self class] message:@"webView:didStartProvisionalNavigation"];
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginResetNotification object:webView]];
 }
 
