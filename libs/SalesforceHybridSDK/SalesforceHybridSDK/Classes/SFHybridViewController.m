@@ -256,7 +256,7 @@ static NSString * const kHTTP = @"http";
 
     // Remote app. Device is online.
     if ([self userIsAuthenticated]) {
-        [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: Initiating web state cleanup strategy before loading start page.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
+        [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: Preparing web state before loading start page.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
         [self prepareWebState:^{
             [self configureRemoteStartPage];
             [super viewDidLoad];
@@ -579,19 +579,16 @@ static NSString * const kHTTP = @"http";
 
 - (void)onAccessTokenRefresh:(NSNotification *)notification {
     [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: access token was refreshed.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
-    [self prepareWebState:^{
-        [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: done setting session cookies.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
-    }];
+    [self prepareWebState:nil];
 }
 
 - (void)prepareWebState:(void (^)(void))completion
 {
+    [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: preparing web state.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
     dispatch_async(dispatch_get_main_queue(), ^{
         // TODO cleanup old cookies
-        [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: setting session cookies.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
         [self.cookieManager setCookiesWithUserAccount:[SFUserAccountManager sharedInstance].currentUser
                                            completion:^{
-
             if (completion) {
                 completion();
             }
@@ -743,9 +740,10 @@ static NSString * const kHTTP = @"http";
 
 - (void)authenticationCompletion:(NSString *)originalUrl authInfo:(SFOAuthInfo *)authInfo
 {
-    [SFSDKHybridLogger d:[self class] message:@"authenticationCompletion:authInfo: - Initiating post-auth configuration."];
+    [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: Initiating post-auth configuration.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
     [self prepareWebState:^{
         if (originalUrl != nil) {
+            [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: Authentication complete. Loading '%@'.", NSStringFromClass([self class]), NSStringFromSelector(_cmd), originalUrl];
             NSURL *urlToLoad = [self absoluteUrlWithUrl:originalUrl];
             NSURLRequest *newRequest = [NSURLRequest requestWithURL:urlToLoad];
             [(WKWebView *)(self.webView) loadRequest:newRequest];
