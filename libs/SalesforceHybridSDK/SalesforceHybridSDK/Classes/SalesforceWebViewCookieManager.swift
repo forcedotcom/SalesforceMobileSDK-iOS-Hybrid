@@ -33,11 +33,6 @@ import WebKit
 @objc(SFSDKSalesforceWebViewCookieManager)
 class SalesforceWebViewCookieManager: NSObject {
     @MainActor @objc func setCookies(userAccount: UserAccount, completion: @escaping () -> Void) {
-        self.setCookies(userAccount: userAccount)
-        completion()
-    }
-    
-    @MainActor func setCookies(userAccount: UserAccount) {
         SFSDKHybridLogger.i(Self.self, message: "[\(Self.self) \(#function)]: setting cookies for \(String(describing: userAccount.credentials.userId)).")
         let cookieStore = WKWebsiteDataStore.default().httpCookieStore
         let instanceUrl = userAccount.credentials.instanceUrl
@@ -76,6 +71,7 @@ class SalesforceWebViewCookieManager: NSObject {
         setCookieValue(cookieStore: cookieStore, cookieType: Self.ORG_ID, domain: vfDomain, name: Self.ORG_ID, value: orgId)
         
         SFSDKHybridLogger.i(Self.self, message: "[\(Self.self) \(#function)]: done setting cookies for \(String(describing: userAccount.credentials.userId)).")
+        completion()
     }
 
     @MainActor private func setCookieValue(cookieStore: WKHTTPCookieStore, cookieType: String, domain: String?, name: String?, value: String?) {
@@ -99,14 +95,6 @@ class SalesforceWebViewCookieManager: NSObject {
         }
     }
     
-    private func getHttpsUrlFromDomain(domain: String) -> URL {
-        if domain.contains("://") {
-            return URL(string: domain) ?? URL(string: "https://\(domain)")!
-        } else {
-            return URL(string: "https://\(domain)")!
-        }
-    }
-
     private func getDomainFromUrl(_ url: URL?) -> String {
         return url?.host ?? ""
     }

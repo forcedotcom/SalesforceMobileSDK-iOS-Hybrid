@@ -95,7 +95,6 @@ static NSString * const kHTTP = @"http";
  */
 @property (nonatomic, strong) SFSDKSalesforceWebViewCookieManager *cookieManager;
 
-
 /**
  * Whether or not the input URL is one of the reserved URLs in the login flow, for consideration
  * in determining the app's ultimate home page.
@@ -296,7 +295,6 @@ static NSString * const kHTTP = @"http";
 
 - (void)authenticateWithCompletionBlock:(SFOAuthPluginAuthSuccessBlock)completionBlock failureBlock:(SFOAuthPluginFailureBlock)failureBlock
 {
-
     /*
      * Reconfigure user agent. Basically this ensures that Cordova whitelisting won't apply to the
      * WKWebView that hosts the login screen (important for SSO outside of Salesforce domains).
@@ -393,7 +391,6 @@ static NSString * const kHTTP = @"http";
 
 - (NSURL *)absoluteUrlWithUrl:(NSString *)url
 {
-
     SFOAuthCredentials *creds = [SFUserAccountManager sharedInstance].currentUser.credentials;
     NSURL *instUrl = creds.apiUrl;
     NSString *fullUrl = url;
@@ -406,52 +403,6 @@ static NSString * const kHTTP = @"http";
     }
 
     return [NSURL URLWithString:fullUrl];
-}
-
-- (NSURL *)frontDoorUrlWithReturnUrl:(NSString *)returnUrlString returnUrlIsEncoded:(BOOL)isEncoded createAbsUrl:(BOOL)createAbsUrl
-{
-
-    // Special case: if returnUrlString itself is a frontdoor.jsp URL, parse its parameters and rebuild.
-    if ([returnUrlString containsString:kFrontdoor]) {
-        return [self parseFrontDoorReturnUrlString:returnUrlString encoded:isEncoded];
-    }
-    SFOAuthCredentials *creds = [SFUserAccountManager sharedInstance].currentUser.credentials;
-    NSURL *instUrl = creds.apiUrl;
-    NSString *fullReturnUrlString = returnUrlString;
-
-    /*
-     * We need to use the absolute URL in some cases and relative URL in some
-     * other cases, because of differences between instance URL and community URL.
-     */
-    if (createAbsUrl && ![returnUrlString hasPrefix:kHTTP]) {
-        NSURLComponents *retUrlComponents = [NSURLComponents componentsWithURL:instUrl resolvingAgainstBaseURL:NO];
-        NSString* pathToAppend = [returnUrlString hasPrefix:@"/"] ? returnUrlString : [NSString stringWithFormat:@"/%@", returnUrlString];
-        retUrlComponents.path = [retUrlComponents.path stringByAppendingString:pathToAppend];
-        fullReturnUrlString = retUrlComponents.string;
-    }
-
-    // Create frontDoor path based on credentials API URL.
-    NSURLComponents *frontDoorUrlComponents = [NSURLComponents componentsWithURL:instUrl resolvingAgainstBaseURL:NO];
-    frontDoorUrlComponents.path = [frontDoorUrlComponents.path stringByAppendingString:@"/secur/frontdoor.jsp"];
-
-    // NB: We're not using NSURLComponents.queryItems here, because it unsufficiently encodes query params.
-    NSMutableString *frontDoorUrlString = [NSMutableString stringWithString:frontDoorUrlComponents.string];
-    NSString *encodedRetUrlValue = (isEncoded ? fullReturnUrlString : [fullReturnUrlString sfsdk_stringByURLEncoding]);
-    NSString *encodedSidValue = [creds.accessToken sfsdk_stringByURLEncoding];
-    [frontDoorUrlString appendFormat:@"?sid=%@&retURL=%@&display=touch", encodedSidValue, encodedRetUrlValue];
-    return [NSURL URLWithString:frontDoorUrlString];
-}
-
-- (NSURL *)parseFrontDoorReturnUrlString:(NSString *)frontDoorUrlString encoded:(BOOL)encoded {
-    NSRange r1 = [frontDoorUrlString rangeOfString: encoded ? @"retURL%3D" : @"retURL="];
-    NSRange r2 = [frontDoorUrlString rangeOfString: encoded ? @"%26display" : @"&display"];
-    NSRange range = NSMakeRange(r1.location + r1.length, r2.location - r1.location - r1.length);
-    NSString *returnUrlString = [frontDoorUrlString substringWithRange: range];
-    if (encoded) {
-        returnUrlString = [returnUrlString stringByRemovingPercentEncoding];
-    }
-    [SFSDKHybridLogger d:[self class] format:@"%@ Extracted return URL string '%@' from original frontDoor URL '%@'", NSStringFromSelector(_cmd), returnUrlString, frontDoorUrlString];
-    return [self frontDoorUrlWithReturnUrl:returnUrlString returnUrlIsEncoded:YES createAbsUrl:NO];
 }
 
 - (NSString *)isLoginRedirectUrl:(NSURL *)url
