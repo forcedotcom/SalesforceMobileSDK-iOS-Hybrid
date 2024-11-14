@@ -197,16 +197,12 @@ static NSString * const kHTTP = @"http";
                 [strongSelf loadErrorPageWithCode:error.code description:error.localizedDescription context:kErrorContextAuthExpiredSessionRefresh];
             }
         };
-        
-        // Watch for token refreshes
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAccessTokenRefresh:) name:kSFNotificationUserDidRefreshToken object:nil];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.errorPageWKWebView.navigationDelegate = nil;
     SFRelease(_errorPageWKWebView);
 }
@@ -468,6 +464,7 @@ static NSString * const kHTTP = @"http";
         if (url.query != nil) {
             retUrlValue = [url sfsdk_valueForParameterName:kRetURLParam];
             retUrlValue = (retUrlValue == nil) ? [url sfsdk_valueForParameterName:kStartURLParam] : retUrlValue;
+            retUrlValue = [retUrlValue stringByRemovingPercentEncoding];
         }
         if (retUrlValue == nil || [retUrlValue containsString:kFrontdoor]) {
             retUrlValue = self.startPage;
@@ -575,11 +572,6 @@ static NSString * const kHTTP = @"http";
         self.startPage = _hybridViewConfig.unauthenticatedStartPage;
     }
     startPageConfigured = YES;
-}
-
-- (void)onAccessTokenRefresh:(NSNotification *)notification {
-    [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: access token was refreshed.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
-    [self prepareWebState:nil];
 }
 
 - (void)prepareWebState:(void (^)(void))completion
