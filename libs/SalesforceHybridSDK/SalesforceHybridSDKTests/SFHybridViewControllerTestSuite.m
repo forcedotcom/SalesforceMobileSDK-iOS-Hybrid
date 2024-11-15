@@ -28,7 +28,10 @@
 
 @interface SFHybridViewController (tests)
 
-- (NSURL *)frontDoorUrlWithReturnUrl:(NSString *)returnUrlString returnUrlIsEncoded:(BOOL)isEncoded createAbsUrl:(BOOL)createAbsUrl;
+- (NSURL *)absoluteUrlWithUrl:(NSString *)url;
+- (NSString *)isLoginRedirectUrl:(NSURL *)url;
+- (BOOL)isVFPageRedirect:(NSURL *)url;
+- (void)configureRemoteStartPage;
 
 @end
 
@@ -51,27 +54,60 @@
 }
 
 - (void)testFrontDoorUrlNoLeadingSlash {
-    NSURLComponents *components = [NSURLComponents componentsWithURL:[self.hybridViewController frontDoorUrlWithReturnUrl:@"apex/abc" returnUrlIsEncoded:NO createAbsUrl:YES] resolvingAgainstBaseURL:NO];
-    NSString* expectedRetUrl = [NSString stringWithFormat:@"https://%@/apex/abc", components.host];
-    XCTAssertEqualObjects(components.scheme, @"https", "Wrong scheme");
-    XCTAssertEqualObjects(components.path, @"/secur/frontdoor.jsp", "Wrong path");
-    XCTAssertEqualObjects(components.queryItems[0].name, @"sid");
-    XCTAssertEqualObjects(components.queryItems[1].name, @"retURL");
-    XCTAssertEqualObjects(components.queryItems[1].value, expectedRetUrl, "Wrong retUrl");
-    XCTAssertEqualObjects(components.queryItems[2].name, @"display");
-    XCTAssertEqualObjects(components.queryItems[2].value, @"touch");
+    NSString* expectedSubstring = @"SalesforceHybridSDKTestApp/1.0(1.0) HybridLocal";
+    XCTAssertTrue([self.hybridViewController.sfHybridViewUserAgentString containsString:expectedSubstring],
+                      @"User agent string should contain 'HybridLocal'");
+    self.hybridViewConfig.isLocal = false;
+    expectedSubstring = @"SalesforceHybridSDKTestApp/1.0(1.0) HybridRemote";
+    XCTAssertTrue([self.hybridViewController.sfHybridViewUserAgentString containsString:expectedSubstring],
+                      @"User agent string should contain 'HybridRemote'");
 }
 
-- (void)testFrontDoorUrlWithLeadingSlash {
-    NSURLComponents *components = [NSURLComponents componentsWithURL:[self.hybridViewController frontDoorUrlWithReturnUrl:@"/apex/abc" returnUrlIsEncoded:NO createAbsUrl:YES] resolvingAgainstBaseURL:NO];
-    NSString* expectedRetUrl = [NSString stringWithFormat:@"https://%@/apex/abc", components.host];
-    XCTAssertEqualObjects(components.scheme, @"https", "Wrong scheme");
-    XCTAssertEqualObjects(components.path, @"/secur/frontdoor.jsp", "Wrong path");
-    XCTAssertEqualObjects(components.queryItems[0].name, @"sid");
-    XCTAssertEqualObjects(components.queryItems[1].name, @"retURL");
-    XCTAssertEqualObjects(components.queryItems[1].value, expectedRetUrl, "Wrong retUrl");
-    XCTAssertEqualObjects(components.queryItems[2].name, @"display");
-    XCTAssertEqualObjects(components.queryItems[2].value, @"touch");
+- (void)testAbsoluteUrlWithRelativeUrl{
+    NSString* actualUrl = [self.hybridViewController absoluteUrlWithUrl:@"/apex/abc"].absoluteString;
+    NSString* expectedUrl = [NSString stringWithFormat:@"%@%@", [SFUserAccountManager sharedInstance].currentUser.credentials.instanceUrl.absoluteString, @"/apex/abc"];
+    XCTAssertEqualObjects(actualUrl, expectedUrl);
+}
+
+- (void)testAbsoluteUrlWithFullUrl{
+    NSString* actualUrl = [self.hybridViewController absoluteUrlWithUrl:@"https://abc.com/def"].absoluteString;
+    NSString* expectedUrl = @"https://abc.com/def";
+    XCTAssertEqualObjects(actualUrl, expectedUrl);
+}
+
+- (void)testIsVFPageRedirect{
+    XCTAssertTrue([self.hybridViewController isVFPageRedirect:[NSURL URLWithString:@"https://xyz.com?ec=301"]]);
+    XCTAssertTrue([self.hybridViewController isVFPageRedirect:[NSURL URLWithString:@"https://xyz.com?ec=302"]]);
+    XCTAssertFalse([self.hybridViewController isVFPageRedirect:[NSURL URLWithString:@"https://xyz.com?ec=something-else"]]);
+}
+
+- (void)testIsLoginUrlWithNonLoginUrl{
+    NSURL* url = [NSURL URLWithString:@"https://xyz.com/apex/abc"];
+    XCTAssertNil([self.hybridViewController isLoginRedirectUrl:url]);
+}
+
+- (void)testIsLoginUrlWithVfRedirect{
+    // vf redirect url with retURL
+    XCTAssertEqualObjects([self.hybridViewController isLoginRedirectUrl:[NSURL URLWithString:@"https://xyz.com?ec=302&retURL=%2Fapex%2Fabc"]], @"/apex/abc");
+    // vf redirect url with startURL
+    XCTAssertEqualObjects([self.hybridViewController isLoginRedirectUrl:[NSURL URLWithString:@"https://xyz.com?ec=302&startURL=%2Fapex%2Fabc"]], @"/apex/abc");
+}
+
+- (void)testIsLoginUrlWithVfRedirectNoRetUrl{
+    // vf redirect url without startURL
+    self.hybridViewConfig.isLocal = false;
+    self.hybridViewConfig.startPage = @"apex/def";
+    [self.hybridViewController configureRemoteStartPage];
+    NSString* expectedUrl = [NSString stringWithFormat:@"%@%@", [SFUserAccountManager sharedInstance].currentUser.credentials.instanceUrl.absoluteString, @"/apex/def"];
+    XCTAssertEqualObjects([self.hybridViewController isLoginRedirectUrl:[NSURL URLWithString:@"https://xyz.com?ec=302"]], expectedUrl);
+}
+
+- (void)testConfigureRemoteStartPage{
+    self.hybridViewConfig.isLocal = false;
+    self.hybridViewConfig.startPage = @"apex/def";
+    [self.hybridViewController configureRemoteStartPage];
+    NSString* expectedUrl = [NSString stringWithFormat:@"%@%@", [SFUserAccountManager sharedInstance].currentUser.credentials.instanceUrl.absoluteString, @"/apex/def"];
+    XCTAssertEqualObjects(self.hybridViewController.startPage, expectedUrl);
 }
 
 
