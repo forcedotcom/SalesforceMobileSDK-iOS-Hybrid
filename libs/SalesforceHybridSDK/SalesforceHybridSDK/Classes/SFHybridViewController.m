@@ -592,7 +592,8 @@ static NSString * const kHTTP = @"http";
             }
             shouldAllowRequest = NO;
         } else {
-            shouldAllowRequest = YES;
+            [self defaultWKNavigationHandling:webView decidePolicyForNavigationAction:navigationAction decisionHandler:decisionHandler];
+            return;
         }
     }
     if (shouldAllowRequest) {
