@@ -33,20 +33,21 @@ import WebKit
 @objc(SFSDKSalesforceWebViewCookieManager)
 class SalesforceWebViewCookieManager: NSObject {
     @MainActor @objc func setCookies(userAccount: UserAccount, completion: @escaping () -> Void) {
-        SFSDKHybridLogger.i(Self.self, message: "[\(Self.self) \(#function)]: setting cookies for \(String(describing: userAccount.credentials.userId)).")
+        let creds = userAccount.credentials
+        SFSDKHybridLogger.i(Self.self, message: "[\(Self.self) \(#function)]: setting cookies for \(String(describing: creds.userId)).")
         let cookieStore = WKWebsiteDataStore.default().httpCookieStore
-        let instanceUrl = userAccount.credentials.instanceUrl
-        let lightningDomain = userAccount.credentials.lightningDomain
-        let lightningSid = userAccount.credentials.lightningSid
-        let contentDomain = userAccount.credentials.contentDomain
-        let contentSid = userAccount.credentials.contentSid
-        let mainSid = userAccount.credentials.accessToken
-        let vfDomain = userAccount.credentials.vfDomain
-        let vfSid = userAccount.credentials.vfSid
-        let clientSrc = userAccount.credentials.cookieClientSrc
-        let sidClient = userAccount.credentials.cookieSidClient
-        let sidCookieName = userAccount.credentials.sidCookieName
-        let csrfToken = userAccount.credentials.csrfToken
+        let instanceUrl = creds.instanceUrl
+        let lightningDomain = creds.lightningDomain
+        let lightningSid = creds.lightningSid
+        let contentDomain = creds.contentDomain
+        let contentSid = creds.contentSid
+        let mainSid = creds.tokenFormat == "jwt" ? creds.parentSid : creds.accessToken
+        let vfDomain = creds.vfDomain
+        let vfSid = creds.vfSid
+        let clientSrc = creds.cookieClientSrc
+        let sidClient = creds.cookieSidClient
+        let sidCookieName = creds.sidCookieName
+        let csrfToken = creds.csrfToken
         let orgId = userAccount.accountIdentity.orgId
         let mainDomain = getDomainFromUrl(instanceUrl)
         
@@ -70,7 +71,7 @@ class SalesforceWebViewCookieManager: NSObject {
         setCookieValue(cookieStore: cookieStore, cookieType: Self.SID_CLIENT, domain: vfDomain, name: Self.SID_CLIENT, value: sidClient)
         setCookieValue(cookieStore: cookieStore, cookieType: Self.ORG_ID, domain: vfDomain, name: Self.ORG_ID, value: orgId)
         
-        SFSDKHybridLogger.i(Self.self, message: "[\(Self.self) \(#function)]: done setting cookies for \(String(describing: userAccount.credentials.userId)).")
+        SFSDKHybridLogger.i(Self.self, message: "[\(Self.self) \(#function)]: done setting cookies for \(String(describing: creds.userId)).")
         completion()
     }
 
