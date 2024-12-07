@@ -150,16 +150,6 @@ typedef void (^SFOAuthPluginFailureBlock)(SFOAuthInfo *, NSError *);
 - (void)configureRemoteStartPage;
 
 /**
- Initiates a web state cleanup strategy prior to staging the web-based auth context from an
- OAuth authentication or refresh.
- 
- Default behavior is to remove all of the web view cookies from .salesforce.com and .force.com
- domains.  Override this method if you wish to establish a different web state prior to the
- web-based auth context setup.
- */
-- (void)webStateCleanupStrategy;
-
-/**
  * Method called after re-authentication completes (after session timeout).
  *
  * @param originalUrl The original URL being called before the session timed out.
@@ -167,7 +157,7 @@ typedef void (^SFOAuthPluginFailureBlock)(SFOAuthInfo *, NSError *);
 - (void)authenticationCompletion:(nullable NSString *)originalUrl authInfo:(nullable SFOAuthInfo *)authInfo;
 
 /**
- * Passively refresh credentials if needed by making userInfo REST API call.
+ * Passively refresh credentials if needed by making cheap REST API call.
  *
  @param completionBlock The block of code to execute when the refresh process successfully completes.
  @param failureBlock The block of code to execute when the refresh process has a fatal failure.
