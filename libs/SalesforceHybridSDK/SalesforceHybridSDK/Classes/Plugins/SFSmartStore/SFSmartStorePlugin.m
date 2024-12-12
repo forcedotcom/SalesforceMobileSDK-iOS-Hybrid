@@ -513,8 +513,4 @@ NSString * const kStoreName           = @"storeName";
 - (void)dealloc {
     SFRelease(_cursorCache);
 }
-- (void)pgGetSoupSpec:(nonnull CDVInvokedUrlCommand *)command {
-    // TODO: NO-OP, What needs to be done here?
-}
-
 @end
