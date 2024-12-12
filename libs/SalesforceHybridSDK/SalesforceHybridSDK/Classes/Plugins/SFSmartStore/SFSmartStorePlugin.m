@@ -345,7 +345,6 @@ NSString * const kStoreName           = @"storeName";
 {
     [self runCommand:^(NSDictionary* argsDict) {
         NSString *soupName = [argsDict sfsdk_nonNullObjectForKey:kSoupNameArg];
-        NSDictionary *soupSpecDict = [argsDict sfsdk_nonNullObjectForKey:kSoupSpecArg];
         NSArray *indexSpecs = [SFSoupIndex asArraySoupIndexes:[argsDict sfsdk_nonNullObjectForKey:kIndexesArg]];
         BOOL reIndexData = [[argsDict sfsdk_nonNullObjectForKey:kReIndexDataArg] boolValue];
         [SFSDKHybridLogger d:[self class] format:@"pgAlterSoup with name: %@, indexSpecs: %@, reIndexData: %@", soupName, indexSpecs, reIndexData ? @"true" : @"false"];
