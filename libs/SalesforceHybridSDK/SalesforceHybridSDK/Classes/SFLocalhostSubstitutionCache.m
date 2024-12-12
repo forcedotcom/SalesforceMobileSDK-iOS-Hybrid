@@ -24,6 +24,7 @@
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <SalesforceSDKCore/SFSDKAppFeatureMarkers.h>
+#import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #import "SFLocalhostSubstitutionCache.h"
 #import "SFSDKHybridLogger.h"
 
@@ -34,13 +35,16 @@ static NSString * const kSFAppFeatureUsesLocalhost = @"LH";
 
 @implementation SFLocalhostSubstitutionCache
 
-- (NSString *)mimeTypeForPath:(NSString *)filePath
-{
-    CFStringRef fileExtension = (__bridge CFStringRef)[filePath pathExtension];
-    CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
-    CFStringRef MIMEType = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
-    CFRelease(UTI);
-    return (__bridge_transfer NSString *)MIMEType;
+- (NSString *)mimeTypeForPath:(NSString *)filePath {
+    if (filePath && ![filePath isEqualToString:@""]) {
+        NSString *fileExtension = [filePath pathExtension];
+        if (fileExtension && ![fileExtension isEqualToString:@""]) {
+            UTType *type = [UTType typeWithFilenameExtension:fileExtension];
+            NSString *MIMEType = type.preferredMIMEType;
+            return MIMEType ?: @"application/octet-stream";
+        }
+    }
+    return @"application/octet-stream"; // Default MIME type for invalid or missing extensions
 }
 
 - (NSString*)pathForResource:(NSString*)resourcepath
