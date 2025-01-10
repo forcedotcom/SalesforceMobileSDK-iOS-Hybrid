@@ -850,7 +850,7 @@
 		824A9BC61721FCA400C9BD79 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1610;
 				ORGANIZATIONNAME = salesforce.com;
 				TargetAttributes = {
 					824A9BCD1721FCA400C9BD79 = {
@@ -1140,7 +1140,7 @@
 		824A9BF21721FCA400C9BD79 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_NOTICES = NO;
 				ASSETCATALOG_WARNINGS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -1202,7 +1202,7 @@
 		824A9BF31721FCA400C9BD79 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_NOTICES = NO;
 				ASSETCATALOG_WARNINGS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
