@@ -31,8 +31,8 @@ import Foundation
 import WebKit
 
 @objc(SFSDKSalesforceWebViewCookieManager)
-class SalesforceWebViewCookieManager: NSObject {
-    @MainActor @objc func setCookies(userAccount: UserAccount, completion: @escaping () -> Void) {
+public class SalesforceWebViewCookieManager: NSObject {
+    @MainActor @objc public func setCookies(userAccount: UserAccount, completion: @escaping () -> Void) {
         let creds = userAccount.credentials
         SFSDKHybridLogger.i(Self.self, message: "[\(Self.self) \(#function)]: setting cookies for \(String(describing: creds.userId)).")
         let cookieStore = WKWebsiteDataStore.default().httpCookieStore
