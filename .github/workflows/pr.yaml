@@ -55,6 +55,7 @@ jobs:
         run: bundle exec danger --dangerfile=.github/DangerFiles/StaticAnalysis.rb --danger_id=StaticAnalysis
 
   ios-pr:
+    needs: [static-analysis]
     strategy:
       fail-fast: false
       matrix:
