@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/forcedotcom/SalesforceMobileSDK-iOS-Hybrid/tree/dev.svg?style=svg)](https://circleci.com/gh/forcedotcom/SalesforceMobileSDK-iOS-Hybrid/tree/dev)
+[![Tests](https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid/actions/workflows/nightly.yaml/badge.svg)](https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid/actions/workflows/nightly.yaml)
 
 # Hybrid library / sample apps and tests for Salesforce.com Mobile SDK on iOS
 
