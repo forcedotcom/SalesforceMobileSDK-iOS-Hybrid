@@ -1,14 +1,14 @@
 Pod::Spec.new do |s|
 
   s.name         = "SalesforceFileLogger"
-  s.version      = "12.2.0"
+  s.version      = "13.0.0"
   s.summary      = "Salesforce Mobile SDK for iOS"
   s.homepage     = "https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid"
 
   s.license      = { :type => "Salesforce.com Mobile SDK License", :file => "LICENSE.md" }
   s.author       = { "Raj Rao" => "rao.r@salesforce.com" }
 
-  s.platform     = :ios, "16.0"
+  s.platform     = :ios, "17.0"
 
   s.source       = { :git => "https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid.git",
                      :tag => "v#{s.version}" }
