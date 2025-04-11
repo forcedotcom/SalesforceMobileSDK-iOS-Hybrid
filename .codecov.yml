@@ -6,23 +6,40 @@ codecov:
 coverage:
   precision: 2
   round: down
-  range: "25...75"
+  range: "60...80"
   
   status:
+    # Overall Libarary Requirements
     project:
       default: false  # disable the default status that measures entire project
       SalesforceHybridSDK:
-        target: auto
+        threshold: 0%
         paths: 
           - "libs/SalesforceHybridSDK/SalesforceHybridSDK/"
         flags: 
           - SalesforceHybridSDK
       SalesforceFileLogger:
-        target: auto
+        threshold: 0%
         paths: 
           - "libs/SalesforceFileLogger/SalesforceFileLogger/"
         flags: 
           - SalesforceFileLogger
+
+    # Pull Request Requirements
+    patch:
+      SalesforceHybridSDK:
+        target: 80%
+        paths: 
+          - "libs/SalesforceHybridSDK/SalesforceHybridSDK/"
+        flags: 
+          - SalesforceHybridSDK
+      SalesforceFileLogger:
+        target: 80%
+        paths: 
+          - "libs/SalesforceFileLogger/SalesforceFileLogger/"
+        flags: 
+          - SalesforceFileLogger
+
       
 ignore:
   - "shared"
