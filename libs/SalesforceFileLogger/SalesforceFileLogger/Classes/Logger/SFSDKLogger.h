@@ -65,6 +65,12 @@
 @property (nonatomic, readwrite, assign, getter=isFileLoggingEnabled) BOOL fileLoggingEnabled;
 
 /**
+ * Controls whether to use OSLog for console logging.
+ * Defaults to NO.
+ */
+@property (class, nonatomic, readwrite, assign) BOOL useOSLog;
+
+/**
  * By default, returns the default shared instance. Child classes implement this method to return an instance with
  * their defined component name.
  *
