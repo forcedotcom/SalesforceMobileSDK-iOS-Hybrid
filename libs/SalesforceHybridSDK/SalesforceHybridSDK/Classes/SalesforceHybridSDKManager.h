@@ -27,7 +27,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * Version of SalesforceSDKManager to be used with all hybrid apps.
+ * Specialized SDK manager for Salesforce hybrid mobile applications using Cordova/PhoneGap.
  */
 
 @interface SalesforceHybridSDKManager : MobileSyncSDKManager
