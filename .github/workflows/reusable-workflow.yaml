@@ -38,18 +38,6 @@ jobs:
         run: |
           ./install.sh
           echo $TEST_CREDENTIALS > ./shared/test/test_credentials.json
-      - name: Select Xcode Version
-        run: |
-          echo "Setting Xcode to version: ${{ inputs.xcode }}"
-          if [[ "${{ inputs.xcode }}" == "^26" ]]; then
-            sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
-          elif [[ "${{ inputs.xcode }}" == "^16" ]]; then
-            sudo xcode-select -s /Applications/Xcode_16.4.0.app/Contents/Developer
-          fi
-          echo "Active Xcode path:"
-          xcode-select -p
-          echo "Available Xcode versions:"
-          ls /Applications/Xcode*.app 2>/dev/null || echo "No Xcode apps found in /Applications/"
       - uses: mxcl/xcodebuild@v3
         with:
           xcode: ${{ inputs.xcode }}
