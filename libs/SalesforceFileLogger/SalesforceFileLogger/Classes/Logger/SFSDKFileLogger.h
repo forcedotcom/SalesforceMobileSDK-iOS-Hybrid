@@ -30,7 +30,7 @@
 #import <CocoaLumberjack/DDFileLogger.h>
 
 /**
- * File logger implementation for Salesforce SDK components with enhanced log management capabilities.
+ * File logger implementation for Salesforce SDK with enhanced log management capabilities.
  */
 @interface SFSDKFileLogger : DDFileLogger
 
