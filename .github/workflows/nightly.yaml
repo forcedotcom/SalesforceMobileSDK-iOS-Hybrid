@@ -11,17 +11,51 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        lib: [SalesforceFileLogger, SalesforceHybridSDK, AccountEditor, MobileSyncExplorerHybrid]
-        macos: [macos-15]
-        ios: [^18]
-        xcode: [^26, ^16]
-        # Valid combinations that will run:
-        # - iOS ^18 + Xcode ^26
-        # - iOS ^18 + Xcode ^16
+        lib: [SalesforceFileLogger, SalesforceHybridSDK]
+        include:
+          - macos: macos-15
+            ios: ^18
+            xcode: ^16
+          - macos: macos-15
+            ios: ^18
+            xcode: ^26
+          - macos: macos-15
+            ios: ^26
+            xcode: ^26
+          - macos: macos-14
+            ios: ^17
+            xcode: ^15
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
       lib: ${{ matrix.lib }}
       ios: ${{ matrix.ios }}
       xcode: ${{ matrix.xcode }}
       macos: ${{ matrix.macos }}
+    secrets: inherit
+
+  hybrid-samples-nightly:
+    strategy:
+      fail-fast: false
+      matrix:
+        lib: [AccountEditor, MobileSyncExplorerHybrid]
+        include:
+          - macos: macos-15
+            ios: ^18
+            xcode: ^16
+          - macos: macos-15
+            ios: ^18
+            xcode: ^26
+          - macos: macos-15
+            ios: ^26
+            xcode: ^26
+          - macos: macos-14
+            ios: ^17
+            xcode: ^15
+    uses: ./.github/workflows/reusable-workflow.yaml
+    with:
+      lib: ${{ matrix.lib }}
+      ios: ${{ matrix.ios }}
+      xcode: ${{ matrix.xcode }}
+      macos: ${{ matrix.macos }}
+      action: build
     secrets: inherit
