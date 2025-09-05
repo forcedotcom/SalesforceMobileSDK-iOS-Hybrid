@@ -11,16 +11,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        lib: [SalesforceFileLogger, SalesforceHybridSDK]
+        lib: [SalesforceFileLogger, SalesforceHybridSDK, AccountEditor, MobileSyncExplorerHybrid]
         macos: [macos-15]
-        ios: [^26, ^18]
+        ios: [^18]
         xcode: [^26, ^16]
         # Valid combinations that will run:
-        # - iOS ^26 + Xcode ^26
         # - iOS ^18 + Xcode ^26
         # - iOS ^18 + Xcode ^16
-        exclude:
-          - { ios: ^26, xcode: ^16 }
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
       lib: ${{ matrix.lib }}
