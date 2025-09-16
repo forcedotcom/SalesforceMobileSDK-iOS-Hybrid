@@ -69,7 +69,6 @@ jobs:
       lib: ${{ matrix.lib }}
       ios: ${{ matrix.ios }}
       xcode: ${{ matrix.xcode }}
-      macos: ${{ matrix.macos }}
       is_pr: true
     secrets: inherit
 
@@ -90,7 +89,6 @@ jobs:
       lib: ${{ matrix.lib }}
       ios: ${{ matrix.ios }}
       xcode: ${{ matrix.xcode }}
-      macos: ${{ matrix.macos }}
       action: build
       is_pr: true
     secrets: inherit
