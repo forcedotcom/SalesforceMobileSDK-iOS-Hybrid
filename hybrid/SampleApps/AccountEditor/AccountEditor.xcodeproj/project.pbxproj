@@ -42,6 +42,8 @@
 		4FF15E9A190885CC00705FE0 /* com.salesforce.util.exec.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4FF15E671908852E00705FE0 /* com.salesforce.util.exec.js */; };
 		4FF15E9B190885CC00705FE0 /* com.salesforce.util.logger.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4FF15E681908852E00705FE0 /* com.salesforce.util.logger.js */; };
 		4FF15E9E1908860900705FE0 /* cordova.js in Copy Shared www Files */ = {isa = PBXBuildFile; fileRef = 4FF15E9C1908860100705FE0 /* cordova.js */; };
+		693387DD2E83347800F667A7 /* FMDB in Frameworks */ = {isa = PBXBuildFile; productRef = 693387DC2E83347800F667A7 /* FMDB */; };
+		693387E02E83348A00F667A7 /* SQLCipher in Frameworks */ = {isa = PBXBuildFile; productRef = 693387DF2E83348A00F667A7 /* SQLCipher */; };
 		69B48BEF2AD4DE1C0026AEC6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 69B48BEE2AD4DE1C0026AEC6 /* PrivacyInfo.xcprivacy */; };
 		8236AD101C4D9FF5004B69B8 /* SalesforceHybridSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FFEE5FE1BFE912300B7AA8A /* SalesforceHybridSDK.framework */; };
 		824A9BD21721FCA400C9BD79 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824A9BD11721FCA400C9BD79 /* UIKit.framework */; };
@@ -491,6 +493,7 @@
 				CE6AB3AE1C10C5B60012125E /* libz.tbd in Frameworks */,
 				CE6AB3B01C10C5BD0012125E /* libxml2.tbd in Frameworks */,
 				CE39040225369B25007313FD /* Photos.framework in Frameworks */,
+				693387E02E83348A00F667A7 /* SQLCipher in Frameworks */,
 				4F22156919DF5AA300FF2D26 /* ImageIO.framework in Frameworks */,
 				CE39040625369B32007313FD /* ContactsUI.framework in Frameworks */,
 				CE39040825369B3A007313FD /* CoreServices.framework in Frameworks */,
@@ -505,6 +508,7 @@
 				824A9DB51724CA5000C9BD79 /* MediaPlayer.framework in Frameworks */,
 				824A9DB71724CA5700C9BD79 /* MessageUI.framework in Frameworks */,
 				CE39040425369B2C007313FD /* Contacts.framework in Frameworks */,
+				693387DD2E83347800F667A7 /* FMDB in Frameworks */,
 				824A9DBB1724CAB100C9BD79 /* QuartzCore.framework in Frameworks */,
 				824A9DBD1724CAB900C9BD79 /* Security.framework in Frameworks */,
 				824A9DBF1724CAF900C9BD79 /* SystemConfiguration.framework in Frameworks */,
@@ -871,6 +875,10 @@
 				Base,
 			);
 			mainGroup = 824A9BC51721FCA400C9BD79;
+			packageReferences = (
+				693387DB2E83347800F667A7 /* XCRemoteSwiftPackageReference "fmdb" */,
+				693387DE2E83348A00F667A7 /* XCRemoteSwiftPackageReference "SQLCipher" */,
+			);
 			productRefGroup = 824A9BCF1721FCA400C9BD79 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -1318,6 +1326,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		693387DB2E83347800F667A7 /* XCRemoteSwiftPackageReference "fmdb" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/forcedotcom/fmdb";
+			requirement = {
+				kind = exactVersion;
+				version = "2.7.12-sqlcipher";
+			};
+		};
+		693387DE2E83348A00F667A7 /* XCRemoteSwiftPackageReference "SQLCipher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sqlcipher/SQLCipher.swift";
+			requirement = {
+				kind = exactVersion;
+				version = 4.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		693387DC2E83347800F667A7 /* FMDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 693387DB2E83347800F667A7 /* XCRemoteSwiftPackageReference "fmdb" */;
+			productName = FMDB;
+		};
+		693387DF2E83348A00F667A7 /* SQLCipher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 693387DE2E83348A00F667A7 /* XCRemoteSwiftPackageReference "SQLCipher" */;
+			productName = SQLCipher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 824A9BC61721FCA400C9BD79 /* Project object */;
 }
