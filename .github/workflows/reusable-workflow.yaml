@@ -13,12 +13,16 @@ on:
         required: false
         type: string
       macos:
-        default: macos-15
+        default: macos-26
         required: false
         type: string
       is_pr:
         type: boolean
         default: false
+      action:
+        type: string
+        default: "test"
+        required: false
 
 jobs:
   test-ios:
@@ -38,6 +42,9 @@ jobs:
         run: |
           ./install.sh
           echo $TEST_CREDENTIALS > ./shared/test/test_credentials.json
+      - name: Install iOS 17 runtime if needed
+        if: ${{ inputs.ios == '^17' }}
+        run: xcodes runtimes install "iOS 17.5"
       - uses: mxcl/xcodebuild@v3
         with:
           xcode: ${{ inputs.xcode }}
@@ -45,7 +52,8 @@ jobs:
           platform-version: ${{ inputs.ios }}
           workspace: SalesforceMobileSDK-Hybrid.xcworkspace
           scheme: ${{ inputs.lib }}
-          code-coverage: true
+          action: ${{ inputs.action }}
+          code-coverage: ${{ inputs.action == 'test'}}
           verbosity: xcbeautify
       - uses: slidoapp/xcresulttool@v3.1.0
         with:
@@ -54,10 +62,10 @@ jobs:
           show-code-coverage: false
           upload-bundles: false
           show-passed-tests: false
-        if: success() || failure()
+        if: ${{ inputs.action == 'test' && inputs.ios != '^26' }}
       - uses: codecov/codecov-action@v4
         with:
           flags: ${{ inputs.lib }}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        if: success() || failure()
+        if: inputs.action == 'test'
