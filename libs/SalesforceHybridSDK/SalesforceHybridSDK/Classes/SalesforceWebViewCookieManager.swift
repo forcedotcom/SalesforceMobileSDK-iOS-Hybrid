@@ -29,12 +29,17 @@
 
 import Foundation
 import WebKit
+import SalesforceSDKCore
 
 @objc(SFSDKSalesforceWebViewCookieManager)
 public class SalesforceWebViewCookieManager: NSObject {
     @MainActor @objc public func setCookies(userAccount: UserAccount, completion: @escaping () -> Void) {
         let creds = userAccount.credentials
         SFSDKHybridLogger.i(Self.self, message: "[\(Self.self) \(#function)]: setting cookies for \(String(describing: creds.userId)).")
+
+        // Warn if expected scopes are missing
+        inspectScopes(creds.scopes)
+
         let cookieStore = WKWebsiteDataStore.default().httpCookieStore
         let instanceUrl = creds.instanceUrl
         let lightningDomain = creds.lightningDomain
@@ -98,6 +103,34 @@ public class SalesforceWebViewCookieManager: NSObject {
     
     private func getDomainFromUrl(_ url: URL?) -> String {
         return url?.host ?? ""
+    }
+    
+    @objc public func inspectScopes(_ scopes: [String]?, warn: ((String) -> Void)? = nil) {
+        let warnFunction = warn ?? { message in
+            SFSDKHybridLogger.w(Self.self, message: message)
+        }
+        
+        let scopeParser = ScopeParser(scopes: scopes)
+        
+        // full encompasses all other scopes except for refresh
+        if !scopeParser.hasScope("full") {
+            if !scopeParser.hasScope("web") {
+                warnFunction("Missing web scope: will not be able to access web content.")
+                
+                // web encompasses visualforce scope
+                if !scopeParser.hasScope("visualforce") {
+                    warnFunction("Missing visualforce scope: will not be able to access Visualforce pages.")
+                }
+            }
+            
+            if !scopeParser.hasScope("lightning") {
+                warnFunction("Missing lightning scope: will not be able to access Lightning applications.")
+            }
+            
+            if !scopeParser.hasScope("content") {
+                warnFunction("Missing content scope: will not be able to access Content resources.")
+            }
+        }
     }
 
     static let CLIENT_SRC = "clientSrc"
