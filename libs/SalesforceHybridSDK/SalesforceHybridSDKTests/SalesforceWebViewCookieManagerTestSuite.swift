@@ -153,4 +153,264 @@ class SalesforceWebViewCookieManagerTestSuite: XCTestCase {
                      "Should warn about missing content scope")
     }
     
+    // MARK: - setCookies Method Tests
+    
+    /**
+     * Test setCookies with complete user account - should call setCookieValue for all domains.
+     */
+    @MainActor func testSetCookiesWithCompleteUserAccount() {
+        guard let userAccount = createTestUserAccount() else {
+            XCTFail("Failed to create test user account")
+            return
+        }
+        
+        var setCookieValueCalls: [CookieCall] = []
+        var completionCalled = false
+        
+        let setCookieValueLambda: (String, String?, Bool, String?, String?) -> Void = { cookieType, domain, setDomain, name, value in
+            setCookieValueCalls.append(CookieCall(cookieType: cookieType, domain: domain, setDomain: setDomain, name: name, value: value))
+        }
+        
+        let expectation = XCTestExpectation(description: "setCookies completion")
+        
+        cookieManager.setCookies(
+            userAccount: userAccount,
+            setCookieValue: setCookieValueLambda
+        ) {
+            completionCalled = true
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        // Verify completion was called
+        XCTAssertTrue(completionCalled, "Completion should be called once")
+        
+        // Verify all expected cookie calls were made (setDomain should be false since no community URL)
+        let expectedCalls = [
+            CookieCall(cookieType: "sid for main", domain: "test.salesforce.com", setDomain: false, name: "sid", value: "test_auth_token"),
+            CookieCall(cookieType: "clientSrc", domain: "test.salesforce.com", setDomain: false, name: "clientSrc", value: "test_client_src"),
+            CookieCall(cookieType: "sid_Client", domain: "test.salesforce.com", setDomain: false, name: "sid_Client", value: "test_sid_client"),
+            CookieCall(cookieType: "oid", domain: "test.salesforce.com", setDomain: false, name: "oid", value: "test_org_id"),
+            CookieCall(cookieType: "eikoocnekotMob", domain: "test.salesforce.com", setDomain: false, name: "eikoocnekotMob", value: "test_csrf_token"),
+            CookieCall(cookieType: "sid for lightning", domain: "lightning.test.salesforce.com", setDomain: false, name: "sid", value: "test_lightning_sid"),
+            CookieCall(cookieType: "eikoocnekotMob", domain: "lightning.test.salesforce.com", setDomain: false, name: "eikoocnekotMob", value: "test_csrf_token"),
+            CookieCall(cookieType: "sid for content", domain: "content.test.salesforce.com", setDomain: false, name: "sid", value: "test_content_sid"),
+            CookieCall(cookieType: "sid for vf", domain: "vf.test.salesforce.com", setDomain: false, name: "sid", value: "test_vf_sid"),
+            CookieCall(cookieType: "clientSrc", domain: "vf.test.salesforce.com", setDomain: false, name: "clientSrc", value: "test_client_src"),
+            CookieCall(cookieType: "sid_Client", domain: "vf.test.salesforce.com", setDomain: false, name: "sid_Client", value: "test_sid_client"),
+            CookieCall(cookieType: "oid", domain: "vf.test.salesforce.com", setDomain: false, name: "oid", value: "test_org_id")
+        ]
+        
+        XCTAssertEqual(setCookieValueCalls.count, expectedCalls.count,
+                      "Should make correct number of setCookieValue calls")
+        
+        // Verify each expected call
+        for expectedCall in expectedCalls {
+            XCTAssertTrue(setCookieValueCalls.contains(expectedCall),
+                         "Should contain call: \(expectedCall)")
+        }
+    }
+    
+    /**
+     * Test setCookies with JWT token format - should use parentSid instead of authToken.
+     */
+    @MainActor func testSetCookiesWithJWTTokenFormat() {
+        guard let jwtUserAccount = createTestUserAccountWithJWT() else {
+            XCTFail("Failed to create JWT test user account")
+            return
+        }
+        
+        var setCookieValueCalls: [CookieCall] = []
+        
+        let setCookieValueLambda: (String, String?, Bool, String?, String?) -> Void = { cookieType, domain, setDomain, name, value in
+            setCookieValueCalls.append(CookieCall(cookieType: cookieType, domain: domain, setDomain: setDomain, name: name, value: value))
+        }
+        
+        let expectation = XCTestExpectation(description: "setCookies completion")
+        
+        cookieManager.setCookies(
+            userAccount: jwtUserAccount,
+            setCookieValue: setCookieValueLambda
+        ) {
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        // Find the main SID call
+        let mainSidCall = setCookieValueCalls.first { $0.cookieType == "sid for main" }
+        XCTAssertNotNil(mainSidCall, "Should have main SID call")
+        XCTAssertEqual(mainSidCall?.value, "test_parent_sid", 
+                      "Should use parentSid for JWT token format")
+    }
+
+   /**
+     * Test setCookies with community URL - should set domain flag to true.
+     */
+    @MainActor func testSetCookiesWithCommunityUrl() {
+        guard let communityUserAccount = createTestUserAccountWithCommunity() else {
+            XCTFail("Failed to create community test user account")
+            return
+        }
+        
+        var setCookieValueCalls: [CookieCall] = []
+        
+        let setCookieValueLambda: (String, String?, Bool, String?, String?) -> Void = { cookieType, domain, setDomain, name, value in
+            setCookieValueCalls.append(CookieCall(cookieType: cookieType, domain: domain, setDomain: setDomain, name: name, value: value))
+        }
+        
+        let expectation = XCTestExpectation(description: "setCookies completion")
+        
+        cookieManager.setCookies(
+            userAccount: communityUserAccount,
+            setCookieValue: setCookieValueLambda
+        ) {
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        // Verify that setDomain is true for all calls when community URL is present
+        XCTAssertGreaterThan(setCookieValueCalls.count, 0, "Should have made some cookie calls")
+        
+        let allCallsHaveSetDomainTrue = setCookieValueCalls.allSatisfy { $0.setDomain }
+        XCTAssertTrue(allCallsHaveSetDomainTrue,
+                     "All calls should have setDomain=true when community URL is present")
+    }        
+    
+    // MARK: - Helper Data Structures
+    
+    /**
+     * Helper data structure for tracking cookie calls.
+     */
+    private struct CookieCall: Equatable {
+        let cookieType: String
+        let domain: String?
+        let setDomain: Bool
+        let name: String?
+        let value: String?
+        
+        static func == (lhs: CookieCall, rhs: CookieCall) -> Bool {
+            return lhs.cookieType == rhs.cookieType &&
+                   lhs.domain == rhs.domain &&
+                   lhs.setDomain == rhs.setDomain &&
+                   lhs.name == rhs.name &&
+                   lhs.value == rhs.value
+        }
+    }
+    
+    // MARK: - Helper Methods for User Account Creation
+    
+    /**
+     * Helper method to create a test UserAccount with all required fields.
+     * Based on Android createTestUserAccount() helper.
+     */
+    private func createTestUserAccount() -> UserAccount? {
+        guard let credentials = OAuthCredentials(identifier: "test-identifier", clientId: "test-client-id", encrypted: false) else {
+            return nil
+        }
+        
+        // Use updateCredentials method to set all the properties
+        let params: [String: String] = [
+            "access_token": "test_auth_token",
+            "refresh_token": "test_refresh_token",
+            "instance_url": "https://test.salesforce.com",
+            "api_instance_url": "https://test.salesforce.com", 
+            "id": "https://test.salesforce.com/id/test_org_id/test_user_id",
+            "scope": "web lightning content",
+            "lightning_domain": "lightning.test.salesforce.com",
+            "lightning_sid": "test_lightning_sid",
+            "visualforce_domain": "vf.test.salesforce.com",
+            "visualforce_sid": "test_vf_sid",
+            "content_domain": "content.test.salesforce.com",
+            "content_sid": "test_content_sid",
+            "csrf_token": "test_csrf_token",
+            "cookie-clientSrc": "test_client_src",
+            "cookie-sid_Client": "test_sid_client",
+            "sidCookieName": "sid",
+            "parent_sid": "test_parent_sid",
+            "token_format": "access_token"
+        ]
+        
+        credentials.update(params)
+        let userAccount = UserAccount(credentials: credentials)
+        
+        return userAccount
+    }
+    
+    /**
+     * Helper method to create a test UserAccount with JWT token format.
+     * Based on Android createTestUserAccountWithJWT() helper.
+     */
+    private func createTestUserAccountWithJWT() -> UserAccount? {
+        guard let credentials = OAuthCredentials(identifier: "test-identifier-jwt", clientId: "test-client-id", encrypted: false) else {
+            return nil
+        }
+        
+        // Use updateCredentials method with JWT token format
+        let params: [String: String] = [
+            "access_token": "test_auth_token",
+            "refresh_token": "test_refresh_token",
+            "instance_url": "https://test.salesforce.com",
+            "api_instance_url": "https://test.salesforce.com",
+            "id": "https://test.salesforce.com/id/test_org_id/test_user_id",
+            "scope": "web lightning content",
+            "lightning_domain": "lightning.test.salesforce.com",
+            "lightning_sid": "test_lightning_sid",
+            "visualforce_domain": "vf.test.salesforce.com",
+            "visualforce_sid": "test_vf_sid",
+            "content_domain": "content.test.salesforce.com",
+            "content_sid": "test_content_sid",
+            "csrf_token": "test_csrf_token",
+            "cookie-clientSrc": "test_client_src",
+            "cookie-sid_Client": "test_sid_client",
+            "sidCookieName": "sid",
+            "parent_sid": "test_parent_sid",
+            "token_format": "jwt"  // This is the key difference - JWT format
+        ]
+        
+        credentials.update(params)
+        let userAccount = UserAccount(credentials: credentials)
+        
+        return userAccount
+    }
+    
+    /**
+     * Helper method to create a test UserAccount with community URL.
+     */
+    private func createTestUserAccountWithCommunity() -> UserAccount? {
+        guard let credentials = OAuthCredentials(identifier: "test-identifier-community", clientId: "test-client-id", encrypted: false) else {
+            return nil
+        }
+        
+        // Use updateCredentials method with community URL
+        let params: [String: String] = [
+            "access_token": "test_auth_token",
+            "refresh_token": "test_refresh_token",
+            "instance_url": "https://test.salesforce.com",
+            "api_instance_url": "https://test.salesforce.com",
+            "id": "https://test.salesforce.com/id/test_org_id/test_user_id",
+            "scope": "web lightning content",
+            "lightning_domain": "lightning.test.salesforce.com",
+            "lightning_sid": "test_lightning_sid",
+            "visualforce_domain": "vf.test.salesforce.com",
+            "visualforce_sid": "test_vf_sid",
+            "content_domain": "content.test.salesforce.com",
+            "content_sid": "test_content_sid",
+            "csrf_token": "test_csrf_token",
+            "cookie-clientSrc": "test_client_src",
+            "cookie-sid_Client": "test_sid_client",
+            "sidCookieName": "sid",
+            "parent_sid": "test_parent_sid",
+            "token_format": "access_token",
+            "sfdc_community_url": "https://community.salesforce.com"  // Add community URL
+        ]
+        
+        credentials.update(params)
+        let userAccount = UserAccount(credentials: credentials)
+        
+        return userAccount
+    }   
+ 
 }
