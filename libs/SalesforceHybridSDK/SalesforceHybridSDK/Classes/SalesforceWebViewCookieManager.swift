@@ -29,13 +29,52 @@
 
 import Foundation
 import WebKit
+import SalesforceSDKCore
 
 @objc(SFSDKSalesforceWebViewCookieManager)
 public class SalesforceWebViewCookieManager: NSObject {
+    
+    // MARK: - Public Methods
+    
+    /**
+     * Sets cookies for the provided user account (Objective-C compatible version).
+     * This method delegates to the Swift-only version with default implementations.
+     */
     @MainActor @objc public func setCookies(userAccount: UserAccount, completion: @escaping () -> Void) {
-        let creds = userAccount.credentials
+        setCookies(
+            userAccount: userAccount,
+            setCookieValue: { [weak self] cookieType, domain, setDomain, name, value in
+                guard let self = self else { return }
+                self.setCookieValue(cookieStore: WKWebsiteDataStore.default().httpCookieStore, 
+                                  cookieType: cookieType, 
+                                  domain: domain, 
+                                  name: name, 
+                                  value: value)
+            },
+            completion: completion
+        )
+    }
+    
+    /**
+     * Sets cookies for the provided user account (Swift version with testable parameters).
+     * Internal access for testing purposes only.
+     * 
+     * - Parameters:
+     *   - userAccount: The user account for which to set cookies
+     *   - setCookieValue: Optional lambda to set cookie values (for testing)
+     *   - completion: Completion block called when cookie setting is finished
+     */
+    @MainActor internal func setCookies(
+        userAccount: UserAccount,
+        setCookieValue: @escaping (String, String?, Bool, String?, String?) -> Void = { _, _, _, _, _ in },
+        completion: @escaping () -> Void
+    ) {
+        let creds = userAccount.credentials        
         SFSDKHybridLogger.i(Self.self, message: "[\(Self.self) \(#function)]: setting cookies for \(String(describing: creds.userId)).")
-        let cookieStore = WKWebsiteDataStore.default().httpCookieStore
+
+        // Warn if expected scopes are missing
+        inspectScopes(creds.scopes)
+
         let instanceUrl = creds.instanceUrl
         let lightningDomain = creds.lightningDomain
         let lightningSid = creds.lightningSid
@@ -51,25 +90,28 @@ public class SalesforceWebViewCookieManager: NSObject {
         let orgId = userAccount.accountIdentity.orgId
         let mainDomain = getDomainFromUrl(instanceUrl)
         
+        // Determine setDomain flag based on community URL presence
+        let hasCommunityUrl = creds.communityUrl != nil
+        
         // Main domain cookies
-        setCookieValue(cookieStore: cookieStore, cookieType: "sid for main", domain: mainDomain, name: sidCookieName, value: mainSid)
-        setCookieValue(cookieStore: cookieStore, cookieType: Self.CLIENT_SRC, domain: mainDomain, name: Self.CLIENT_SRC, value: clientSrc)
-        setCookieValue(cookieStore: cookieStore, cookieType: Self.SID_CLIENT, domain: mainDomain, name: Self.SID_CLIENT, value: sidClient)
-        setCookieValue(cookieStore: cookieStore, cookieType: Self.ORG_ID, domain: mainDomain, name: Self.ORG_ID, value: orgId)
-        setCookieValue(cookieStore: cookieStore, cookieType: Self.csrfTokenCookieName, domain: mainDomain, name: Self.csrfTokenCookieName, value: csrfToken)
+        setCookieValue("sid for main", mainDomain, hasCommunityUrl, sidCookieName, mainSid)
+        setCookieValue(Self.CLIENT_SRC, mainDomain, hasCommunityUrl, Self.CLIENT_SRC, clientSrc)
+        setCookieValue(Self.SID_CLIENT, mainDomain, hasCommunityUrl, Self.SID_CLIENT, sidClient)
+        setCookieValue(Self.ORG_ID, mainDomain, hasCommunityUrl, Self.ORG_ID, orgId)
+        setCookieValue(Self.csrfTokenCookieName, mainDomain, hasCommunityUrl, Self.csrfTokenCookieName, csrfToken)
         
         // Lightning domain cookies
-        setCookieValue(cookieStore: cookieStore, cookieType: "sid for lightning", domain: lightningDomain, name: sidCookieName, value: lightningSid)
-        setCookieValue(cookieStore: cookieStore, cookieType: Self.csrfTokenCookieName, domain: lightningDomain, name: Self.csrfTokenCookieName, value: csrfToken)
+        setCookieValue("sid for lightning", lightningDomain, hasCommunityUrl, sidCookieName, lightningSid)
+        setCookieValue(Self.csrfTokenCookieName, lightningDomain, hasCommunityUrl, Self.csrfTokenCookieName, csrfToken)
         
         // Content domain cookies
-        setCookieValue(cookieStore: cookieStore, cookieType: "sid for content", domain: contentDomain, name: sidCookieName, value: contentSid)
+        setCookieValue("sid for content", contentDomain, hasCommunityUrl, sidCookieName, contentSid)
         
         // Vf domain cookies
-        setCookieValue(cookieStore: cookieStore, cookieType: "sid for vf", domain: vfDomain, name: sidCookieName, value: vfSid)
-        setCookieValue(cookieStore: cookieStore, cookieType: Self.CLIENT_SRC, domain: vfDomain, name: Self.CLIENT_SRC, value: clientSrc)
-        setCookieValue(cookieStore: cookieStore, cookieType: Self.SID_CLIENT, domain: vfDomain, name: Self.SID_CLIENT, value: sidClient)
-        setCookieValue(cookieStore: cookieStore, cookieType: Self.ORG_ID, domain: vfDomain, name: Self.ORG_ID, value: orgId)
+        setCookieValue("sid for vf", vfDomain, hasCommunityUrl, sidCookieName, vfSid)
+        setCookieValue(Self.CLIENT_SRC, vfDomain, hasCommunityUrl, Self.CLIENT_SRC, clientSrc)
+        setCookieValue(Self.SID_CLIENT, vfDomain, hasCommunityUrl, Self.SID_CLIENT, sidClient)
+        setCookieValue(Self.ORG_ID, vfDomain, hasCommunityUrl, Self.ORG_ID, orgId)
         
         SFSDKHybridLogger.i(Self.self, message: "[\(Self.self) \(#function)]: done setting cookies for \(String(describing: creds.userId)).")
         completion()
@@ -98,6 +140,34 @@ public class SalesforceWebViewCookieManager: NSObject {
     
     private func getDomainFromUrl(_ url: URL?) -> String {
         return url?.host ?? ""
+    }
+    
+    internal func inspectScopes(_ scopes: [String]?, warn: ((String) -> Void)? = nil) {
+        let warnFunction = warn ?? { message in
+            SFSDKHybridLogger.w(Self.self, message: message)
+        }
+        
+        let scopeParser = ScopeParser(scopes: scopes)
+        
+        // full encompasses all other scopes except for refresh
+        if !scopeParser.hasScope("full") {
+            if !scopeParser.hasScope("web") {
+                warnFunction("Missing web scope: will not be able to access web content.")
+                
+                // web encompasses visualforce scope
+                if !scopeParser.hasScope("visualforce") {
+                    warnFunction("Missing visualforce scope: will not be able to access Visualforce pages.")
+                }
+            }
+            
+            if !scopeParser.hasScope("lightning") {
+                warnFunction("Missing lightning scope: will not be able to access Lightning applications.")
+            }
+            
+            if !scopeParser.hasScope("content") {
+                warnFunction("Missing content scope: will not be able to access Content resources.")
+            }
+        }
     }
 
     static let CLIENT_SRC = "clientSrc"
