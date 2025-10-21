@@ -44,6 +44,7 @@
 		CE4CE2E91C0E465B009F6029 /* SalesforceFileLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CEA2A8EA2214C1B1009D923B /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA2A8C72214C184009D923B /* CocoaLumberjack.framework */; };
 		CEA2A8EB2214C1B9009D923B /* SalesforceSDKCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA2A8AC2214C174009D923B /* SalesforceSDKCommon.framework */; };
+		D291DB6C2E468AAF00AA4B64 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D291DB6B2E468AAF00AA4B64 /* ViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +169,8 @@
 		CEA2A8B32214C184009D923B /* Lumberjack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lumberjack.xcodeproj; path = ../../external/CocoaLumberjack/Lumberjack.xcodeproj; sourceTree = "<group>"; };
 		CECB662E1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig"; path = "Configuration/SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig"; sourceTree = "<group>"; };
 		CECB662F1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Dynamic-iOS-Release.xcconfig"; path = "Configuration/SalesforceFileLogger-Dynamic-iOS-Release.xcconfig"; sourceTree = "<group>"; };
+		D291DB6A2E468AAF00AA4B64 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		D291DB6B2E468AAF00AA4B64 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,6 +296,8 @@
 		82EFF30516E8049500A63CDF /* SalesforceFileLoggerTestApp */ = {
 			isa = PBXGroup;
 			children = (
+				D291DB6A2E468AAF00AA4B64 /* ViewController.h */,
+				D291DB6B2E468AAF00AA4B64 /* ViewController.m */,
 				4F06AFC31C49A87F00F70798 /* Supporting Files */,
 				B7282F4C1D8C717200475F79 /* SalesforceFileLoggerTestApp.entitlements */,
 				82EFF34116E80B6300A63CDF /* Classes */,
@@ -622,6 +627,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D291DB6C2E468AAF00AA4B64 /* ViewController.m in Sources */,
 				82EFF30C16E8049500A63CDF /* main.m in Sources */,
 				82EFF34416E80B6300A63CDF /* AppDelegate.m in Sources */,
 			);
