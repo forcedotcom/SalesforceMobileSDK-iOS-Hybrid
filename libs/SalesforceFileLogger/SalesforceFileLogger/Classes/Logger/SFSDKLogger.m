@@ -189,17 +189,18 @@ static BOOL _useOSLog = NO;
 - (void)setDdLogLevel:(DDLogLevel)logLevel {
     [self storeLogLevel:logLevel];
 
-    // Update console logger for this component
-    DDLog *consoleLoggerDDLog = self.consoleLoggers[self.componentName];
-    if (consoleLoggerDDLog) {
+    // Update all console loggers
+    for (NSString *className in self.consoleLoggers.allKeys) {
+      DDLog *consoleLoggerDDLog = self.consoleLoggers[className];
       [consoleLoggerDDLog removeAllLoggers];
       id<DDLogger> consoleLogger;
       if ([self.class useOSLog]) {
-        consoleLogger = [[DDOSLogger alloc]
-            initWithSubsystem:[[NSBundle mainBundle] bundleIdentifier]
-            category:self.componentName];
+        consoleLogger =
+            [[DDOSLogger alloc] initWithSubsystem:[[NSBundle mainBundle] bundleIdentifier]
+                                category:className];
       } else {
         DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
+        ttyLogger.logFormatter = [[SFSDKFormatter alloc] init];
         ttyLogger.colorsEnabled = YES;
         consoleLogger = ttyLogger;
       }
