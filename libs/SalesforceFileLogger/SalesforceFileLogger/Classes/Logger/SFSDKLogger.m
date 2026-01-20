@@ -272,11 +272,30 @@ static BOOL _useOSLog = NO;
     NSString *tag = [NSString stringWithFormat:kLogIdentifierFormat, self.componentName, cls];
     DDLogMessage *logMessage = [[DDLogMessage alloc] initWithFormat:message formatted:message level:level flag:DDLogFlagForLogLevel(level) context:0 file:self.componentName function:nil line:0 tag:tag options:0 timestamp:[NSDate date]];
 
-    // Log to console logger for this component
-    DDLog *consoleLogger = self.consoleLoggers[self.componentName];
-    if (consoleLogger) {
-      [consoleLogger log:YES message:logMessage];
+    // Get or create console logger for this class
+    NSString *className = NSStringFromClass(cls);
+    DDLog *consoleLoggerDDLog = self.consoleLoggers[className];
+    if (!consoleLoggerDDLog) {
+      // Create new console logger for this class
+      consoleLoggerDDLog = [[DDLog alloc] init];
+      id<DDLogger> consoleLogger;
+      if ([self.class useOSLog]) {
+        consoleLogger =
+            [[DDOSLogger alloc] initWithSubsystem:[[NSBundle mainBundle] bundleIdentifier]
+                                category:className];
+      } else {
+        DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
+        ttyLogger.logFormatter = [[SFSDKFormatter alloc] init];
+        ttyLogger.colorsEnabled = YES;
+        consoleLogger = ttyLogger;
+      }
+      [consoleLoggerDDLog addLogger:consoleLogger
+                          withLevel:DDLogLogLevelForSFLogLevel(self.logLevel)];
+      self.consoleLoggers[className] = consoleLoggerDDLog;
     }
+
+    // Log to console logger for this class
+    [consoleLoggerDDLog log:YES message:logMessage];
 
     // Log to file logger if enabled
     if (self.fileLoggingEnabled) {
