@@ -107,22 +107,6 @@ static BOOL _useOSLog = NO;
         // Create console loggers dictionary
         self.consoleLoggers = [[NSMutableDictionary alloc] init];
 
-        // Create console logger for this component
-        DDLog *consoleLoggerDDLog = [[DDLog alloc] init];
-        id<DDLogger> consoleLogger;
-        if ([self.class useOSLog]) {
-            consoleLogger = [[DDOSLogger alloc] initWithSubsystem:[[NSBundle mainBundle] bundleIdentifier] category:componentName];
-        } else {
-            DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
-            ttyLogger.logFormatter = [[SFSDKFormatter alloc] init];
-            ttyLogger.colorsEnabled = YES;
-            consoleLogger = ttyLogger;
-        }
-        [consoleLoggerDDLog
-            addLogger:consoleLogger
-            withLevel:DDLogLogLevelForSFLogLevel(self.logLevel)];
-        self.consoleLoggers[componentName] = consoleLoggerDDLog;
-
         // Create separate file logger
         self.fileLogger =
             [[SFSDKFileLogger alloc] initWithComponent:componentName];
