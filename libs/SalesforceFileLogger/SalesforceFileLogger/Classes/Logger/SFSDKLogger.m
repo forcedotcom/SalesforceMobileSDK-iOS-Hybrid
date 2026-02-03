@@ -257,9 +257,8 @@ static BOOL _useOSLog = NO;
     NSString *tag = [NSString stringWithFormat:kLogIdentifierFormat, self.componentName, cls];
     DDLogMessage *logMessage = [[DDLogMessage alloc] initWithFormat:message formatted:message level:level flag:DDLogFlagForLogLevel(level) context:0 file:self.componentName function:nil line:0 tag:tag options:0 timestamp:[NSDate date]];
 
-    // Get or create console logger for this class
-    NSString *className = NSStringFromClass(cls);
-    DDLog *consoleLoggerDDLog = self.consoleLoggers[className];
+    // Get or create console logger for this tag
+    DDLog *consoleLoggerDDLog = self.consoleLoggers[tag];
     if (!consoleLoggerDDLog) {
       // Create new console logger for this class
       consoleLoggerDDLog = [[DDLog alloc] init];
@@ -267,7 +266,7 @@ static BOOL _useOSLog = NO;
       if ([self.class useOSLog]) {
         consoleLogger =
             [[DDOSLogger alloc] initWithSubsystem:[[NSBundle mainBundle] bundleIdentifier]
-                                category:className];
+                                         category:tag];
       } else {
         DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
         ttyLogger.logFormatter = [[SFSDKFormatter alloc] init];
@@ -276,7 +275,7 @@ static BOOL _useOSLog = NO;
       }
       [consoleLoggerDDLog addLogger:consoleLogger
                           withLevel:DDLogLogLevelForSFLogLevel(self.logLevel)];
-      self.consoleLoggers[className] = consoleLoggerDDLog;
+      self.consoleLoggers[tag] = consoleLoggerDDLog;
     }
 
     // Log to console logger for this class
