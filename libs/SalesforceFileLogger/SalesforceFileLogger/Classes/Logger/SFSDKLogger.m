@@ -260,7 +260,7 @@ static BOOL _useOSLog = NO;
     // Get or create console logger for this tag
     DDLog *consoleLoggerDDLog = self.consoleLoggers[tag];
     if (!consoleLoggerDDLog) {
-      // Create new console logger for this class
+      // Create new console logger for this tag
       consoleLoggerDDLog = [[DDLog alloc] init];
       id<DDLogger> consoleLogger;
       if ([self.class useOSLog]) {
