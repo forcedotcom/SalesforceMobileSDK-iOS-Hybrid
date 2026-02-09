@@ -16,15 +16,19 @@ jobs:
         include:
           - ios: ^26
             xcode: ^26
+            macos: macos-26
           - ios: ^18
             xcode: ^16
+            macos: macos-15
           - ios: ^17
             xcode: ^16
+            macos: macos-15
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
       lib: ${{ matrix.lib }}
       ios: ${{ matrix.ios }}
       xcode: ${{ matrix.xcode }}
+      macos: ${{ matrix.macos }}
     secrets: inherit
 
   hybrid-samples-nightly:
@@ -36,14 +40,18 @@ jobs:
         include:
           - ios: ^26
             xcode: ^26
+            macos: macos-26
           - ios: ^18
             xcode: ^16
+            macos: macos-15
           - ios: ^17
             xcode: ^16
+            macos: macos-15
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
       lib: ${{ matrix.lib }}
       ios: ${{ matrix.ios }}
       xcode: ${{ matrix.xcode }}
+      macos: ${{ matrix.macos }}
       action: build
     secrets: inherit
