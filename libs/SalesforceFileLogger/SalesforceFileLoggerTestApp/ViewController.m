@@ -25,6 +25,7 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #import "ViewController.h"
+#import "Classes/AppDelegate.h"
 #import <SalesforceFileLogger/SalesforceFileLogger.h>
 
 @interface ViewController ()
@@ -48,9 +49,9 @@
     // Create a new logger instance with OSLog enabled and log some more messages
     SFSDKLogger *osLogTestLogger = [SFSDKLogger sharedInstanceWithComponent:@"OSLog Test"];
     [osLogTestLogger i:[self class] message:@"Info log message with OSLog"];
-    [osLogTestLogger w:[self class] message:@"Warning log message with OSLog"];
-    [osLogTestLogger e:[self class] message:@"Error log message with OSLog"];
-    [osLogTestLogger d:[self class] message:@"Debug log message with OSLog"];
+    [osLogTestLogger w:[AppDelegate class] message:@"Warning log message with OSLog"];
+    [osLogTestLogger e:[NSString class] message:@"Error log message with OSLog"];
+    [osLogTestLogger d:[SFSDKLogger class] message:@"Debug log message with OSLog"];
 }
 
 @end
