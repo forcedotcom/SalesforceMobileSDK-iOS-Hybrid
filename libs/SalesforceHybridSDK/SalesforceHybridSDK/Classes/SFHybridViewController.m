@@ -528,20 +528,20 @@ static NSString * const kHTTP = @"http";
 - (void)prepareWebState:(void (^)(void))completion
 {
     [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: preparing web state.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
 
         // Cleaning up old cookies
         [SFSDKHybridLogger i:[self class] format:@"[%@ %@]: resetting session cookies.", NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
-        [SFSDKWebViewStateManager resetSessionCookie];
-
-        // Setting cookies we got from token end point
-        // NB: you must be using an hybrid auth flow
-        [self.cookieManager setCookiesWithUserAccount:[SFUserAccountManager sharedInstance].currentUser
-                                           completion:^{
-            if (completion) {
-                completion();
-            }
+        [SFSDKWebViewStateManager resetSessionCookieWithCompletion:^{
+            // Setting cookies we got from token end point
+            // NB: you must be using an hybrid auth flow
+            [self.cookieManager setCookiesWithUserAccount:[SFUserAccountManager sharedInstance].currentUser
+                                               completion:^{
+                if (completion) {
+                    completion();
+                }
+            }];
         }];
     });
 }
