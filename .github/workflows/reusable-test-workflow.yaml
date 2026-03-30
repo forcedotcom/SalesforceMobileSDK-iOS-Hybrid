@@ -5,11 +5,11 @@ on:
         required: true
         type: string
       ios:
-        default: "^18"
+        default: "^26"
         required: false
         type: string
       xcode:
-        default: "^16"
+        default: "^26"
         required: false
         type: string
       macos:
@@ -19,10 +19,6 @@ on:
       is_pr:
         type: boolean
         default: false
-      action:
-        type: string
-        default: "test"
-        required: false
 
 jobs:
   test-ios:
@@ -53,8 +49,8 @@ jobs:
           platform-version: ${{ inputs.ios }}
           workspace: SalesforceMobileSDK-Hybrid.xcworkspace
           scheme: ${{ inputs.lib }}
-          action: ${{ inputs.action }}
-          code-coverage: ${{ inputs.action == 'test'}}
+          action: test
+          code-coverage: true
           verbosity: xcbeautify
       - name: Parse test results
         if: success() || failure()
