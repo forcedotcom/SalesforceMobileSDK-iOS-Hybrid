@@ -327,7 +327,7 @@ Understanding these concepts is essential:
 - **Hybrid View Config**: Configuration specifying local vs remote app, authentication behavior
 - **Cookie Bridge**: Mechanism to share Salesforce session cookies between native and WKWebView
 - **Bootstrap**: Initial authentication and WebView setup before loading app content
-- **Connected App**: Salesforce OAuth configuration (defined in app, not in SDK)
+- **External Client App or Connected App (legacy)**: Salesforce OAuth configuration (defined in app, not in SDK)
 - **Localhost Substitution**: Performance optimization for loading local files
 
 ## Release & Distribution
