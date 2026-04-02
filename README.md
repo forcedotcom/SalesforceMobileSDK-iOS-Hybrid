@@ -1,47 +1,313 @@
 [![Tests](https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid/actions/workflows/nightly.yaml/badge.svg)](https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid/actions/workflows/nightly.yaml)
 
-# Hybrid library / sample apps and tests for Salesforce.com Mobile SDK on iOS
+# Salesforce Mobile SDK for iOS Hybrid
 
-You have arrived at the source repository for the Hybrid library of the Salesforce Mobile SDK on iOS.  Welcome!
+iOS native bridge layer and libraries for Cordova-based hybrid mobile applications.
 
-- If you'd like to work with the source code of the SDK itself, you've come to the right place!  You can browse sample app source code and debug down through the layers to get a feel for how everything works under the covers.  Read on for instructions on how to get started with the SDK in your development environment.
-- If you're just eager to start developing your own new application, the quickest way is to use our npm binary distribution package, called [forcehybrid](https://npmjs.org/package/forcehybrid), which is hosted on [npmjs.org](https://npmjs.org/).  Getting started is as simple as installing the npm package and launching your template app.  You'll find more details on the forcehybrid package page.
+## Overview
 
-Installation (do this first - really)
-==
-Working with this repository requires working with git.  Any workflow that leaves you with a functioning git clone of this repository should set you up for success.  Downloading the ZIP file from GitHub, on the other hand, is likely to put you at a dead end.
+This repository provides the **iOS native implementation** for hybrid apps built with the Salesforce Mobile SDK and Apache Cordova. It bridges JavaScript Cordova plugins to iOS native SDK functionality, enabling hybrid apps to leverage authentication, SmartStore, MobileSync, and REST APIs.
 
-## Setting up the repo
-First, clone the repo:
+### What's Included
 
-- Open the Terminal App
-- `cd` to the parent directory where the repo directory will live
-- `git clone https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid.git`
+- **SalesforceHybridSDK**: Cordova plugin bridges and hybrid view management
+- **SalesforceFileLogger**: File-based logging for hybrid apps
+- **Sample Apps**: Demo applications showcasing SDK features
+- **Dependencies**: iOS SDK, Cordova, and CocoaLumberjack as submodules
 
-After cloning the repo:
+## Architecture
 
-- `cd SalesforceMobileSDK-iOS-Hybrid`
-- `./install.sh`
+```
+Hybrid App (HTML/JS/CSS)
+        ↓
+Cordova Plugins (JavaScript)
+        ↓
+SalesforceHybridSDK (iOS Bridge - this repo)
+        ↓
+iOS Mobile SDK (Native)
+        ↓
+Salesforce Platform
+```
 
-This script pulls the submodule dependencies from GitHub, to finalize setup of the workspace.  You can then work with the Mobile SDK by opening `SalesforceMobileSDK-Hybrid.xcworkspace` from Xcode.
+## Getting Started
 
-The Salesforce Mobile SDK for iOS requires iOS 11.0 or greater.  The install.sh script checks for this, and aborts if the configured SDK version is incorrect.  Building from the command line has been tested using ant 1.8.  Older versions might work, but we recommend using the latest version of ant.
+### For New Hybrid Apps
 
-Introduction
-==
+We recommend using the [forcehybrid](https://npmjs.org/package/forcehybrid) command-line tool to create hybrid apps:
 
-### What's New in 7.1
+```bash
+# Install CLI tools
+npm install -g forcehybrid
 
-**Version Updates**
-- Cordova for iOS: 5.0.0
-- SQLCipher: 4.0.1
+# Create a new hybrid app
+forcehybrid create
+    --platform ios
+    --appname MyHybridApp
+    --packagename com.mycompany.myhybridapp
+    --organization "My Company"
+```
 
-Documentation
-==
+This creates a complete Cordova-based hybrid app with the Salesforce Mobile SDK pre-configured.
 
-* Salesforce Mobile SDK Development Guide -- [HTML](https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/preface_intro.htm)
-* [Mobile SDK Trail](https://trailhead.salesforce.com/trails/mobile_sdk_intro)
+### For SDK Development
 
-Discussion
-==
-If you would like to make suggestions, have questions, or encounter any issues, we'd love to hear from you. Post any feedback you have on [Salesforce StackExchange](https://salesforce.stackexchange.com/questions/tagged/mobilesdk).
+If you want to work with the iOS Hybrid SDK source code:
+
+**Prerequisites**:
+- macOS with Xcode 15+
+- Git (for submodule management)
+- CocoaPods
+
+**Setup**:
+```bash
+# Clone the repository
+git clone https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid.git
+cd SalesforceMobileSDK-iOS-Hybrid
+
+# Pull submodule dependencies
+./install.sh
+
+# Open the workspace
+open SalesforceMobileSDK-Hybrid.xcworkspace
+```
+
+**Important**: Always open the `.xcworkspace` file, not individual `.xcodeproj` files.
+
+## Repository Structure
+
+### Libraries (`libs/`)
+
+**SalesforceHybridSDK**
+- Main hybrid bridge library
+- Cordova plugin implementations (OAuth, SmartStore, MobileSync, Network, SDKInfo)
+- Hybrid view controller and configuration
+- WKWebView cookie management
+- Minimum iOS: 17.0
+
+**SalesforceFileLogger**
+- File-based logging with rotation
+- Integration with CocoaLumberjack
+- Log export for debugging
+
+### Sample Apps (`hybrid/SampleApps/`)
+
+**AccountEditor**
+- Basic CRUD operations on Account records
+- Demonstrates Cordova plugin usage
+- Local hybrid app example
+
+**MobileSyncExplorerHybrid**
+- Complete MobileSync demo
+- Offline data synchronization
+- SmartStore integration
+- Conflict resolution
+
+### Dependencies (`external/`)
+
+Git submodules for core dependencies:
+- **SalesforceMobileSDK-iOS**: iOS native SDK
+- **shared**: Shared JavaScript libraries (SalesforceMobileSDK-Shared)
+- **cordova**: Apache Cordova for iOS
+- **CocoaLumberjack**: Logging framework
+
+## Key Features
+
+### Cordova Plugin Bridges
+
+Native iOS implementations of Salesforce Cordova plugins:
+
+| Plugin | Purpose |
+|--------|---------|
+| **OAuth** | Authentication, login, logout, user management |
+| **SmartStore** | Encrypted local storage (SQLCipher-backed) |
+| **MobileSync** | Bidirectional data synchronization |
+| **Network** | REST API requests to Salesforce |
+| **SDKInfo** | SDK version and configuration information |
+| **AccountManager** | Multi-user account management |
+
+### Hybrid View Management
+
+- **SFHybridViewController**: Manages Cordova WebView lifecycle
+- **SFHybridViewConfig**: Configures local vs remote app behavior
+- **Cookie Management**: Shares Salesforce sessions between native and WebView
+- **Authentication Flow**: Handles OAuth before loading app content
+
+## Development
+
+### Building from Source
+
+```bash
+# Build the library
+xcodebuild -workspace SalesforceMobileSDK-Hybrid.xcworkspace \
+  -scheme SalesforceHybridSDK \
+  -sdk iphonesimulator \
+  build
+
+# Run tests
+xcodebuild test -workspace SalesforceMobileSDK-Hybrid.xcworkspace \
+  -scheme SalesforceHybridSDK \
+  -sdk iphonesimulator \
+  -destination 'platform=iOS Simulator,name=iPhone 15'
+```
+
+### Running Sample Apps
+
+1. Open `SalesforceMobileSDK-Hybrid.xcworkspace`
+2. Select `AccountEditor` or `MobileSyncExplorerHybrid` scheme
+3. Choose a simulator or device
+4. Build and run (Cmd+R)
+
+### Testing
+
+**Unit Tests**: Located in `libs/SalesforceHybridSDK/SalesforceHybridSDKTests/`
+- Test Cordova plugin bridges
+- Test hybrid view configuration
+- Test cookie management
+
+**Integration Tests**: Sample apps serve as integration tests
+- Verify end-to-end plugin functionality
+- Test authentication flows
+- Validate data synchronization
+
+## API Overview
+
+### JavaScript (in Hybrid App)
+
+```javascript
+// After including cordova.js and cordova.force.js
+
+// OAuth - Get current user
+navigator.oauth.getAuthCredentials(
+    function(creds) {
+        console.log('User:', creds.userName);
+    },
+    function(error) {
+        console.error('Auth error:', error);
+    }
+);
+
+// SmartStore - Query data
+navigator.smartstore.querySoup(
+    false, // isGlobalStore
+    'accounts',
+    querySpec,
+    function(results) {
+        console.log('Found:', results.totalEntries, 'entries');
+    },
+    function(error) {
+        console.error('Query error:', error);
+    }
+);
+
+// Network - REST API call
+com.salesforce.plugin.network.sendRequest(
+    '/services/data/v56.0/query/',
+    'SELECT Id, Name FROM Account LIMIT 10',
+    function(response) {
+        console.log('Accounts:', response.records);
+    },
+    function(error) {
+        console.error('API error:', error);
+    }
+);
+```
+
+### Native iOS (Plugin Implementation)
+
+```objective-c
+// Example: Implementing a Cordova plugin
+@interface MyPlugin : CDVPlugin
+
+- (void)myMethod:(CDVInvokedUrlCommand*)command;
+
+@end
+
+@implementation MyPlugin
+
+- (void)myMethod:(CDVInvokedUrlCommand*)command {
+    [self.commandDelegate runInBackground:^{
+        // Do work
+        NSString* result = @"Success";
+
+        CDVPluginResult* pluginResult = [CDVPluginResult
+            resultWithStatus:CDVCommandStatus_OK
+            messageAsString:result];
+
+        [self.commandDelegate sendPluginResult:pluginResult
+            callbackId:command.callbackId];
+    }];
+}
+
+@end
+```
+
+## Version Compatibility
+
+| iOS Hybrid SDK | iOS SDK | Cordova iOS | iOS Min | Xcode |
+|---------------|---------|-------------|---------|-------|
+| 13.2.0        | 13.2.0  | 7.1.1       | 17.0    | 15+   |
+| 13.1.0        | 13.1.0  | 7.1.0       | 16.0    | 15+   |
+| 13.0.0        | 13.0.0  | 7.1.0       | 16.0    | 15+   |
+
+See [release notes](https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid/releases) for detailed version history.
+
+## Distribution
+
+### CocoaPods
+
+The SalesforceHybridSDK library is distributed via CocoaPods:
+
+```ruby
+pod 'SalesforceHybridSDK', '~> 13.2'
+```
+
+**Note**: Typically installed automatically by the Cordova plugin, not added directly.
+
+### Cordova Plugin
+
+This repo provides the iOS implementation consumed by the [SalesforceMobileSDK-CordovaPlugin](https://github.com/forcedotcom/SalesforceMobileSDK-CordovaPlugin) package.
+
+## Documentation
+
+### Developer Resources
+- **Mobile SDK Development Guide**: https://developer.salesforce.com/docs/platform/mobile-sdk/guide
+- **iOS SDK Documentation**: https://forcedotcom.github.io/SalesforceMobileSDK-iOS
+- **Mobile SDK Trail**: https://trailhead.salesforce.com/trails/mobile_sdk_intro
+- **Cordova Documentation**: https://cordova.apache.org/docs/
+
+### Related Repositories
+- **iOS SDK** (native): https://github.com/forcedotcom/SalesforceMobileSDK-iOS
+- **Android Hybrid**: https://github.com/forcedotcom/SalesforceMobileSDK-Android (libs/SalesforceHybrid)
+- **Shared JavaScript**: https://github.com/forcedotcom/SalesforceMobileSDK-Shared
+- **Cordova Plugin**: https://github.com/forcedotcom/SalesforceMobileSDK-CordovaPlugin
+- **Templates**: https://github.com/forcedotcom/SalesforceMobileSDK-Templates
+
+## Support
+
+- **Issues**: [GitHub Issues](https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid/issues)
+- **Questions**: [Salesforce Stack Exchange](https://salesforce.stackexchange.com/questions/tagged/mobilesdk)
+- **Community**: [Trailblazer Community](https://trailhead.salesforce.com/trailblazer-community/groups/0F94S000000kH0HSAU)
+
+## Contributing
+
+We welcome contributions! Please:
+1. Read the [CLAUDE.md](CLAUDE.md) file for development guidelines
+2. Follow existing code style and conventions
+3. Write or update tests for new functionality
+4. Test on iOS devices and simulators
+5. Ensure changes are compatible with Android hybrid implementation
+6. Submit a pull request with a clear description
+
+### Before Submitting
+- Run unit tests for SalesforceHybridSDK
+- Build and test sample apps (AccountEditor, MobileSyncExplorerHybrid)
+- Verify no Xcode warnings or errors
+- Test with hybrid templates if changing public APIs
+
+## License
+
+Salesforce Mobile SDK License. See [LICENSE](LICENSE) file for details.
+
+## Security
+
+Please report security vulnerabilities to [security@salesforce.com](mailto:security@salesforce.com). See [SECURITY.md](SECURITY.md) for more information.

@@ -29,6 +29,7 @@
 
 #import "SFSDKLogger.h"
 #import <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>
+#import <CocoaLumberjack/DDOSLogger.h>
 #import <CocoaLumberjack/DDTTYLogger.h>
 
 static NSString * const kDefaultComponentName = @"SFSDK";
@@ -36,6 +37,7 @@ static NSString * const kFileLoggerOnOffKey = @"file_logger_enabled";
 static NSString * const kLogLevelKey = @"log_level";
 static NSString * const kLogIdentifierFormat = @"COMPONENT: %@, CLASS: %@";
 static NSMutableDictionary<NSString *, SFSDKLogger *> *loggerList = nil;
+static BOOL _useOSLog = NO;
 
 @interface SFSDKLogger ()
 
@@ -67,6 +69,14 @@ static NSMutableDictionary<NSString *, SFSDKLogger *> *loggerList = nil;
     return [self sharedInstanceWithComponent:kDefaultComponentName];
 }
 
++ (BOOL)useOSLog {
+    return _useOSLog;
+}
+
++ (void)setUseOSLog:(BOOL)useOSLogValue {
+    _useOSLog = useOSLogValue;
+}
+
 + (void)flushAllComponents:(void (^)(void))completionBlock {
     @synchronized ([SFSDKLogger class]) {
         __block NSUInteger numberOfLogsLeftToFlush = loggerList.allKeys.count;
@@ -94,9 +104,17 @@ static NSMutableDictionary<NSString *, SFSDKLogger *> *loggerList = nil;
         self.componentName = componentName;
         self.logger = [[DDLog alloc] init];
         self.fileLogger = [[SFSDKFileLogger alloc] initWithComponent:componentName];
-        DDTTYLogger *consoleLogger = [DDTTYLogger sharedInstance];
-        consoleLogger.logFormatter = [[SFSDKFormatter alloc] init];
-        consoleLogger.colorsEnabled = YES;
+        
+        id<DDLogger> consoleLogger;
+        if ([self.class useOSLog]) {
+            consoleLogger = [[DDOSLogger alloc] initWithSubsystem:[[NSBundle mainBundle] bundleIdentifier] category:componentName];
+        } else {
+            DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
+            ttyLogger.logFormatter = [[SFSDKFormatter alloc] init];
+            ttyLogger.colorsEnabled = YES;
+            consoleLogger = ttyLogger;
+        }
+        
         [self.logger addLogger:consoleLogger withLevel:DDLogLogLevelForSFLogLevel(self.logLevel)];
         if (self.fileLoggingEnabled) {
             [self.logger addLogger:self.fileLogger withLevel:DDLogLogLevelForSFLogLevel(self.logLevel)];
@@ -150,8 +168,16 @@ static NSMutableDictionary<NSString *, SFSDKLogger *> *loggerList = nil;
 - (void)setDdLogLevel:(DDLogLevel)logLevel {
     [self storeLogLevel:logLevel];
     [self.logger removeAllLoggers];
-    DDTTYLogger *consoleLogger = [DDTTYLogger sharedInstance];
-    consoleLogger.colorsEnabled = YES;
+    
+    id<DDLogger> consoleLogger;
+    if ([self.class useOSLog]) {
+        consoleLogger = [[DDOSLogger alloc] initWithSubsystem:[[NSBundle mainBundle] bundleIdentifier] category:self.componentName];
+    } else {
+        DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
+        ttyLogger.colorsEnabled = YES;
+        consoleLogger = ttyLogger;
+    }
+    
     [self.logger addLogger:consoleLogger withLevel:logLevel];
     [self.logger addLogger:self.fileLogger withLevel:logLevel];
 }

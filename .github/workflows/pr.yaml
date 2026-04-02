@@ -6,7 +6,7 @@ on:
 
 jobs:
   static-analysis:
-    runs-on: macos-26
+    runs-on: macos-latest
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/.github/DangerFiles/Gemfile
     steps:
@@ -58,17 +58,11 @@ jobs:
       fail-fast: false
       matrix:
         lib: [SalesforceFileLogger, SalesforceHybridSDK]
-        ios: [^26, ^18]
-        include:
-          - ios: ^26
-            xcode: ^26
-          - ios: ^18
-            xcode: ^16
-    uses: ./.github/workflows/reusable-workflow.yaml
+        ios: [^26]
+    uses: ./.github/workflows/reusable-test-workflow.yaml
     with:
       lib: ${{ matrix.lib }}
       ios: ${{ matrix.ios }}
-      xcode: ${{ matrix.xcode }}
       is_pr: true
     secrets: inherit
 
@@ -77,18 +71,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        lib: [AccountEditor, MobileSyncExplorerHybrid]
-        ios: [^26, ^18]
-        include:
-          - ios: ^26
-            xcode: ^26
-          - ios: ^18
-            xcode: ^16
-    uses: ./.github/workflows/reusable-workflow.yaml
+        app: [AccountEditor, MobileSyncExplorerHybrid]
+    uses: ./.github/workflows/reusable-build-workflow.yaml
     with:
-      lib: ${{ matrix.lib }}
-      ios: ${{ matrix.ios }}
-      xcode: ${{ matrix.xcode }}
-      action: build
+      app: ${{ matrix.app }}
       is_pr: true
     secrets: inherit
