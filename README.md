@@ -82,7 +82,7 @@ open SalesforceMobileSDK-Hybrid.xcworkspace
 - Cordova plugin implementations (OAuth, SmartStore, MobileSync, Network, SDKInfo)
 - Hybrid view controller and configuration
 - WKWebView cookie management
-- Minimum iOS: 17.0
+- Minimum iOS: 18.0
 
 **SalesforceFileLogger**
 - File-based logging with rotation
