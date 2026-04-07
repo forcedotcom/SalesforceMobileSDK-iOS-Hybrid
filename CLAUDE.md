@@ -147,7 +147,7 @@ external/CocoaLumberjack            # Logging library
 ### Prerequisites
 - **macOS**: Required for iOS development
 - **Xcode**: 15+ recommended
-- **iOS**: Minimum deployment target 17.0
+- **iOS**: Minimum deployment target 18.0
 - **CocoaPods**: For dependency management
 
 ### Initial Setup
