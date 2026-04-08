@@ -42,7 +42,8 @@ static BOOL _useOSLog = NO;
 @interface SFSDKLogger ()
 
 @property (nonatomic, readwrite, strong) NSString *componentName;
-@property (nonatomic, readwrite, strong) DDLog *logger;
+@property(nonatomic, readwrite, strong) NSMutableDictionary<NSString *, DDLog *> *consoleLoggers;
+@property(nonatomic, readwrite, strong) DDLog *fileLoggerDDLog;
 @end
 
 @implementation SFSDKLogger
@@ -102,22 +103,19 @@ static BOOL _useOSLog = NO;
     self = [super init];
     if (self) {
         self.componentName = componentName;
-        self.logger = [[DDLog alloc] init];
-        self.fileLogger = [[SFSDKFileLogger alloc] initWithComponent:componentName];
-        
-        id<DDLogger> consoleLogger;
-        if ([self.class useOSLog]) {
-            consoleLogger = [[DDOSLogger alloc] initWithSubsystem:[[NSBundle mainBundle] bundleIdentifier] category:componentName];
-        } else {
-            DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
-            ttyLogger.logFormatter = [[SFSDKFormatter alloc] init];
-            ttyLogger.colorsEnabled = YES;
-            consoleLogger = ttyLogger;
-        }
-        
-        [self.logger addLogger:consoleLogger withLevel:DDLogLogLevelForSFLogLevel(self.logLevel)];
+
+        // Create console loggers dictionary
+        self.consoleLoggers = [[NSMutableDictionary alloc] init];
+
+        // Create separate file logger
+        self.fileLogger =
+            [[SFSDKFileLogger alloc] initWithComponent:componentName];
+        self.fileLoggerDDLog = [[DDLog alloc] init];
+
         if (self.fileLoggingEnabled) {
-            [self.logger addLogger:self.fileLogger withLevel:DDLogLogLevelForSFLogLevel(self.logLevel)];
+          [self.fileLoggerDDLog
+              addLogger:self.fileLogger
+              withLevel:DDLogLogLevelForSFLogLevel(self.logLevel)];
         }
     }
     return self;
@@ -126,8 +124,10 @@ static BOOL _useOSLog = NO;
 - (void)setFileLogger:(SFSDKFileLogger *)fileLogger {
     if (fileLogger != _fileLogger) {
         if (self.isFileLoggingEnabled) {
-            [_logger removeLogger:_fileLogger];
-            [_logger addLogger:fileLogger withLevel:DDLogLogLevelForSFLogLevel(self.logLevel)];
+          [_fileLoggerDDLog removeLogger:_fileLogger];
+          [_fileLoggerDDLog
+              addLogger:fileLogger
+              withLevel:DDLogLogLevelForSFLogLevel(self.logLevel)];
         }
         _fileLogger = fileLogger;
     }
@@ -141,9 +141,14 @@ static BOOL _useOSLog = NO;
     // Adds or removes the file logger depending on the change in policy.
     if (curPolicy != newPolicy) {
         if (newPolicy) {
-            [self.logger addLogger:self.fileLogger withLevel:DDLogLogLevelForSFLogLevel(self.logLevel)]; // Disabled to enabled.
+          [self.fileLoggerDDLog
+              addLogger:self.fileLogger
+              withLevel:DDLogLogLevelForSFLogLevel(
+                            self.logLevel)]; // Disabled to enabled.
+
         } else {
-            [self.logger removeLogger:self.fileLogger]; // Enabled to disabled.
+          [self.fileLoggerDDLog
+              removeLogger:self.fileLogger]; // Enabled to disabled.
         }
     }
 }
@@ -167,19 +172,30 @@ static BOOL _useOSLog = NO;
 
 - (void)setDdLogLevel:(DDLogLevel)logLevel {
     [self storeLogLevel:logLevel];
-    [self.logger removeAllLoggers];
-    
-    id<DDLogger> consoleLogger;
-    if ([self.class useOSLog]) {
-        consoleLogger = [[DDOSLogger alloc] initWithSubsystem:[[NSBundle mainBundle] bundleIdentifier] category:self.componentName];
-    } else {
+
+    // Update all console loggers
+    for (NSString *className in self.consoleLoggers.allKeys) {
+      DDLog *consoleLoggerDDLog = self.consoleLoggers[className];
+      [consoleLoggerDDLog removeAllLoggers];
+      id<DDLogger> consoleLogger;
+      if ([self.class useOSLog]) {
+        consoleLogger =
+            [[DDOSLogger alloc] initWithSubsystem:[[NSBundle mainBundle] bundleIdentifier]
+                                category:className];
+      } else {
         DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
+        ttyLogger.logFormatter = [[SFSDKFormatter alloc] init];
         ttyLogger.colorsEnabled = YES;
         consoleLogger = ttyLogger;
+      }
+      [consoleLoggerDDLog addLogger:consoleLogger withLevel:logLevel];
     }
-    
-    [self.logger addLogger:consoleLogger withLevel:logLevel];
-    [self.logger addLogger:self.fileLogger withLevel:logLevel];
+
+    // Update file logger
+    [self.fileLoggerDDLog removeAllLoggers];
+    if (self.fileLoggingEnabled) {
+      [self.fileLoggerDDLog addLogger:self.fileLogger withLevel:logLevel];
+    }
 }
 
 - (void)e:(Class)cls format:(NSString *)format, ... {
@@ -240,7 +256,35 @@ static BOOL _useOSLog = NO;
 - (void)logInternal:(Class)cls level:(DDLogLevel)level message:(NSString *)message  {
     NSString *tag = [NSString stringWithFormat:kLogIdentifierFormat, self.componentName, cls];
     DDLogMessage *logMessage = [[DDLogMessage alloc] initWithFormat:message formatted:message level:level flag:DDLogFlagForLogLevel(level) context:0 file:self.componentName function:nil line:0 tag:tag options:0 timestamp:[NSDate date]];
-    [self.logger log:YES message:logMessage];
+
+    // Get or create console logger for this tag
+    DDLog *consoleLoggerDDLog = self.consoleLoggers[tag];
+    if (!consoleLoggerDDLog) {
+      // Create new console logger for this tag
+      consoleLoggerDDLog = [[DDLog alloc] init];
+      id<DDLogger> consoleLogger;
+      if ([self.class useOSLog]) {
+        consoleLogger =
+            [[DDOSLogger alloc] initWithSubsystem:[[NSBundle mainBundle] bundleIdentifier]
+                                         category:tag];
+      } else {
+        DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
+        ttyLogger.logFormatter = [[SFSDKFormatter alloc] init];
+        ttyLogger.colorsEnabled = YES;
+        consoleLogger = ttyLogger;
+      }
+      [consoleLoggerDDLog addLogger:consoleLogger
+                          withLevel:DDLogLogLevelForSFLogLevel(self.logLevel)];
+      self.consoleLoggers[tag] = consoleLoggerDDLog;
+    }
+
+    // Log to console logger for this class
+    [consoleLoggerDDLog log:YES message:logMessage];
+
+    // Log to file logger if enabled
+    if (self.fileLoggingEnabled) {
+      [self.fileLoggerDDLog log:YES message:logMessage];
+    }
 }
 
 - (void)logInternal:(Class)cls level:(DDLogLevel)level format:(NSString *)format args:(va_list)args {

@@ -40,9 +40,9 @@
 @property (nonatomic, readonly, strong, nonnull) NSString *componentName;
 
 /**
- * Instance of the underlying logger being used.
+ * Dictionary of console loggers, keyed by component name.
  */
-@property (nonatomic, readonly, strong, nonnull) DDLog *logger;
+@property (nonatomic, readonly, strong, nonnull) NSMutableDictionary<NSString *, DDLog *> *consoleLoggers;
 
 /**
  * Instance of the underlying file logger being used.
