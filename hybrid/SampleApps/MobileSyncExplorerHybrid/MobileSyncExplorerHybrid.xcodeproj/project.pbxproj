@@ -1343,7 +1343,7 @@
 			repositoryURL = "https://github.com/sqlcipher/SQLCipher.swift";
 			requirement = {
 				kind = exactVersion;
-				version = 4.10.0;
+				version = 4.15.0;
 			};
 		};
 		693387C62E83320100F667A7 /* XCRemoteSwiftPackageReference "fmdb" */ = {

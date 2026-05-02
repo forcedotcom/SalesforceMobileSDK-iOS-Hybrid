@@ -336,7 +336,6 @@ static NSString * const kHTTP = @"http";
     NSURL *errorPageUrl = [self fullFileUrlForPage:errorPage];
 
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-    config.processPool = SFSDKWebViewStateManager.sharedProcessPool;
     self.errorPageWKWebView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:config];
     self.errorPageWKWebView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.errorPageWKWebView.navigationDelegate = self;
