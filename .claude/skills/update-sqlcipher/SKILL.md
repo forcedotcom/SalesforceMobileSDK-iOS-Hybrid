@@ -71,7 +71,66 @@ git add external/SalesforceMobileSDK-iOS
 
 The submodule will now point to the iOS SDK commit with the SQLCipher update.
 
-### 3. Verify Podspec Dependencies
+### 3. Update Swift Package Manager Dependencies
+
+**CRITICAL:** The workspace and sample apps use Swift Package Manager for SQLCipher dependencies. These must be updated to match the iOS submodule version.
+
+#### 3.1. Update Workspace Package.resolved
+
+Update `SalesforceMobileSDK-Hybrid.xcworkspace/xcshareddata/swiftpm/Package.resolved`:
+
+```json
+{
+  "identity" : "sqlcipher.swift",
+  "kind" : "remoteSourceControl",
+  "location" : "https://github.com/sqlcipher/SQLCipher.swift",
+  "state" : {
+    "revision" : "<COMMIT_HASH>",  // Get from SQLCipher tag
+    "version" : "4.16.0"  // Update to new version
+  }
+}
+```
+
+**To find the correct commit hash:**
+```bash
+git clone --depth=1 --branch 4.16.0 https://github.com/sqlcipher/SQLCipher.swift /tmp/sqlcipher-check
+cd /tmp/sqlcipher-check
+git log -1 --format="%H"
+```
+
+#### 3.2. Update Sample App Project Files
+
+Both sample apps have direct SQLCipher package references that must be updated:
+
+**MobileSyncExplorerHybrid:**
+Edit `hybrid/SampleApps/MobileSyncExplorerHybrid/MobileSyncExplorerHybrid.xcodeproj/project.pbxproj`:
+
+Find the section `XCRemoteSwiftPackageReference "SQLCipher"` and update:
+```
+requirement = {
+    kind = exactVersion;
+    version = 4.16.0;  // Update from 4.15.0
+};
+```
+
+**AccountEditor:**
+Edit `hybrid/SampleApps/AccountEditor/AccountEditor.xcodeproj/project.pbxproj`:
+
+Find the section `XCRemoteSwiftPackageReference "SQLCipher"` and update:
+```
+requirement = {
+    kind = exactVersion;
+    version = 4.16.0;  // Update from 4.15.0
+};
+```
+
+**Why this is needed:** The sample apps declare exact SQLCipher versions in their project files. If these don't match the iOS submodule's version, Xcode's package resolution will fail with:
+```
+Could not resolve package dependencies:
+  Failed to resolve dependencies Dependencies could not be resolved because root depends on 'sqlcipher.swift' 4.16.0 and root depends on 'sqlcipher.swift' 4.15.0.
+```
+
+### 4. Verify Podspec Dependencies
 
 Check `SalesforceHybridSDK.podspec`:
 
@@ -87,7 +146,7 @@ The hybrid SDK depends on `MobileSync` from the iOS SDK, which transitively depe
 
 **Important:** The iOS SDK's podspec (SmartStore.podspec) should already have the updated SQLCipher dependency. The hybrid SDK inherits it.
 
-### 4. Build the Hybrid SDK
+### 5. Build the Hybrid SDK
 
 Build the SalesforceHybridSDK library to catch compilation issues:
 
@@ -104,7 +163,7 @@ Address any compilation errors related to:
 - API changes in MobileSync or SmartStore
 - Cordova plugin compatibility
 
-### 5. Run Hybrid SDK Tests
+### 6. Run Hybrid SDK Tests
 
 **CRITICAL**: Full SalesforceHybridSDK test suite must pass before proceeding.
 
@@ -132,7 +191,7 @@ If tests fail:
 - Review Cordova plugin implementations in `libs/SalesforceHybridSDK/SalesforceHybridSDK/Classes/Plugins/`
 - Compare behavior with the iOS SDK's SmartStore tests
 
-### 6. Verify Sample Apps
+### 7. Verify Sample Apps
 
 Test the hybrid sample applications:
 
@@ -156,14 +215,14 @@ Run the sample apps on a simulator to ensure:
 - SmartStore operations function correctly
 - MobileSync operations function correctly
 
-### 7. Check Cross-Platform Consistency
+### 8. Check Cross-Platform Consistency
 
 Since this is a hybrid SDK:
 - Verify the Android hybrid SDK has the corresponding SQLCipher update
 - Check the Shared repo for any JavaScript changes needed
 - Ensure CordovaPlugin repo is aware of the update (will need `tools/update.sh` run)
 
-### 8. Create Pull Request
+### 9. Create Pull Request
 
 When creating the PR:
 - **Branch name:** `sqlcipher-4.16` (or appropriate version)
@@ -180,6 +239,9 @@ When creating the PR:
 ## File Checklist
 
 - [ ] `external/SalesforceMobileSDK-iOS` - Update submodule reference
+- [ ] `SalesforceMobileSDK-Hybrid.xcworkspace/xcshareddata/swiftpm/Package.resolved` - Update SQLCipher version and commit hash
+- [ ] `hybrid/SampleApps/MobileSyncExplorerHybrid/MobileSyncExplorerHybrid.xcodeproj/project.pbxproj` - Update SQLCipher package version
+- [ ] `hybrid/SampleApps/AccountEditor/AccountEditor.xcodeproj/project.pbxproj` - Update SQLCipher package version
 - [ ] `SalesforceHybridSDK.podspec` - Verify dependencies (usually no change needed)
 - [ ] Run full SalesforceHybridSDK test suite
 - [ ] Build and test AccountEditor sample app
@@ -210,12 +272,63 @@ When creating the PR:
 - `hybrid/SampleApps/AccountEditor/` - Basic CRUD sample
 - `hybrid/SampleApps/MobileSyncExplorerHybrid/` - Complete sync demo
 
+## Troubleshooting
+
+### Package Resolution Failures
+
+**Error:**
+```
+xcodebuild: error: Could not resolve package dependencies:
+  Failed to resolve dependencies Dependencies could not be resolved because root depends on 'sqlcipher.swift' 4.16.0 and root depends on 'sqlcipher.swift' 4.15.0.
+```
+
+**Cause:** Version mismatch between:
+- iOS submodule's SQLCipher dependency (in SmartStore.podspec)
+- Workspace Package.resolved
+- Sample app project files
+
+**Solution:**
+1. Check iOS submodule version: `grep -A 5 "SQLCipher" external/SalesforceMobileSDK-iOS/SmartStore.podspec`
+2. Update workspace Package.resolved to match
+3. Update both sample app project.pbxproj files to match
+4. Clean build folder: `rm -rf ~/Library/Developer/Xcode/DerivedData/*`
+
+### Wrong Commit Hash in Package.resolved
+
+**Error:**
+```
+Couldn't check out revision 'xxxxx':
+    fatal: unable to read tree (xxxxx)
+```
+
+**Cause:** Incorrect commit hash in Package.resolved
+
+**Solution:**
+```bash
+git clone --depth=1 --branch 4.16.0 https://github.com/sqlcipher/SQLCipher.swift /tmp/sqlcipher-check
+cd /tmp/sqlcipher-check
+git log -1 --format="%H"
+# Use this hash in Package.resolved
+```
+
+### Sample Apps Won't Build After Update
+
+**Cause:** Sample app project files still reference old SQLCipher version
+
+**Solution:**
+Search for old version in project files:
+```bash
+grep -r "4.15.0" hybrid/SampleApps/*/*/project.pbxproj
+```
+Update all occurrences to new version.
+
 ## Notes
 
 - The iOS Hybrid SDK doesn't directly manage SQLCipher dependencies
 - SQLCipher updates flow through the iOS SDK submodule
 - Always update the iOS SDK first, then update the submodule reference
 - The hybrid SDK's dependency on MobileSync brings in SmartStore and SQLCipher transitively
+- **Swift Package Manager is used by the workspace and sample apps** - these must be updated separately from podspecs
 - Hybrid plugins (SFSmartStorePlugin, SFMobileSyncPlugin) bridge JavaScript to the native iOS SDK
 - Test with encrypted databases from previous versions to ensure migration works
 - After updating, the CordovaPlugin repo will need to run `tools/update.sh` to sync changes
