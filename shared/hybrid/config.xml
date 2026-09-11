@@ -40,6 +40,11 @@
     <access origin="https://*.salesforce-communities.com" />
 
     <!-- Preferences for iOS -->
+    <!-- Use CDVURLSchemeHandler (app://) instead of file:// so plugin scripts are served
+         from the host process. On iOS 27, WebContentExtension.appex cannot reliably
+         access file:// URLs directly, causing Cordova's pluginloader to hang indefinitely
+         (script.onload never fires) and deviceready to never fire. -->
+    <preference name="scheme" value="app" />
     <preference name="AllowInlineMediaPlayback" value="false" />
     <preference name="BackupWebStorage" value="local"/>
     <preference name="DisallowOverscroll" value="false" />

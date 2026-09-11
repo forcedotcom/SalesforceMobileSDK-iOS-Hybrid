@@ -80,7 +80,7 @@ public class SalesforceWebViewCookieManager: NSObject {
         let lightningSid = creds.lightningSid
         let contentDomain = creds.contentDomain
         let contentSid = creds.contentSid
-        let mainSid = creds.tokenFormat == "jwt" ? creds.parentSid : creds.accessToken
+        let mainSid = creds.mainSid
         let vfDomain = creds.vfDomain
         let vfSid = creds.vfSid
         let clientSrc = creds.cookieClientSrc

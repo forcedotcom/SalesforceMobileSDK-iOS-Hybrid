@@ -63,16 +63,6 @@
    </Group>
    <Group
       location = "container:"
-      name = "External">
-      <FileRef
-         location = "group:external/CocoaLumberjack/Lumberjack.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:external/cordova/CordovaLib/CordovaLib.xcodeproj">
-      </FileRef>
-   </Group>
-   <Group
-      location = "container:"
       name = "shared">
       <Group
          location = "group:external/SalesforceMobileSDK-iOS/shared/resources"

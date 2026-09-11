@@ -22,12 +22,6 @@ then
     cp shared/test/test_credentials.json.sample shared/test/test_credentials.json
 fi
 
-# Prepare cordova.js
-pushd "external/cordova"
-npm install
-npm run prepare
-popd
-
 # Substitute env vars if set in bootconfig.json
 BOOTCONFIG_JSON_PATHS=(
     "external/shared/samples/mobilesyncexplorer/bootconfig.json"

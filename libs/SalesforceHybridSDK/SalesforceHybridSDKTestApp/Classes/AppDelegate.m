@@ -68,10 +68,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.autoresizesSubviews = YES;
-    [self initializeAppViewState];
+    // Refresh the access token now, before the scene connects and before XCTest
+    // starts running. synchronousAuthRefresh spins the run loop while waiting for
+    // the network; doing it here avoids a deadlock where setUp's 15-second polling
+    // loop traps the auth spin under it, preventing viewController from being created.
+    [TestSetupUtils synchronousAuthRefresh];
     return YES;
+}
+
+- (UISceneConfiguration *)application:(UIApplication *)application
+configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession
+                               options:(UISceneConnectionOptions *)options API_AVAILABLE(ios(13.0)) {
+    return [[UISceneConfiguration alloc] initWithName:@"Default Configuration"
+                                          sessionRole:connectingSceneSession.role];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -179,7 +188,6 @@
         });
         return;
     }
-    [TestSetupUtils synchronousAuthRefresh];
     self.viewController = [[SFHybridViewController alloc] initWithConfig:self.testAppHybridViewConfig];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];

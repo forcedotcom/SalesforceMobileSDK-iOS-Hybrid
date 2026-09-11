@@ -29,7 +29,7 @@
 		4FAE62EC21966E8A003A5CD6 /* SFSDKLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FAE62E621966E8A003A5CD6 /* SFSDKLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4FAE62ED21966E8A003A5CD6 /* SFSDKLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62E721966E8A003A5CD6 /* SFSDKLogger.m */; };
 		4FAE63002196714C003A5CD6 /* SFSDKLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE62FF2196714C003A5CD6 /* SFSDKLoggerTests.m */; };
-		691BBAAD278663820098A716 /* CocoaLumberjack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEA2A8C72214C184009D923B /* CocoaLumberjack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CEA2FF012214C1B1009D9200 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = CEA2FF022214C1B1009D9200 /* CocoaLumberjack */; };
 		691BBAB02786638C0098A716 /* SalesforceSDKCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEA2A8AC2214C174009D923B /* SalesforceSDKCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		696E91742AD0CD7E00205884 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 696E916E2AD0CC8200205884 /* PrivacyInfo.xcprivacy */; };
 		69802DEB2FE5220200B9DA72 /* SalesforceFileLoggerTestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69802DEA2FE5220200B9DA72 /* SalesforceFileLoggerTestApp.swift */; };
@@ -37,7 +37,6 @@
 		CE0AB0A51C10D60400BFAEED /* SalesforceFileLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */; };
 		CE4CE2E81C0E465B009F6029 /* SalesforceFileLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */; };
 		CE4CE2E91C0E465B009F6029 /* SalesforceFileLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE4CE2E11C0E465B009F6029 /* SalesforceFileLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CEA2A8EA2214C1B1009D923B /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA2A8C72214C184009D923B /* CocoaLumberjack.framework */; };
 		CEA2A8EB2214C1B9009D923B /* SalesforceSDKCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA2A8AC2214C174009D923B /* SalesforceSDKCommon.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,34 +76,6 @@
 			remoteGlobalIDString = B716A3E4218F6EEA009D407F;
 			remoteInfo = SalesforceSDKCommonTestApp;
 		};
-		CEA2A8C62214C184009D923B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CEA2A8B32214C184009D923B /* Lumberjack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DCB3185114EB418E001CFBEE;
-			remoteInfo = CocoaLumberjack;
-		};
-		CEA2A8C82214C184009D923B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CEA2A8B32214C184009D923B /* Lumberjack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 18F3BF0F1A81D8B700692297;
-			remoteInfo = CocoaLumberjackSwift;
-		};
-		CEA2A8CE2214C184009D923B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CEA2A8B32214C184009D923B /* Lumberjack.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 18F3BFD71A81E06E00692297;
-			remoteInfo = "CocoaLumberjack-iOS-Static";
-		};
-		CEA2A8E62214C19A009D923B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CEA2A8B32214C184009D923B /* Lumberjack.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 19FF46011B8B4CF400B43179;
-			remoteInfo = "CocoaLumberjack-iOS";
-		};
 		CEA2A8E82214C1A2009D923B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CEA2A8A42214C174009D923B /* SalesforceSDKCommon.xcodeproj */;
@@ -122,7 +93,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				691BBAB02786638C0098A716 /* SalesforceSDKCommon.framework in Embed Frameworks */,
-				691BBAAD278663820098A716 /* CocoaLumberjack.framework in Embed Frameworks */,
 				CE4CE2E91C0E465B009F6029 /* SalesforceFileLogger.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -153,7 +123,6 @@
 		CE8F13061AD4A87200233F2F /* SalesforceFileLogger-Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Common.xcconfig"; path = "Configuration/SalesforceFileLogger-Common.xcconfig"; sourceTree = "<group>"; };
 		CE8F13091AD4A87200233F2F /* SalesforceFileLogger-Test.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Test.xcconfig"; path = "Configuration/SalesforceFileLogger-Test.xcconfig"; sourceTree = "<group>"; };
 		CEA2A8A42214C174009D923B /* SalesforceSDKCommon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SalesforceSDKCommon.xcodeproj; path = "../../external/SalesforceMobileSDK-iOS/libs/SalesforceSDKCommon/SalesforceSDKCommon.xcodeproj"; sourceTree = "<group>"; };
-		CEA2A8B32214C184009D923B /* Lumberjack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lumberjack.xcodeproj; path = ../../external/CocoaLumberjack/Lumberjack.xcodeproj; sourceTree = "<group>"; };
 		CECB662E1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig"; path = "Configuration/SalesforceFileLogger-Dynamic-iOS-Debug.xcconfig"; sourceTree = "<group>"; };
 		CECB662F1C1BB8CB008038AE /* SalesforceFileLogger-Dynamic-iOS-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SalesforceFileLogger-Dynamic-iOS-Release.xcconfig"; path = "Configuration/SalesforceFileLogger-Dynamic-iOS-Release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,7 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEA2A8EB2214C1B9009D923B /* SalesforceSDKCommon.framework in Frameworks */,
-				CEA2A8EA2214C1B1009D923B /* CocoaLumberjack.framework in Frameworks */,
+				CEA2FF012214C1B1009D9200 /* CocoaLumberjack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,7 +191,6 @@
 		82EFF2D216E7C57100A63CDF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CEA2A8B32214C184009D923B /* Lumberjack.xcodeproj */,
 				CEA2A8A42214C174009D923B /* SalesforceSDKCommon.xcodeproj */,
 			);
 			name = Frameworks;
@@ -309,16 +277,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CEA2A8B42214C184009D923B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CEA2A8CF2214C184009D923B /* libCocoaLumberjack.a */,
-				CEA2A8C72214C184009D923B /* CocoaLumberjack.framework */,
-				CEA2A8C92214C184009D923B /* CocoaLumberjackSwift.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -388,7 +346,6 @@
 			);
 			dependencies = (
 				CEA2A8E92214C1A2009D923B /* PBXTargetDependency */,
-				CEA2A8E72214C19A009D923B /* PBXTargetDependency */,
 			);
 			name = SalesforceFileLogger;
 			productName = SalesforceFileLogger;
@@ -431,11 +388,10 @@
 			mainGroup = 82EFF2C716E7C57100A63CDF;
 			productRefGroup = 82EFF2D116E7C57100A63CDF /* Products */;
 			projectDirPath = "";
+			packageReferences = (
+				CEA2FF052214C1B1009D9200 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
+			);
 			projectReferences = (
-				{
-					ProductGroup = CEA2A8B42214C184009D923B /* Products */;
-					ProjectRef = CEA2A8B32214C184009D923B /* Lumberjack.xcodeproj */;
-				},
 				{
 					ProductGroup = CEA2A8A52214C174009D923B /* Products */;
 					ProjectRef = CEA2A8A42214C174009D923B /* SalesforceSDKCommon.xcodeproj */;
@@ -471,27 +427,6 @@
 			fileType = wrapper.application;
 			path = SalesforceSDKCommonTestApp.app;
 			remoteRef = CEA2A8AF2214C174009D923B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CEA2A8C72214C184009D923B /* CocoaLumberjack.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaLumberjack.framework;
-			remoteRef = CEA2A8C62214C184009D923B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CEA2A8C92214C184009D923B /* CocoaLumberjackSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CocoaLumberjackSwift.framework;
-			remoteRef = CEA2A8C82214C184009D923B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CEA2A8CF2214C184009D923B /* libCocoaLumberjack.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCocoaLumberjack.a;
-			remoteRef = CEA2A8CE2214C184009D923B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -609,11 +544,6 @@
 			isa = PBXTargetDependency;
 			target = CE4CE2E01C0E465B009F6029 /* SalesforceFileLogger */;
 			targetProxy = 82A8C6E81C122998006BBDFE /* PBXContainerItemProxy */;
-		};
-		CEA2A8E72214C19A009D923B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "CocoaLumberjack-iOS";
-			targetProxy = CEA2A8E62214C19A009D923B /* PBXContainerItemProxy */;
 		};
 		CEA2A8E92214C1A2009D923B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1003,6 +933,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CEA2FF052214C1B1009D9200 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack";
+			requirement = {
+				kind = exactVersion;
+				version = "3.9.1";
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CEA2FF022214C1B1009D9200 /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEA2FF052214C1B1009D9200 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 82EFF2C816E7C57100A63CDF /* Project object */;
 }

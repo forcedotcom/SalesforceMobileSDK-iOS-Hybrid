@@ -67,6 +67,12 @@
     NSDate *startTime = [NSDate date] ;
     BOOL completionTimedOut = NO;
     while (![self isTestRunnerReady]) {
+        // viewController may not exist when setUp runs (initializeAppViewState dispatches async);
+        // re-fetch the plugin each iteration until we get a non-nil reference.
+        if (_testRunnerPlugin == nil) {
+            AppDelegate *appDelegate = (AppDelegate *)[[SFApplicationHelper sharedApplication] delegate];
+            _testRunnerPlugin = [appDelegate.viewController.commandDelegate getCommandInstance:kSFTestRunnerPluginName];
+        }
         NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:startTime];
         if (elapsed > 15.0) {
             [SFLogger d:[self class]  format:@"testRunner took too long (%f) to startup", elapsed];

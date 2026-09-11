@@ -13,7 +13,7 @@ This repository provides the **iOS native implementation** for hybrid apps built
 - **SalesforceHybridSDK**: Cordova plugin bridges and hybrid view management
 - **SalesforceFileLogger**: File-based logging for hybrid apps
 - **Sample Apps**: Demo applications showcasing SDK features
-- **Dependencies**: iOS SDK, Cordova, and CocoaLumberjack as submodules
+- **Dependencies**: iOS SDK and Shared as git submodules; Cordova and CocoaLumberjack as remote SPM packages
 
 ## Architecture
 
@@ -54,8 +54,7 @@ This creates a complete Cordova-based hybrid app with the Salesforce Mobile SDK 
 If you want to work with the iOS Hybrid SDK source code:
 
 **Prerequisites**:
-- macOS with Xcode 15+
-- Git (for submodule management)
+- macOS with Xcode 26.6+ (Xcode 27 supported)
 - CocoaPods
 
 **Setup**:
@@ -64,10 +63,10 @@ If you want to work with the iOS Hybrid SDK source code:
 git clone https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid.git
 cd SalesforceMobileSDK-iOS-Hybrid
 
-# Pull submodule dependencies
+# Pull git submodules (iOS SDK and Shared)
 ./install.sh
 
-# Open the workspace
+# Open the workspace (Xcode resolves SPM packages on first open)
 open SalesforceMobileSDK-Hybrid.xcworkspace
 ```
 
@@ -102,13 +101,15 @@ open SalesforceMobileSDK-Hybrid.xcworkspace
 - SmartStore integration
 - Conflict resolution
 
-### Dependencies (`external/`)
+### Dependencies
 
-Git submodules for core dependencies:
+**Git submodules** (`external/`):
 - **SalesforceMobileSDK-iOS**: iOS native SDK
 - **shared**: Shared JavaScript libraries (SalesforceMobileSDK-Shared)
-- **cordova**: Apache Cordova for iOS
-- **CocoaLumberjack**: Logging framework
+
+**Swift Package Manager**:
+- **apache/cordova-ios** `rel/8.1.0`: Apache Cordova for iOS
+- **CocoaLumberjack/CocoaLumberjack** `3.9.1`: Logging framework
 
 ## Key Features
 

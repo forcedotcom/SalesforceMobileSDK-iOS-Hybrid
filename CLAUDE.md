@@ -64,9 +64,7 @@ SalesforceMobileSDK-iOS-Hybrid/
 │
 ├── external/                         # Git submodules
 │   ├── SalesforceMobileSDK-iOS/      # iOS native SDK (submodule)
-│   ├── shared/                       # SalesforceMobileSDK-Shared (submodule)
-│   ├── cordova/                      # Apache Cordova iOS (submodule)
-│   └── CocoaLumberjack/              # Logging library (submodule)
+│   └── shared/                       # SalesforceMobileSDK-Shared (submodule)
 │
 ├── shared/                           # Shared resources
 │   ├── hybrid/                       # Hybrid-specific code
@@ -138,15 +136,18 @@ pod 'CocoaLumberjack'  # Logging framework
 ```bash
 external/SalesforceMobileSDK-iOS    # iOS native SDK
 external/shared                      # Shared JavaScript libraries
-external/cordova                     # Apache Cordova iOS
-external/CocoaLumberjack            # Logging library
 ```
+
+### Swift Package Manager
+
+- `apache/cordova-ios` at `rel/8.1.0` — Apache Cordova for iOS
+- `CocoaLumberjack/CocoaLumberjack` at `3.9.1` — Logging framework
 
 ## Build & Test Setup
 
 ### Prerequisites
 - **macOS**: Required for iOS development
-- **Xcode**: 15+ recommended
+- **Xcode**: 26.6+ (Xcode 27 supported)
 - **iOS**: Minimum deployment target 18.0
 - **CocoaPods**: For dependency management
 
@@ -305,7 +306,6 @@ When reviewing PRs:
 - Don't change Cordova plugin interfaces without matching Android changes
 - Don't add new dependencies without flagging for review
 - Don't suppress warnings or test failures
-- Don't modify `install.sh` without explicit request
 
 ### Escalation — Stop and Flag for Human Review
 - Any change to Cordova plugin interfaces
@@ -313,7 +313,7 @@ When reviewing PRs:
 - WKWebView configuration or cookie management changes
 - New public APIs or API signature modifications
 - Build system changes (Xcode project, CocoaPods, podspecs)
-- Dependency version bumps (Cordova, iOS SDK, CocoaLumberjack)
+- Dependency version bumps (Cordova SPM, iOS SDK, CocoaLumberjack SPM)
 - Submodule reference updates
 - Removal of any previously deprecated API
 
