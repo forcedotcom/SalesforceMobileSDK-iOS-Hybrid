@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SalesforceHybridSDK"
-  s.version      = "14.0.0-rc.1"
+  s.version      = "14.0.0"
   s.summary      = "Salesforce Mobile SDK for iOS"
   s.homepage     = "https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid"
   s.license      = { :type => "Salesforce.com Mobile SDK License", :file => "LICENSE.md" }
