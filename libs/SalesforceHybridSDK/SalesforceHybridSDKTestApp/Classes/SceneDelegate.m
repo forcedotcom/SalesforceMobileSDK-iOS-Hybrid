@@ -31,10 +31,21 @@
     if (![scene isKindOfClass:[UIWindowScene class]]) return;
     UIWindowScene *windowScene = (UIWindowScene *)scene;
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    appDelegate.window = [[UIWindow alloc] initWithWindowScene:windowScene];
-    appDelegate.window.autoresizesSubviews = YES;
+
+    // The window and webview are normally created in didFinishLaunching so the app
+    // works in headless CI test hosts where no foreground scene connects. When a
+    // scene does connect, adopt that existing window rather than recreating it (which
+    // would rebuild the webview and reset the JS test runner). Only build from
+    // scratch if didFinishLaunching has not already done so.
+    if (appDelegate.window != nil) {
+        appDelegate.window.windowScene = windowScene;
+    } else {
+        appDelegate.window = [[UIWindow alloc] initWithWindowScene:windowScene];
+        appDelegate.window.autoresizesSubviews = YES;
+        [appDelegate initializeAppViewState];
+    }
     self.window = appDelegate.window;
-    [appDelegate initializeAppViewState];
+    [appDelegate.window makeKeyAndVisible];
 }
 
 @end

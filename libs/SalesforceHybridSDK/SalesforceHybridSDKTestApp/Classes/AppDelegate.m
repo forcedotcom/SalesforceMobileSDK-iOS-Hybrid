@@ -73,6 +73,16 @@
     // the network; doing it here avoids a deadlock where setUp's 15-second polling
     // loop traps the auth spin under it, preventing viewController from being created.
     [TestSetupUtils synchronousAuthRefresh];
+
+    // Create the window and bring up the webview here, rather than waiting for
+    // scene:willConnectToSession:. In headless CI test hosts no foreground
+    // UIWindowScene connects, so relying solely on the scene lifecycle leaves the
+    // webview (and JS test runner) uninitialized and every hybrid test fails with
+    // "Test runner not ready". didFinishLaunching always runs, headless or not.
+    // When a scene does connect (locally / iOS 27) it adopts this same window.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.autoresizesSubviews = YES;
+    [self initializeAppViewState];
     return YES;
 }
 
