@@ -111,6 +111,14 @@ open SalesforceMobileSDK-Hybrid.xcworkspace
 - **apache/cordova-ios** `rel/8.1.0`: Apache Cordova for iOS
 - **CocoaLumberjack/CocoaLumberjack** `3.9.1`: Logging framework
 
+### SalesforceFileLogger via Swift Package Manager
+
+Add `https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Hybrid.git` in Xcode's package dependencies and select the **SalesforceFileLogger** library. The package identity is `SalesforceMobileSDK-iOS-Hybrid`; choose a new Hybrid release tag containing `Package.swift` (`vX.Y.Z`), not the older `v14.0.0` tag. Swift code can `import SalesforceFileLogger`; Objective-C code can `#import <SalesforceFileLogger/SFSDKLogger.h>` (the umbrella header and the other two logger headers are public too). This source package uses the same three Objective-C implementations as the Xcode framework and CocoaPods podspec; consumers do not need the Hybrid Git submodules.
+
+The package requires CocoaLumberjack **3.9.1** and the `SalesforceSDKCommon` product from `SalesforceMobileSDK-iOS-SPM` **14.0.0** (iOS-SPM's Git tag omits the `v` prefix). A consumer pinning CocoaLumberjack exactly to 3.8.5 must upgrade its pin before these packages can resolve together. The Xcode framework and CocoaPods integrations remain available; the logger podspec now allows CocoaLumberjack `~> 3.9.1`.
+
+For release maintenance, `setversion.sh -v X.Y.Z` updates the logger podspec version, but SwiftPM derives the package version from the **Hybrid Git tag**, not from a version field in `Package.swift`. The release process tags Hybrid before building iOS-SPM, so Hybrid `v14.0.1` should retain its verified iOS-SPM `14.0.0` dependency. Change that pin only if a compatible newer iOS-SPM binary has already been published and tested before tagging Hybrid; do not assume `setversion.sh` updates it.
+
 ## Key Features
 
 ### Cordova Plugin Bridges
