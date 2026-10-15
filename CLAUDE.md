@@ -142,6 +142,10 @@ external/shared                      # Shared JavaScript libraries
 
 - `apache/cordova-ios` at `rel/8.1.0` — Apache Cordova for iOS
 - `CocoaLumberjack/CocoaLumberjack` at `3.9.1` — Logging framework
+- Root `Package.swift` distributes the source-built `SalesforceFileLogger` product from the canonical logger `.m` files and public forwarding headers; it also requires the `SalesforceSDKCommon` product from public package identity `SalesforceMobileSDK-iOS-SPM` at released tag `14.0.0`. It does not require the Hybrid submodules.
+- Consumers use the iOS-Hybrid package URL and a **new** `vX.Y.Z` Hybrid release tag containing the manifest (`v14.0.0` predates it). Swift imports `SalesforceFileLogger`; Objective-C imports `<SalesforceFileLogger/SFSDKLogger.h>`.
+- The Xcode framework and logger CocoaPods podspec continue using their existing header/source paths. CocoaLumberjack is 3.9.1 in the manifest and `~> 3.9.1` in the logger podspec; a consumer pinned exactly to 3.8.5 must update its constraint.
+- `setversion.sh` updates podspec versions, not SwiftPM package versions: SwiftPM uses the Hybrid Git tag. Hybrid is tagged before iOS-SPM is built in the release process, so `v14.0.1` retains the verified iOS-SPM `14.0.0` pin unless a compatible newer binary was published and tested *before* the Hybrid tag. Do not expect the version script to update this pin; iOS-SPM tags omit the Hybrid `v` prefix.
 
 ## Build & Test Setup
 
