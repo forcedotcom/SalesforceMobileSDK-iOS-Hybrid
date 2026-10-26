@@ -73,7 +73,24 @@ cd "$repoDir"
 publicHeaderFileList=""
 isFirstFile=1
 for headerFile in `ls -1 "${publicHeaderDirectory}"`; do
-	repoHeaderFile=`find ${projectDir} -name $headerFile`
+	if [ "${PROJECT_NAME}" = "SalesforceFileLogger" ] && [ "${SUBSPEC_NAME}" = "filelogger" ]; then
+		# SwiftPM forwarding headers share basenames with canonical source headers.
+		loggerSourceDir="${projectDir}/SalesforceFileLogger"
+		loggerHeaders=()
+		while IFS= read -r match; do
+			loggerHeaders+=("$match")
+		done < <(find "$loggerSourceDir" -path "$loggerSourceDir/include" -prune -o -type f -name "$headerFile" -print)
+		if [ ${#loggerHeaders[@]} -eq 0 ]; then
+			echo "no canonical SalesforceFileLogger header for $headerFile" >&2
+			exit 1
+		elif [ ${#loggerHeaders[@]} -ne 1 ]; then
+			echo "multiple canonical SalesforceFileLogger headers for $headerFile: ${loggerHeaders[*]}" >&2
+			exit 1
+		fi
+		repoHeaderFile="${loggerHeaders[0]}"
+	else
+		repoHeaderFile=`find ${projectDir} -name $headerFile`
+	fi
 	if [ "$repoHeaderFile" != "" ]; then
 		if [ $isFirstFile -eq 1 ]; then
 			publicHeaderFileList="'$repoHeaderFile'"
