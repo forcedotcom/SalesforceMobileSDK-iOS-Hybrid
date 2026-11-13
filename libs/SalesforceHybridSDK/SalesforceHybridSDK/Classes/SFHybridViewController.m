@@ -41,6 +41,7 @@
 #import <Cordova/NSDictionary+CordovaPreferences.h>
 #import <Cordova/CDVPluginNotifications.h>
 #import <objc/message.h>
+#import <objc/runtime.h>
 #import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
 #import <SalesforceHybridSDK/SalesforceHybridSDK-Swift.h>
 
@@ -77,6 +78,51 @@ static NSString * const kEC301 = @"301";
 static NSString * const kEC302 = @"302";
 static NSString * const kQuestionMark = @"?";
 static NSString * const kHTTP = @"http";
+
+/*
+ * Cordova retains its UI delegate. Forward custom controller callbacks weakly
+ * so the controller can release its engine without forming a retain cycle.
+ */
+@interface SFHybridWeakUIDelegate : NSProxy <WKUIDelegate> {
+    __weak id<WKUIDelegate> _target;
+    Class _targetClass;
+}
+- (instancetype)initWithTarget:(id<WKUIDelegate>)target;
+@end
+
+@implementation SFHybridWeakUIDelegate
+- (instancetype)initWithTarget:(id<WKUIDelegate>)target {
+    _target = target;
+    _targetClass = [target class];
+    return self;
+}
+
+- (BOOL)respondsToSelector:(SEL)selector {
+    return [_target respondsToSelector:selector];
+}
+
+- (BOOL)conformsToProtocol:(Protocol *)protocol {
+    return protocol_isEqual(protocol, @protocol(WKUIDelegate)) ||
+        [_target conformsToProtocol:protocol];
+}
+
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
+    id<WKUIDelegate> target = _target;
+    return [(NSObject *)target methodSignatureForSelector:selector] ?:
+        [_targetClass instanceMethodSignatureForSelector:selector];
+}
+
+- (void)forwardInvocation:(NSInvocation *)invocation {
+    id<WKUIDelegate> target = _target;
+    if (target) {
+        [invocation invokeWithTarget:target];
+    } else if (invocation.methodSignature.methodReturnLength) {
+        NSMutableData *emptyReturn = [NSMutableData
+            dataWithLength:invocation.methodSignature.methodReturnLength];
+        [invocation setReturnValue:emptyReturn.mutableBytes];
+    }
+}
+@end
 
 @interface SFHybridViewController()
 {
@@ -205,6 +251,22 @@ static NSString * const kHTTP = @"http";
 {
     self.errorPageWKWebView.navigationDelegate = nil;
     SFRelease(_errorPageWKWebView);
+}
+
+- (UIView *)newCordovaViewWithFrame:(CGRect)bounds
+{
+    UIView *view = [super newCordovaViewWithFrame:bounds];
+    if ([view isKindOfClass:[WKWebView class]]) {
+        WKWebView *webView = (WKWebView *)view;
+        if (webView.UIDelegate == (id<WKUIDelegate>)self) {
+            id<WKUIDelegate> delegate = [[SFHybridWeakUIDelegate alloc]
+                initWithTarget:(id<WKUIDelegate>)self];
+            [self.webViewEngine updateWithInfo:@{
+                kCDVWebViewEngineWKUIDelegate: delegate
+            }];
+        }
+    }
+    return view;
 }
 
 - (void)viewDidLoad

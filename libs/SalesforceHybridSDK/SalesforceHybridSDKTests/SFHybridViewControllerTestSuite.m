@@ -38,8 +38,26 @@
 @end
 
 @interface SFHybridCustomUIDelegateController : SFHybridViewController <WKUIDelegate>
+@property (nonatomic, copy) NSString *lastAlertMessage;
+@property (nonatomic, strong) WKWebView *providedWindow;
 @end
 @implementation SFHybridCustomUIDelegateController
+- (void)webView:(WKWebView *)webView
+    runJavaScriptAlertPanelWithMessage:(NSString *)message
+    initiatedByFrame:(WKFrameInfo *)frame
+    completionHandler:(void (^)(void))completionHandler {
+    self.lastAlertMessage = message;
+    completionHandler();
+}
+- (WKWebView *)webView:(WKWebView *)webView
+    createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
+    forNavigationAction:(WKNavigationAction *)action
+    windowFeatures:(WKWindowFeatures *)features {
+    return self.providedWindow;
+}
+- (void)webViewDidClose:(WKWebView *)webView {
+    self.lastAlertMessage = @"closed";
+}
 @end
 
 @interface SFHybridDialogController : SFHybridViewController
@@ -161,15 +179,66 @@
         @selector(webView:runJavaScriptTextInputPanelWithPrompt:defaultText:initiatedByFrame:completionHandler:)]);
 }
 
-- (void)test_givenCustomUIDelegate_whenLoaded_thenPreservesControllerDelegate {
+- (void)test_givenCustomUIDelegate_whenLoaded_thenForwardsControllerDelegate {
     self.hybridViewConfig.isLocal = YES;
     self.hybridViewConfig.shouldAuthenticate = NO;
     SFHybridCustomUIDelegateController *controller =
         [[SFHybridCustomUIDelegateController alloc] initWithConfig:self.hybridViewConfig];
     [controller loadViewIfNeeded];
 
-    XCTAssertEqual(((WKWebView *)controller.webView).UIDelegate, controller);
+    WKWebView *webView = (WKWebView *)controller.webView;
+    id<WKUIDelegate> delegate = webView.UIDelegate;
+    XCTAssertNotNil(delegate);
+    XCTAssertNotEqual(delegate, controller);
+    XCTAssertTrue([delegate respondsToSelector:
+        @selector(webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:completionHandler:)]);
+    XCTAssertFalse([delegate respondsToSelector:
+        @selector(webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:completionHandler:)]);
+    __block BOOL completed = NO;
+    WKFrameInfo *frame = nil;
+    [delegate webView:webView runJavaScriptAlertPanelWithMessage:@"Custom alert"
+        initiatedByFrame:frame completionHandler:^{ completed = YES; }];
+    XCTAssertEqualObjects(controller.lastAlertMessage, @"Custom alert");
+    XCTAssertTrue(completed);
+    controller.providedWindow = [[WKWebView alloc] init];
+    WKNavigationAction *action = nil;
+    WKWindowFeatures *features = nil;
+    XCTAssertEqual([delegate webView:webView
+        createWebViewWithConfiguration:controller.providedWindow.configuration
+        forNavigationAction:action windowFeatures:features], controller.providedWindow);
     [(CDVPlugin *)controller.webViewEngine dispose];
+}
+
+- (void)test_givenCustomUIDelegate_whenControllerReleased_thenDeallocates {
+    __weak SFHybridViewController *releasedController;
+    id<CDVWebViewEngineProtocol> engine;
+    id<WKUIDelegate> delegate;
+    @autoreleasepool {
+        self.hybridViewConfig.isLocal = YES;
+        self.hybridViewConfig.shouldAuthenticate = NO;
+        SFHybridCustomUIDelegateController *controller =
+            [[SFHybridCustomUIDelegateController alloc] initWithConfig:self.hybridViewConfig];
+        [controller loadViewIfNeeded];
+        engine = controller.webViewEngine;
+        id<WKUIDelegate> installedDelegate = ((WKWebView *)controller.webView).UIDelegate;
+        if (installedDelegate != controller) {
+            delegate = installedDelegate;
+        }
+        releasedController = controller;
+    }
+
+    NSPredicate *deallocated = [NSPredicate predicateWithBlock:
+        ^BOOL(id object, NSDictionary *bindings) {
+            return releasedController == nil;
+        }];
+    XCTestExpectation *expectation = [[XCTNSPredicateExpectation alloc]
+        initWithPredicate:deallocated object:nil];
+    XCTWaiterResult result = [XCTWaiter waitForExpectations:@[expectation] timeout:2];
+    XCTAssertEqual(result, XCTWaiterResultCompleted);
+    XCTAssertFalse([delegate respondsToSelector:@selector(webViewDidClose:)]);
+    WKWebView *webView = nil;
+    XCTAssertNoThrow([delegate webViewDidClose:webView]);
+    [(CDVPlugin *)engine dispose];
 }
 
 - (void)test_givenDefaultUIDelegate_whenDialogsRequested_thenPresentsCordovaDialogs {

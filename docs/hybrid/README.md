@@ -182,3 +182,7 @@ The file must contain:
 ```
 
 `test_credentials.json` is gitignored — never commit real credentials.
+
+### Custom WebView UI delegates
+
+A hybrid controller that implements `WKUIDelegate` receives callbacks through a weak forwarding delegate. Cordova owns the forwarding delegate, which preserves optional-method detection and forwards calls to the controller without retaining it. Consequently, `webView.UIDelegate` is a forwarding object rather than the controller itself; use callback behavior instead of delegate pointer identity. Separate application-supplied delegate objects remain unchanged.
