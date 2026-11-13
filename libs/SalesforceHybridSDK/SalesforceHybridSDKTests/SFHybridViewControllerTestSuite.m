@@ -25,6 +25,7 @@
 #import <XCTest/XCTest.h>
 #import "SFHybridViewConfig.h"
 #import "SFHybridViewController.h"
+#import <Cordova/NSDictionary+CordovaPreferences.h>
 
 @interface SFHybridViewController (tests)
 
@@ -32,7 +33,35 @@
 - (NSString *)isLoginRedirectUrl:(NSURL *)url;
 - (BOOL)isVFPageRedirect:(NSURL *)url;
 - (void)configureRemoteStartPage;
+- (void)loadSettings;
 
+@end
+
+@interface SFHybridCustomUIDelegateController : SFHybridViewController <WKUIDelegate>
+@end
+@implementation SFHybridCustomUIDelegateController
+@end
+
+@interface SFHybridDialogController : SFHybridViewController
+@property (nonatomic, strong) UIAlertController *capturedAlert;
+@property (nonatomic, copy) NSString *mediaPermissionPreference;
+@end
+@implementation SFHybridDialogController
+- (void)loadSettings {
+    [super loadSettings];
+    if (self.mediaPermissionPreference) {
+        [self.settings setCordovaSetting:self.mediaPermissionPreference
+            forKey:@"MediaPermissionGrantType"];
+    }
+}
+- (void)presentViewController:(UIViewController *)controller
+                    animated:(BOOL)animated
+                  completion:(void (^)(void))completion {
+    self.capturedAlert = (UIAlertController *)controller;
+    if (completion) {
+        completion();
+    }
+}
 @end
 
 @interface SFHybridViewControllerTestSuite : XCTestCase
@@ -110,5 +139,88 @@
     XCTAssertEqualObjects(self.hybridViewController.startPage, expectedUrl);
 }
 
+
+- (void)test_givenLocalUnauthenticatedView_whenLoaded_thenRetainsDefaultUIDelegate {
+    self.hybridViewConfig.isLocal = YES;
+    self.hybridViewConfig.shouldAuthenticate = NO;
+    self.hybridViewConfig.startPage = @"index.html";
+    [self.hybridViewController loadViewIfNeeded];
+
+    WKWebView *webView = (WKWebView *)self.hybridViewController.webView;
+    XCTAssertNotNil(webView);
+    XCTAssertNotNil(webView.UIDelegate);
+    id engineDelegate = [(NSObject *)self.hybridViewController.webViewEngine
+        valueForKey:@"uiDelegate"];
+    XCTAssertNotNil(engineDelegate);
+    XCTAssertEqual(engineDelegate, webView.UIDelegate);
+    XCTAssertTrue([webView.UIDelegate respondsToSelector:
+        @selector(webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:completionHandler:)]);
+    XCTAssertTrue([webView.UIDelegate respondsToSelector:
+        @selector(webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:completionHandler:)]);
+    XCTAssertTrue([webView.UIDelegate respondsToSelector:
+        @selector(webView:runJavaScriptTextInputPanelWithPrompt:defaultText:initiatedByFrame:completionHandler:)]);
+}
+
+- (void)test_givenCustomUIDelegate_whenLoaded_thenPreservesControllerDelegate {
+    self.hybridViewConfig.isLocal = YES;
+    self.hybridViewConfig.shouldAuthenticate = NO;
+    SFHybridCustomUIDelegateController *controller =
+        [[SFHybridCustomUIDelegateController alloc] initWithConfig:self.hybridViewConfig];
+    [controller loadViewIfNeeded];
+
+    XCTAssertEqual(((WKWebView *)controller.webView).UIDelegate, controller);
+    [(CDVPlugin *)controller.webViewEngine dispose];
+}
+
+- (void)test_givenDefaultUIDelegate_whenDialogsRequested_thenPresentsCordovaDialogs {
+    self.hybridViewConfig.isLocal = YES;
+    self.hybridViewConfig.shouldAuthenticate = NO;
+    SFHybridDialogController *controller =
+        [[SFHybridDialogController alloc] initWithConfig:self.hybridViewConfig];
+    [controller loadViewIfNeeded];
+    WKWebView *webView = (WKWebView *)controller.webView;
+    id<WKUIDelegate> delegate = webView.UIDelegate;
+    XCTAssertNotNil(delegate);
+    WKFrameInfo *frame = nil;
+
+    [delegate webView:webView runJavaScriptAlertPanelWithMessage:@"Alert message"
+        initiatedByFrame:frame completionHandler:^{}];
+    XCTAssertEqualObjects(controller.capturedAlert.message, @"Alert message");
+    XCTAssertEqual(controller.capturedAlert.actions.count, 1u);
+
+    [delegate webView:webView runJavaScriptConfirmPanelWithMessage:@"Confirm message"
+        initiatedByFrame:frame completionHandler:^(BOOL confirmed) {}];
+    XCTAssertEqualObjects(controller.capturedAlert.message, @"Confirm message");
+    XCTAssertEqual(controller.capturedAlert.actions.count, 2u);
+
+    [delegate webView:webView runJavaScriptTextInputPanelWithPrompt:@"Prompt message"
+        defaultText:@"Initial text" initiatedByFrame:frame
+        completionHandler:^(NSString *text) {}];
+    XCTAssertEqualObjects(controller.capturedAlert.message, @"Prompt message");
+    XCTAssertEqualObjects(controller.capturedAlert.textFields.firstObject.text,
+        @"Initial text");
+    XCTAssertEqual(controller.capturedAlert.actions.count, 2u);
+}
+
+- (void)test_givenDeniedMediaPreference_whenPermissionRequested_thenDeniesCapture {
+    self.hybridViewConfig.isLocal = YES;
+    self.hybridViewConfig.shouldAuthenticate = NO;
+    SFHybridDialogController *controller =
+        [[SFHybridDialogController alloc] initWithConfig:self.hybridViewConfig];
+    controller.mediaPermissionPreference = @"deny";
+    [controller loadViewIfNeeded];
+    WKWebView *webView = (WKWebView *)controller.webView;
+    XCTAssertNotNil(webView.UIDelegate);
+    __block BOOL completed = NO;
+    WKSecurityOrigin *origin = nil;
+    WKFrameInfo *frame = nil;
+    [webView.UIDelegate webView:webView
+        requestMediaCapturePermissionForOrigin:origin initiatedByFrame:frame
+        type:WKMediaCaptureTypeCamera decisionHandler:^(WKPermissionDecision decision) {
+            XCTAssertEqual(decision, WKPermissionDecisionDeny);
+            completed = YES;
+        }];
+    XCTAssertTrue(completed);
+}
 
 @end

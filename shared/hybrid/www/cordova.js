@@ -19,7 +19,7 @@
  under the License.
 */
 ;(function() {
-var PLATFORM_VERSION_BUILD_LABEL = '8.1.0';
+var PLATFORM_VERSION_BUILD_LABEL = '8.2.0';
 // file: src/scripts/require.js
 var require;
 var define;
@@ -995,7 +995,14 @@ function execProxy () {
 }
 
 execProxy.nativeFetchMessages = function () {
-    return cordovaExec().nativeFetchMessages.apply(null, arguments);
+    // The built-in WKWebView-based WebView does not implement `nativeFetchMessages`
+    // since it uses `postMessage` instead.
+    // The `nativeFetchMessages` logic is kept guarded in case a custom pluggable
+    // WebView engine still implements it. This logic is apart of the old JS/native
+    // command queue dispatching/polling path.
+    if (cordovaExec().nativeFetchMessages) {
+        return cordovaExec().nativeFetchMessages.apply(null, arguments);
+    }
 };
 
 execProxy.nativeEvalAndFetch = function () {
@@ -1795,20 +1802,23 @@ var statusBar = {};
 const statusBarScript = document.createElement('script');
 document.head.appendChild(statusBarScript);
 
+/**
+ * Hides or shows the system status bar. No status bar will be visible at all when false is passed.
+ */
 Object.defineProperty(statusBar, 'visible', {
     configurable: false,
     enumerable: true,
     get: function () {
+        // If cordova-plugin-statusbar is installed fallback to it for compatibility reasons
         if (window.StatusBar) {
-            // Let the CDVStatusBar plugin handle it
             return window.StatusBar.isVisible;
         }
 
         return statusBarVisible;
     },
     set: function (value) {
+        // If cordova-plugin-statusbar is installed fallback to it for compatibility reasons
         if (window.StatusBar) {
-            // Let the CDVStatusBar plugin handle it
             if (value) {
                 window.StatusBar.show();
             } else {
@@ -1821,6 +1831,13 @@ Object.defineProperty(statusBar, 'visible', {
     }
 });
 
+/**
+ * Sets the background color of the visible status bar.
+ * Supports valid CSS color values, e.g. `rebeccapurple`, `#RRGGBBAA`, `rgb(255 0 153)`.
+ * Alpha is supported since cordova-ios 8.1.1.
+ * Note: This is intended for special cases only, and not a recommended API. The recommended way
+ * to set the background colour of the status bar is with the `<meta name="theme-color">` tag.
+ */
 Object.defineProperty(statusBar, 'setBackgroundColor', {
     configurable: false,
     enumerable: false,
@@ -1833,11 +1850,12 @@ Object.defineProperty(statusBar, 'setBackgroundColor', {
             return;
         }
 
-        var rgbVals = rgbStr.match(/\d+/g).map(function (v) { return parseInt(v, 10); });
+        var rgbVals = rgbStr.match(/[\d.]+/g).map(function (v, i) { return (i < 3) ? parseInt(v, 10) : parseFloat(v); });
         if (rgbVals.length < 3) {
             return;
         }
 
+        // If cordova-plugin-statusbar is installed fallback to it for compatibility reasons
         if (window.StatusBar) {
             window.StatusBar.backgroundColorByHexString('#' + rgbVals[0].toString(16).padStart(2, '0') + rgbVals[1].toString(16).padStart(2, '0') + rgbVals[2].toString(16).padStart(2, '0'));
         } else {

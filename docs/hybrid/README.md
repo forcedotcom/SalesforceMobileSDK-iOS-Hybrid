@@ -75,8 +75,9 @@ Other submodules:
 | Path | Repository |
 |------|------------|
 | `external/SalesforceMobileSDK-iOS` | iOS native SDK |
-| `external/cordova` | Apache Cordova iOS |
-| `external/CocoaLumberjack` | Logging library |
+
+Cordova and CocoaLumberjack are Swift Package Manager dependencies of the Xcode
+projects, rather than Git submodules.
 
 ---
 
@@ -89,14 +90,14 @@ Located under `hybrid/SampleApps/`:
 
 ### How sample apps are structured
 
-The sample apps are standard Xcode projects that wire together files from four sources via relative paths in `project.pbxproj`:
+The sample apps are standard Xcode projects that wire together the following sources via relative paths in `project.pbxproj`:
 
 | Source | What it provides |
 |--------|-----------------|
 | `external/shared/samples/<appname>/` | App HTML, CSS, JS, `bootconfig.json`, sync configs (from Shared submodule) |
 | `external/shared/gen/plugins_with_define/` | Cordova plugin JS files copied to `www/plugins/com.salesforce/` (from Shared submodule) |
-| `shared/hybrid/` | `AppDelegate.swift`, `InitialViewController.{h,m}`, `UIApplication+SalesforceHybridSDK.{h,m}`, `config.xml`, `cordova_plugins.js` |
-| `external/cordova/` | `cordova.js`, `CDVAppDelegate.{h,m}`, `CordovaLib.xcodeproj` (from cordova submodule) |
+| `shared/hybrid/` | `AppDelegate.swift`, `InitialViewController.{h,m}`, `UIApplication+SalesforceHybridSDK.{h,m}`, `config.xml`, `cordova_plugins.js`, and bundled `www/cordova.js` |
+| Cordova Swift package | `CDVAppDelegate` and CordovaLib native implementation |
 | `external/SalesforceMobileSDK-iOS/` | SDK library `.xcodeproj` files and shared resources (from iOS SDK submodule) |
 
 None of the app-specific source files live in the `hybrid/SampleApps/` directory itself — the Xcode projects are essentially just wiring. All content is pulled from submodules and `shared/hybrid/`.
@@ -115,7 +116,18 @@ Select the `AccountEditor` or `MobileSyncExplorerHybrid` scheme and build. Befor
 
 ### Cordova version dependency
 
-The sample apps link directly against `external/cordova/CordovaLib/CordovaLib.xcodeproj` (the cordova submodule, currently cordova-ios 7.1.1). When the cordova-ios version is upgraded, the `external/cordova` submodule must be updated to the new version. This also requires updating the sample app Xcode projects to reflect any project structure changes in the new Cordova template (e.g., the cordova-ios 8.x move from `main.m` + ObjC `AppDelegate.m` to a Swift `AppDelegate.swift` with `@main`).
+The sample apps use SalesforceHybridSDK's Cordova Swift package dependency,
+pinned to the `rel/8.2.0` revision. Their bundled JavaScript comes from
+`shared/hybrid/www/cordova.js`, copied from the same cordova-ios npm release.
+
+For a Cordova upgrade, update the Xcode package revision, the exact Cordova
+requirement in `SalesforceHybridSDK.podspec`, and the bundled JavaScript together.
+The CordovaPlugin iOS engine requirement and Cordova pod tag, plus Package's iOS
+platform version, must agree with that version. Validate compatible Hybrid and
+plugin snapshots together: plugin installation runs CocoaPods before Package
+applies SDK dependency overrides, so the first installation must already select
+a compatible Hybrid source. Coordinate publication of the companion snapshots
+before exposing the new CLI platform version to consumers.
 
 ---
 
