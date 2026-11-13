@@ -116,18 +116,9 @@ Select the `AccountEditor` or `MobileSyncExplorerHybrid` scheme and build. Befor
 
 ### Cordova version dependency
 
-The sample apps use SalesforceHybridSDK's Cordova Swift package dependency,
-pinned to the `rel/8.2.0` revision. Their bundled JavaScript comes from
-`shared/hybrid/www/cordova.js`, copied from the same cordova-ios npm release.
+The sample apps use SalesforceHybridSDK's Cordova Swift package dependency, pinned to the `rel/8.2.0` revision. Their bundled JavaScript comes from `shared/hybrid/www/cordova.js`, copied from the same cordova-ios npm release.
 
-For a Cordova upgrade, update the Xcode package revision, the exact Cordova
-requirement in `SalesforceHybridSDK.podspec`, and the bundled JavaScript together.
-The CordovaPlugin iOS engine requirement and Cordova pod tag, plus Package's iOS
-platform version, must agree with that version. Validate compatible Hybrid and
-plugin snapshots together: plugin installation runs CocoaPods before Package
-applies SDK dependency overrides, so the first installation must already select
-a compatible Hybrid source. Coordinate publication of the companion snapshots
-before exposing the new CLI platform version to consumers.
+For a Cordova upgrade, update the Xcode package revision, the exact Cordova requirement in `SalesforceHybridSDK.podspec`, and the bundled JavaScript together. The CordovaPlugin iOS engine requirement and Cordova pod tag, plus Package's iOS platform version, must agree with that version. Validate compatible Hybrid and plugin snapshots together: plugin installation runs CocoaPods before Package applies SDK dependency overrides, so the first installation must already select a compatible Hybrid source. Coordinate publication of the companion snapshots before exposing the new CLI platform version to consumers.
 
 ---
 
