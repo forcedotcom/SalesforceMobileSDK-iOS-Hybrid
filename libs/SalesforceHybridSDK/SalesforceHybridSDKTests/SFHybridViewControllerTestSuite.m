@@ -26,6 +26,8 @@
 #import "SFHybridViewConfig.h"
 #import "SFHybridViewController.h"
 #import <Cordova/NSDictionary+CordovaPreferences.h>
+#import <Cordova/CDVSceneDelegate.h>
+#import <Cordova/CDVPluginNotifications.h>
 
 @interface SFHybridViewController (tests)
 
@@ -82,6 +84,25 @@
 }
 @end
 
+/*
+ * UIKit creates these connection objects. Supply their read-only inputs without
+ * launching another scene so the imported Cordova buffering contract is tested.
+ */
+@interface SFHybridLaunchContext : NSObject
+@property (nonatomic, strong) NSURL *URL;
+@property (nonatomic, readonly) UISceneOpenURLOptions *options;
+@end
+@implementation SFHybridLaunchContext
+- (UISceneOpenURLOptions *)options { return nil; }
+@end
+
+@interface SFHybridConnectionOptions : NSObject
+@property (nonatomic, copy) NSSet *URLContexts;
+@property (nonatomic, copy) NSSet *userActivities;
+@end
+@implementation SFHybridConnectionOptions
+@end
+
 @interface SFHybridViewControllerTestSuite : XCTestCase
 
 @property (nonnull, nonatomic, strong) SFHybridViewConfig *hybridViewConfig;
@@ -98,6 +119,63 @@
     self.hybridViewConfig.oauthRedirectURI = @"test:///redirectUri";
     self.hybridViewConfig.oauthScopes = [NSSet setWithArray:@[ @"web", @"api" ]];
     self.hybridViewController = [[SFHybridViewController alloc] initWithConfig:self.hybridViewConfig];
+}
+
+- (void)assertColdLinkDeliveryWithActivity:(BOOL)useActivity disconnect:(BOOL)disconnect {
+    CDVSceneDelegate *delegate = [[CDVSceneDelegate alloc] init];
+    NSObject *scene = [[NSObject alloc] init];
+    SFHybridConnectionOptions *options = [[SFHybridConnectionOptions alloc] init];
+    NSURL *url = [NSURL URLWithString:useActivity ?
+        @"https://example.test/cold-link" : @"hybridvalidation://cold-link"];
+    NSObject *expectedObject;
+    NSString *notificationName;
+    if (useActivity) {
+        NSUserActivity *activity = [[NSUserActivity alloc]
+            initWithActivityType:NSUserActivityTypeBrowsingWeb];
+        activity.webpageURL = url;
+        options.userActivities = [NSSet setWithObject:activity];
+        expectedObject = activity;
+        notificationName = CDVPluginContinueUserActivityNotification;
+    } else {
+        SFHybridLaunchContext *context = [[SFHybridLaunchContext alloc] init];
+        context.URL = url;
+        options.URLContexts = [NSSet setWithObject:context];
+        expectedObject = url;
+        notificationName = CDVPluginHandleOpenURLNotification;
+    }
+    __block NSUInteger deliveries = 0;
+    id observer = [[NSNotificationCenter defaultCenter]
+        addObserverForName:notificationName object:nil queue:nil
+        usingBlock:^(NSNotification *notification) {
+            XCTAssertEqualObjects(notification.object, expectedObject);
+            deliveries++;
+        }];
+    [delegate scene:(UIScene *)scene willConnectToSession:nil
+        options:(UISceneConnectionOptions *)options];
+    XCTAssertEqual(deliveries, 0u);
+    if (disconnect) {
+        [delegate sceneDidDisconnect:(UIScene *)scene];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:
+        CDVPageDidLoadNotification object:nil];
+    XCTAssertEqual(deliveries, disconnect ? 0u : 1u);
+    [[NSNotificationCenter defaultCenter] postNotificationName:
+        CDVPageDidLoadNotification object:nil];
+    XCTAssertEqual(deliveries, disconnect ? 0u : 1u);
+    [[NSNotificationCenter defaultCenter] removeObserver:observer];
+    [delegate sceneDidDisconnect:(UIScene *)scene];
+}
+
+- (void)test_givenColdSchemeURL_whenCordovaPageLoads_thenDeliversOnce {
+    [self assertColdLinkDeliveryWithActivity:NO disconnect:NO];
+}
+
+- (void)test_givenColdUniversalLink_whenCordovaPageLoads_thenDeliversOnce {
+    [self assertColdLinkDeliveryWithActivity:YES disconnect:NO];
+}
+
+- (void)test_givenPendingColdLink_whenSceneDisconnects_thenDoesNotDeliver {
+    [self assertColdLinkDeliveryWithActivity:NO disconnect:YES];
 }
 
 - (void)testFrontDoorUrlNoLeadingSlash {
