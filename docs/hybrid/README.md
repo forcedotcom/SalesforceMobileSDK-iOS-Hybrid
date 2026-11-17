@@ -15,7 +15,7 @@ The primary deliverable is the `SalesforceHybridSDK` pod, declared in `Salesforc
 | Pod name | `SalesforceHybridSDK` |
 | Current version | 14.0.0 |
 | Key dependency | `MobileSync ~> 14.0.0` (pulls the full iOS SDK chain) |
-| Cordova dependency | `Cordova 7.1.1` |
+| Cordova dependency | `Cordova 8.2.0` |
 | Source files | `libs/SalesforceHybridSDK/SalesforceHybridSDK/Classes/**/*.{h,m,swift}` |
 
 In **dev builds**, the CordovaPlugin's `plugin.xml` references this pod directly from the GitHub repo on the `dev` branch. In **GA releases**, it references the pod by version tag (e.g., `v14.0.0`).

@@ -62,6 +62,53 @@
 }
 @end
 
+@interface SFHybridCallbackUIDelegateController : SFHybridCustomUIDelegateController
+@end
+@implementation SFHybridCallbackUIDelegateController
+- (void)webView:(WKWebView *)webView
+    runJavaScriptConfirmPanelWithMessage:(NSString *)message
+    initiatedByFrame:(WKFrameInfo *)frame
+    completionHandler:(void (^)(BOOL))completionHandler {
+    completionHandler(YES);
+}
+- (void)webView:(WKWebView *)webView
+    runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt
+    defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame
+    completionHandler:(void (^)(NSString *))completionHandler {
+    completionHandler(defaultText);
+}
+- (void)webView:(WKWebView *)webView
+    requestMediaCapturePermissionForOrigin:(WKSecurityOrigin *)origin
+    initiatedByFrame:(WKFrameInfo *)frame type:(WKMediaCaptureType)type
+    decisionHandler:(void (^)(WKPermissionDecision))decisionHandler {
+    decisionHandler(WKPermissionDecisionGrant);
+}
+- (void)webView:(WKWebView *)webView
+    requestDeviceOrientationAndMotionPermissionForOrigin:(WKSecurityOrigin *)origin
+    initiatedByFrame:(WKFrameInfo *)frame
+    decisionHandler:(void (^)(WKPermissionDecision))decisionHandler {
+    decisionHandler(WKPermissionDecisionGrant);
+}
+- (void)webView:(WKWebView *)webView
+    contextMenuConfigurationForElement:(WKContextMenuElementInfo *)element
+    completionHandler:(void (^)(UIContextMenuConfiguration *))completionHandler {
+    completionHandler([UIContextMenuConfiguration configurationWithIdentifier:nil
+        previewProvider:nil actionProvider:nil]);
+}
+- (void)webView:(WKWebView *)webView
+    showLockdownModeFirstUseMessage:(NSString *)message
+    completionHandler:(void (^)(WKDialogResult))completionHandler {
+    completionHandler(WKDialogResultShowDefault);
+}
+- (void)webView:(WKWebView *)webView
+    runOpenPanelWithParameters:(WKOpenPanelParameters *)parameters
+    initiatedByFrame:(WKFrameInfo *)frame
+    completionHandler:(void (^)(NSArray<NSURL *> *))completionHandler
+    API_AVAILABLE(ios(18.4)) {
+    completionHandler(@[[NSURL URLWithString:@"file:///example.txt"]]);
+}
+@end
+
 @interface SFHybridDialogController : SFHybridViewController
 @property (nonatomic, strong) UIAlertController *capturedAlert;
 @property (nonatomic, copy) NSString *mediaPermissionPreference;
@@ -317,6 +364,95 @@
     WKWebView *webView = nil;
     XCTAssertNoThrow([delegate webViewDidClose:webView]);
     [(CDVPlugin *)engine dispose];
+}
+
+- (void)checkCustomDelegateCompletionsAfterRelease:(BOOL)releaseController {
+    self.hybridViewConfig.isLocal = YES;
+    self.hybridViewConfig.shouldAuthenticate = NO;
+    __attribute__((objc_precise_lifetime)) SFHybridCallbackUIDelegateController *controller;
+    __weak SFHybridViewController *releasedController;
+    id<WKUIDelegate> delegate;
+    @autoreleasepool {
+        controller = [[SFHybridCallbackUIDelegateController alloc]
+            initWithConfig:self.hybridViewConfig];
+        [controller loadViewIfNeeded];
+        delegate = ((WKWebView *)controller.webView).UIDelegate;
+        XCTAssertNotNil(delegate);
+        releasedController = controller;
+        if (releaseController) {
+            controller = nil;
+        }
+    }
+    if (releaseController) {
+        NSPredicate *deallocated = [NSPredicate predicateWithBlock:
+            ^BOOL(id object, NSDictionary *bindings) {
+                return releasedController == nil;
+            }];
+        XCTestExpectation *expectation = [[XCTNSPredicateExpectation alloc]
+            initWithPredicate:deallocated object:nil];
+        XCTAssertEqual([XCTWaiter waitForExpectations:@[expectation] timeout:2],
+            XCTWaiterResultCompleted);
+    }
+
+    __block NSUInteger completions = 0;
+    WKWebView *webView = nil;
+    WKFrameInfo *frame = nil;
+    WKSecurityOrigin *origin = nil;
+    [delegate webView:webView runJavaScriptAlertPanelWithMessage:@"Alert"
+        initiatedByFrame:frame completionHandler:^{ completions++; }];
+    [delegate webView:webView runJavaScriptConfirmPanelWithMessage:@"Confirm"
+        initiatedByFrame:frame completionHandler:^(BOOL confirmed) {
+            XCTAssertEqual(confirmed, !releaseController);
+            completions++;
+        }];
+    [delegate webView:webView runJavaScriptTextInputPanelWithPrompt:@"Prompt"
+        defaultText:@"Text" initiatedByFrame:frame
+        completionHandler:^(NSString *text) {
+            XCTAssertEqualObjects(text, releaseController ? nil : @"Text");
+            completions++;
+        }];
+    void (^permissionHandler)(WKPermissionDecision) = ^(WKPermissionDecision decision) {
+        XCTAssertEqual(decision, releaseController ?
+            WKPermissionDecisionDeny : WKPermissionDecisionGrant);
+        completions++;
+    };
+    [delegate webView:webView requestMediaCapturePermissionForOrigin:origin
+        initiatedByFrame:frame type:WKMediaCaptureTypeCamera
+        decisionHandler:permissionHandler];
+    [delegate webView:webView requestDeviceOrientationAndMotionPermissionForOrigin:origin
+        initiatedByFrame:frame decisionHandler:permissionHandler];
+    WKContextMenuElementInfo *element = nil;
+    [delegate webView:webView contextMenuConfigurationForElement:element
+        completionHandler:^(UIContextMenuConfiguration *configuration) {
+            XCTAssertEqual(configuration == nil, releaseController);
+            completions++;
+        }];
+    [delegate webView:webView showLockdownModeFirstUseMessage:@"Lockdown"
+        completionHandler:^(WKDialogResult result) {
+            XCTAssertEqual(result, releaseController ?
+                WKDialogResultAskAgain : WKDialogResultShowDefault);
+            completions++;
+        }];
+    NSUInteger expectedCompletions = 7;
+    if (@available(iOS 18.4, *)) {
+        WKOpenPanelParameters *parameters = nil;
+        [delegate webView:webView runOpenPanelWithParameters:parameters
+            initiatedByFrame:frame completionHandler:^(NSArray<NSURL *> *URLs) {
+                XCTAssertEqualObjects(URLs, releaseController ? nil :
+                    @[[NSURL URLWithString:@"file:///example.txt"]]);
+                completions++;
+            }];
+        expectedCompletions++;
+    }
+    XCTAssertEqual(completions, expectedCompletions);
+}
+
+- (void)test_givenCustomUIDelegate_whenAlive_thenForwardsAllCompletions {
+    [self checkCustomDelegateCompletionsAfterRelease:NO];
+}
+
+- (void)test_givenCustomUIDelegate_whenReleased_thenCompletesPendingCallbacks {
+    [self checkCustomDelegateCompletionsAfterRelease:YES];
 }
 
 - (void)test_givenDefaultUIDelegate_whenDialogsRequested_thenPresentsCordovaDialogs {
