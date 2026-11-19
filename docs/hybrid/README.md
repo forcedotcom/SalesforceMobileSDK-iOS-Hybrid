@@ -136,7 +136,7 @@ This updates `s.version` in `SalesforceHybridSDK.podspec` and `SalesforceFileLog
 
 ## Running Unit Tests
 
-For Cordova dependency changes, use the [upgrade validation matrix](cordova-upgrade-validation.md) and record authenticated, Release and device results separately.
+For Cordova dependency changes, use `docs/hybrid/cordova-upgrade-validation.md` in [SalesforceMobileSDK-Package](https://github.com/forcedotcom/SalesforceMobileSDK-Package) at the revision matching the SDK sources under test. Record authenticated, Release and device results separately.
 
 Open the workspace and run the `SalesforceHybridSDK` scheme tests:
 
