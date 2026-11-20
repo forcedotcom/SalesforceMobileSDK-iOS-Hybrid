@@ -140,7 +140,7 @@ external/shared                      # Shared JavaScript libraries
 
 ### Swift Package Manager
 
-- `apache/cordova-ios` at `rel/8.1.0` — Apache Cordova for iOS
+- `apache/cordova-ios` at `rel/8.2.0` — Apache Cordova for iOS
 - `CocoaLumberjack/CocoaLumberjack` at `3.9.1` — Logging framework
 - Root `Package.swift` distributes the source-built `SalesforceFileLogger` product from the canonical logger `.m` files and public forwarding headers; it also requires the `SalesforceSDKCommon` product from public package identity `SalesforceMobileSDK-iOS-SPM` at released tag `14.0.0`. It does not require the Hybrid submodules.
 - Consumers use the iOS-Hybrid package URL and a **new** `vX.Y.Z` Hybrid release tag containing the manifest (`v14.0.0` predates it). Swift imports `SalesforceFileLogger`; Objective-C imports `<SalesforceFileLogger/SFSDKLogger.h>`.

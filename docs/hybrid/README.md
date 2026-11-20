@@ -13,12 +13,12 @@ The primary deliverable is the `SalesforceHybridSDK` pod, declared in `Salesforc
 | Attribute | Value |
 |-----------|-------|
 | Pod name | `SalesforceHybridSDK` |
-| Current version | 14.0.0 |
-| Key dependency | `MobileSync ~> 14.0.0` (pulls the full iOS SDK chain) |
-| Cordova dependency | `Cordova 7.1.1` |
+| Current version | 14.1.0 |
+| Key dependency | `MobileSync ~> 14.1.0` (pulls the full iOS SDK chain) |
+| Cordova dependency | `Cordova 8.2.0` |
 | Source files | `libs/SalesforceHybridSDK/SalesforceHybridSDK/Classes/**/*.{h,m,swift}` |
 
-In **dev builds**, the CordovaPlugin's `plugin.xml` references this pod directly from the GitHub repo on the `dev` branch. In **GA releases**, it references the pod by version tag (e.g., `v14.0.0`).
+In **development builds**, CordovaPlugin's `plugin.xml` selects this pod from its configured Git source. The matched Cordova upgrade pins the reviewed Hybrid commit; other development sources retain their branch policy. In **GA releases**, the pod is selected by version tag (for example, `v14.0.0`).
 
 ---
 
@@ -75,8 +75,9 @@ Other submodules:
 | Path | Repository |
 |------|------------|
 | `external/SalesforceMobileSDK-iOS` | iOS native SDK |
-| `external/cordova` | Apache Cordova iOS |
-| `external/CocoaLumberjack` | Logging library |
+
+Cordova and CocoaLumberjack are Swift Package Manager dependencies of the Xcode
+projects, rather than Git submodules.
 
 ---
 
@@ -89,14 +90,14 @@ Located under `hybrid/SampleApps/`:
 
 ### How sample apps are structured
 
-The sample apps are standard Xcode projects that wire together files from four sources via relative paths in `project.pbxproj`:
+The sample apps are standard Xcode projects that wire together the following sources via relative paths in `project.pbxproj`:
 
 | Source | What it provides |
 |--------|-----------------|
 | `external/shared/samples/<appname>/` | App HTML, CSS, JS, `bootconfig.json`, sync configs (from Shared submodule) |
 | `external/shared/gen/plugins_with_define/` | Cordova plugin JS files copied to `www/plugins/com.salesforce/` (from Shared submodule) |
-| `shared/hybrid/` | `AppDelegate.swift`, `InitialViewController.{h,m}`, `UIApplication+SalesforceHybridSDK.{h,m}`, `config.xml`, `cordova_plugins.js` |
-| `external/cordova/` | `cordova.js`, `CDVAppDelegate.{h,m}`, `CordovaLib.xcodeproj` (from cordova submodule) |
+| `shared/hybrid/` | `AppDelegate.swift`, `InitialViewController.{h,m}`, `UIApplication+SalesforceHybridSDK.{h,m}`, `config.xml`, `cordova_plugins.js`, and bundled `www/cordova.js` |
+| Cordova Swift package | `CDVAppDelegate` and CordovaLib native implementation |
 | `external/SalesforceMobileSDK-iOS/` | SDK library `.xcodeproj` files and shared resources (from iOS SDK submodule) |
 
 None of the app-specific source files live in the `hybrid/SampleApps/` directory itself — the Xcode projects are essentially just wiring. All content is pulled from submodules and `shared/hybrid/`.
@@ -115,7 +116,9 @@ Select the `AccountEditor` or `MobileSyncExplorerHybrid` scheme and build. Befor
 
 ### Cordova version dependency
 
-The sample apps link directly against `external/cordova/CordovaLib/CordovaLib.xcodeproj` (the cordova submodule, currently cordova-ios 7.1.1). When the cordova-ios version is upgraded, the `external/cordova` submodule must be updated to the new version. This also requires updating the sample app Xcode projects to reflect any project structure changes in the new Cordova template (e.g., the cordova-ios 8.x move from `main.m` + ObjC `AppDelegate.m` to a Swift `AppDelegate.swift` with `@main`).
+The sample apps use SalesforceHybridSDK's Cordova Swift package dependency, pinned to the `rel/8.2.0` revision. Their bundled JavaScript comes from `shared/hybrid/www/cordova.js`, copied from the same cordova-ios npm release.
+
+For a Cordova upgrade, update the Xcode package revision, the exact Cordova requirement in `SalesforceHybridSDK.podspec`, and the bundled JavaScript together. The CordovaPlugin iOS engine requirement and Cordova pod tag, plus Package's iOS platform version, must agree with that version. Validate compatible Hybrid and plugin snapshots together: plugin installation runs CocoaPods before Package applies SDK dependency overrides, so the first installation must already select a compatible Hybrid source. Coordinate publication of the companion snapshots before exposing the new CLI platform version to consumers.
 
 ---
 
@@ -127,11 +130,13 @@ The sample apps link directly against `external/cordova/CordovaLib/CordovaLib.xc
 ./setversion.sh -v 14.0.0
 ```
 
-This updates `s.version` in `SalesforceHybridSDK.podspec` and `SalesforceFileLogger.podspec`. This script has no `-d` flag — the dev/GA distinction for iOS is controlled by CordovaPlugin's `plugin.xml` (which references the pod by `branch="dev"` or `tag="v14.0.0"` depending on the build type).
+This updates `s.version` in `SalesforceHybridSDK.podspec` and `SalesforceFileLogger.podspec`. This script has no `-d` flag. Development/GA source selection is controlled by CordovaPlugin's `plugin.xml`: development builds can select a branch or a matched commit, while GA builds use the release tag.
 
 ---
 
 ## Running Unit Tests
+
+For Cordova dependency changes, use `docs/hybrid/cordova-upgrade-validation.md` in [SalesforceMobileSDK-Package](https://github.com/forcedotcom/SalesforceMobileSDK-Package) at the revision matching the SDK sources under test. Record authenticated, Release and device results separately.
 
 Open the workspace and run the `SalesforceHybridSDK` scheme tests:
 
@@ -170,3 +175,7 @@ The file must contain:
 ```
 
 `test_credentials.json` is gitignored — never commit real credentials.
+
+### Custom WebView UI delegates
+
+A hybrid controller that implements `WKUIDelegate` receives callbacks through a weak forwarding delegate. Cordova owns the forwarding delegate, which preserves optional-method detection and forwards calls to the controller without retaining it. Consequently, `webView.UIDelegate` is a forwarding object rather than the controller itself; use callback behavior instead of delegate pointer identity. Separate application-supplied delegate objects remain unchanged.

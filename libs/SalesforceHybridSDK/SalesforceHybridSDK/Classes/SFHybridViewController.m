@@ -41,6 +41,7 @@
 #import <Cordova/NSDictionary+CordovaPreferences.h>
 #import <Cordova/CDVPluginNotifications.h>
 #import <objc/message.h>
+#import <objc/runtime.h>
 #import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
 #import <SalesforceHybridSDK/SalesforceHybridSDK-Swift.h>
 
@@ -77,6 +78,88 @@ static NSString * const kEC301 = @"301";
 static NSString * const kEC302 = @"302";
 static NSString * const kQuestionMark = @"?";
 static NSString * const kHTTP = @"http";
+
+/*
+ * Cordova 8.2.0's CDVWebViewEngine updateWithInfo: retains its UI delegate;
+ * 8.1.0 only assigned the weak WKWebView.UIDelegate for custom delegates. Forward
+ * controller callbacks weakly to avoid a controller -> engine -> controller
+ * cycle. Revisit this proxy if Cordova changes its delegate ownership.
+ */
+@interface SFHybridWeakUIDelegate : NSProxy <WKUIDelegate> {
+    __weak id<WKUIDelegate> _target;
+    Class _targetClass;
+}
+- (instancetype)initWithTarget:(id<WKUIDelegate>)target;
+@end
+
+@implementation SFHybridWeakUIDelegate
+- (instancetype)initWithTarget:(id<WKUIDelegate>)target {
+    _target = target;
+    _targetClass = [target class];
+    return self;
+}
+
+- (BOOL)respondsToSelector:(SEL)selector {
+    return [_target respondsToSelector:selector];
+}
+
+- (BOOL)conformsToProtocol:(Protocol *)protocol {
+    return protocol_isEqual(protocol, @protocol(WKUIDelegate)) ||
+        [_target conformsToProtocol:protocol];
+}
+
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
+    id<WKUIDelegate> target = _target;
+    return [(NSObject *)target methodSignatureForSelector:selector] ?:
+        [_targetClass instanceMethodSignatureForSelector:selector];
+}
+
+- (void)forwardInvocation:(NSInvocation *)invocation {
+    id<WKUIDelegate> target = _target;
+    if (target) {
+        [invocation invokeWithTarget:target];
+        return;
+    }
+
+    /*
+     * WebKit can cache optional delegate capabilities before teardown. Complete
+     * callbacks already in flight even though respondsToSelector: now says NO.
+     * Cancel dialogs and file selection, deny permissions, and defer a Lockdown
+     * Mode notice until a delegate can display it. These callbacks all place
+     * their completion block last, with the public WKUIDelegate signatures.
+     */
+    SEL selector = invocation.selector;
+    NSUInteger lastArgument = invocation.methodSignature.numberOfArguments - 1;
+    if (selector == @selector(webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:completionHandler:)) {
+        __unsafe_unretained void (^completion)(void);
+        [invocation getArgument:&completion atIndex:lastArgument];
+        completion();
+    } else if (selector == @selector(webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:completionHandler:)) {
+        __unsafe_unretained void (^completion)(BOOL);
+        [invocation getArgument:&completion atIndex:lastArgument];
+        completion(NO);
+    } else if (selector == @selector(webView:runJavaScriptTextInputPanelWithPrompt:defaultText:initiatedByFrame:completionHandler:) ||
+        selector == @selector(webView:contextMenuConfigurationForElement:completionHandler:) ||
+        selector == @selector(webView:runOpenPanelWithParameters:initiatedByFrame:completionHandler:)) {
+        __unsafe_unretained void (^completion)(id);
+        [invocation getArgument:&completion atIndex:lastArgument];
+        completion(nil);
+    } else if (selector == @selector(webView:requestMediaCapturePermissionForOrigin:initiatedByFrame:type:decisionHandler:) ||
+        selector == @selector(webView:requestDeviceOrientationAndMotionPermissionForOrigin:initiatedByFrame:decisionHandler:)) {
+        __unsafe_unretained void (^completion)(WKPermissionDecision);
+        [invocation getArgument:&completion atIndex:lastArgument];
+        completion(WKPermissionDecisionDeny);
+    } else if (selector == @selector(webView:showLockdownModeFirstUseMessage:completionHandler:)) {
+        __unsafe_unretained void (^completion)(WKDialogResult);
+        [invocation getArgument:&completion atIndex:lastArgument];
+        completion(WKDialogResultAskAgain);
+    } else if (invocation.methodSignature.methodReturnLength) {
+        NSMutableData *emptyReturn = [NSMutableData
+            dataWithLength:invocation.methodSignature.methodReturnLength];
+        [invocation setReturnValue:emptyReturn.mutableBytes];
+    }
+}
+@end
 
 @interface SFHybridViewController()
 {
@@ -205,6 +288,23 @@ static NSString * const kHTTP = @"http";
 {
     self.errorPageWKWebView.navigationDelegate = nil;
     SFRelease(_errorPageWKWebView);
+}
+
+- (UIView *)newCordovaViewWithFrame:(CGRect)bounds
+{
+    UIView *view = [super newCordovaViewWithFrame:bounds];
+    if ([view isKindOfClass:[WKWebView class]]) {
+        WKWebView *webView = (WKWebView *)view;
+        if (webView.UIDelegate == (id<WKUIDelegate>)self) {
+            /* Break Cordova 8.2.0's strong custom-delegate ownership cycle. */
+            id<WKUIDelegate> delegate = [[SFHybridWeakUIDelegate alloc]
+                initWithTarget:(id<WKUIDelegate>)self];
+            [self.webViewEngine updateWithInfo:@{
+                kCDVWebViewEngineWKUIDelegate: delegate
+            }];
+        }
+    }
+    return view;
 }
 
 - (void)viewDidLoad

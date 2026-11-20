@@ -108,7 +108,7 @@ open SalesforceMobileSDK-Hybrid.xcworkspace
 - **shared**: Shared JavaScript libraries (SalesforceMobileSDK-Shared)
 
 **Swift Package Manager**:
-- **apache/cordova-ios** `rel/8.1.0`: Apache Cordova for iOS
+- **apache/cordova-ios** `rel/8.2.0`: Apache Cordova for iOS
 - **CocoaLumberjack/CocoaLumberjack** `3.9.1`: Logging framework
 
 ### SalesforceFileLogger via Swift Package Manager
