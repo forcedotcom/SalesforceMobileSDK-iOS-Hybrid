@@ -13,12 +13,12 @@ The primary deliverable is the `SalesforceHybridSDK` pod, declared in `Salesforc
 | Attribute | Value |
 |-----------|-------|
 | Pod name | `SalesforceHybridSDK` |
-| Current version | 14.0.0 |
-| Key dependency | `MobileSync ~> 14.0.0` (pulls the full iOS SDK chain) |
+| Current version | 14.1.0 |
+| Key dependency | `MobileSync ~> 14.1.0` (pulls the full iOS SDK chain) |
 | Cordova dependency | `Cordova 8.2.0` |
 | Source files | `libs/SalesforceHybridSDK/SalesforceHybridSDK/Classes/**/*.{h,m,swift}` |
 
-In **dev builds**, the CordovaPlugin's `plugin.xml` references this pod directly from the GitHub repo on the `dev` branch. In **GA releases**, it references the pod by version tag (e.g., `v14.0.0`).
+In **development builds**, CordovaPlugin's `plugin.xml` selects this pod from its configured Git source. The matched Cordova upgrade pins the reviewed Hybrid commit; other development sources retain their branch policy. In **GA releases**, the pod is selected by version tag (for example, `v14.0.0`).
 
 ---
 
@@ -130,7 +130,7 @@ For a Cordova upgrade, update the Xcode package revision, the exact Cordova requ
 ./setversion.sh -v 14.0.0
 ```
 
-This updates `s.version` in `SalesforceHybridSDK.podspec` and `SalesforceFileLogger.podspec`. This script has no `-d` flag — the dev/GA distinction for iOS is controlled by CordovaPlugin's `plugin.xml` (which references the pod by `branch="dev"` or `tag="v14.0.0"` depending on the build type).
+This updates `s.version` in `SalesforceHybridSDK.podspec` and `SalesforceFileLogger.podspec`. This script has no `-d` flag. Development/GA source selection is controlled by CordovaPlugin's `plugin.xml`: development builds can select a branch or a matched commit, while GA builds use the release tag.
 
 ---
 
